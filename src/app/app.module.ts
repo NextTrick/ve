@@ -24,6 +24,7 @@ import {RouterModule} from '@angular/router';
 
 //Services
 import { UserService } from './services/user.service';
+import { ApprecoverpasswordComponent } from './components/apprecoverpassword/apprecoverpassword.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { UserService } from './services/user.service';
     ApploginComponent,
     InitComponent,
     AppsignupComponent,
-    ApphomeComponent
+    ApphomeComponent,
+    ApprecoverpasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -1,34 +1,32 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import { UserService } from '../../services/user.service';
+import { User } from '../../interfaces/user.interface';
+
 import '../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
 
 @Component({
-  selector: 'app-appsingup',
-  templateUrl: './appsingup.component.html',
-  styleUrls: ['./appsingup.component.css',
-             '../../../assets/s/app-assets/css/plugins/forms/validation/form-validation.css'],
+  selector: 'app-apprecoverpassword',
+  templateUrl: './apprecoverpassword.component.html',
+  styleUrls: ['./apprecoverpassword.component.css',
+              '../../../assets/s/app-assets/css/plugins/forms/validation/form-validation.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AppsingupComponent implements OnInit {
+export class ApprecoverpasswordComponent implements OnInit {
 
   form: FormGroup;
-  user:any = {
+  user:User = {
     userName: '',
-    password: '',
-    email: ''
+    email: '',
+    password: ''
   };
 
-  isValidForm: boolean = false;
-
   constructor(
-      private elRef:ElementRef, 
-      private userService: UserService,
-      private formBuilder: FormBuilder
+    private elRef:ElementRef,
+    private userService: UserService,
+    private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      userName: [this.user.userName],
-      password: [this.user.password],
       email: [this.user.email]
     });
   }
@@ -38,9 +36,6 @@ export class AppsingupComponent implements OnInit {
 
     $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]").jqBootstrapValidation({
       preventSubmit: true,
-      submitError: function ($form, event, errors) {
-
-      },
       submitSuccess: function ($form, event) {
         var values = {};
         $.each($form.serializeArray(), function(i, field) {
@@ -53,12 +48,10 @@ export class AppsingupComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-
-  }
-
-  onSubmit(formValue: any):void {
-    this.userService.signup(formValue.userName, formValue.email, formValue.password)
+  onSubmit(formValue:any):void {
+    this.userService.recoverPassword(
+      formValue.email
+    )
       .subscribe(
         response => console.log(response),
         error => console.log(error)

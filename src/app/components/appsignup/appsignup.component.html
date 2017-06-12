@@ -13,7 +13,7 @@
           </div>
           <div class="card-body collapse in">
             <div class="card-block">
-              <form [formGroup]="form" class="form-horizontal form-simple">
+              <form [formGroup]="form" class="form-horizontal form-simple" novalidate>
                 <fieldset class="form-group position-relative has-icon-left mb-1">
                   <div class="controls">
                     <input name="userName" [formControl]="form.controls['userName']" type="text" class="form-control form-control-lg input-lg" id="user-name" placeholder="User Name"
@@ -41,8 +41,7 @@
                     </div>
                   </div>
                 </fieldset>
-                <!--<button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Register</button>-->
-                <button id="button-test" type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Register</button>
+                <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Register</button>
               </form>
             </div>
             <p class="text-xs-center">Already have an account ? <a href="#" [routerLink]="['/login']" class="card-link">Login</a></p>

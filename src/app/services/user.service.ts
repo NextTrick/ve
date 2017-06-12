@@ -10,8 +10,24 @@ export class UserService {
 
     }
 
-    signup(userName: string, email: string, password: string) {
-        return this.http.post(environment.backendUrl,
-            {userName: userName, email: email, password: password});
+    signup(userName:string, email: string, password: string) {
+        return this.http.post(
+            environment.backendUrl + 'user',
+            {userName: userName, email: email, password: password}
+        );
+    }
+
+    login(email:string, password:string) {
+        return this.http.post(
+            environment.backendUrl + 'user',
+            {email: email, password: password}
+        );
+    }
+
+    recoverPassword(email:string) {
+        return this.http.post(
+          environment.backendUrl + 'user',
+          {email: email}
+        );
     }
 }

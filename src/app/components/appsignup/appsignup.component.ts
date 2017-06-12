@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import { UserService } from '../../services/user.service';
+import { User } from '../../interfaces/user.interface';
 
 import '../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
 
@@ -14,13 +15,11 @@ import '../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapVali
 export class AppsignupComponent implements OnInit {
 
   form: FormGroup;
-  user:any = {
+  user:User = {
     userName: '',
-    password: '',
-    email: ''
+    email: '',
+    password: ''
   };
-
-  isValidForm: boolean = false;
 
   constructor(
     private elRef:ElementRef,
@@ -39,9 +38,6 @@ export class AppsignupComponent implements OnInit {
 
     $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]").jqBootstrapValidation({
       preventSubmit: true,
-      submitError: function ($form, event, errors) {
-
-      },
       submitSuccess: function ($form, event) {
         var values = {};
         $.each($form.serializeArray(), function(i, field) {
@@ -54,12 +50,12 @@ export class AppsignupComponent implements OnInit {
     });
   }
 
-  ngAfterViewInit() {
-
-  }
-
-  onSubmit(formValue: any):void {
-    this.userService.signup(formValue.userName, formValue.email, formValue.password)
+  onSubmit(formValue:any):void {
+    this.userService.signup(
+        formValue.userName,
+        formValue.email,
+        formValue.password
+      )
       .subscribe(
         response => console.log(response),
         error => console.log(error)
