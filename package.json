@@ -23,6 +23,7 @@
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.2",
     "@types/jquery": "^2.0.46",
+    "angular2-ladda": "^1.2.1",
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "jquery": "^3.2.1",

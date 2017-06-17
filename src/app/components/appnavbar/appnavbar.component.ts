@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./appnavbar.component.css']
 })
 export class AppnavbarComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  isLoading:boolean = false;
+  constructor() {
+    
   }
 
+  ngOnInit() {
+    
+  }
 }

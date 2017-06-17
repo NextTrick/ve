@@ -25,7 +25,11 @@ import {RouterModule} from '@angular/router';
 //Services
 import { UserService } from './services/user.service';
 import { ApprecoverpasswordComponent } from './components/apprecoverpassword/apprecoverpassword.component';
+import { UsercreateComponent } from './components/usercreate/usercreate.component';
+import { UserlistComponent } from './components/userlist/userlist.component';
 
+//Ladda
+import { LaddaModule } from 'angular2-ladda';
 
 @NgModule({
   declarations: [
@@ -39,7 +43,9 @@ import { ApprecoverpasswordComponent } from './components/apprecoverpassword/app
     InitComponent,
     AppsignupComponent,
     ApphomeComponent,
-    ApprecoverpasswordComponent
+    ApprecoverpasswordComponent,
+    UsercreateComponent,
+    UserlistComponent
   ],
   imports: [
     BrowserModule,
@@ -47,7 +53,8 @@ import { ApprecoverpasswordComponent } from './components/apprecoverpassword/app
     HttpModule,
     BsDropdownModule.forRoot(),
     RouterModule.forRoot(ROUTES),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LaddaModule
   ],
   providers: [UserService],
   bootstrap: [InitComponent]

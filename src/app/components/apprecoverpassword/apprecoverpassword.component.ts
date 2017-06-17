@@ -16,7 +16,7 @@ export class ApprecoverpasswordComponent implements OnInit {
 
   form: FormGroup;
   user:User = {
-    userName: '',
+    companyName: '',
     email: '',
     password: ''
   };

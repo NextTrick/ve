@@ -3,6 +3,8 @@ declare var module: NodeModule;
 
 declare var $:any;
 declare var jquery: any;
+declare var Spinner: any;
+declare var Ladda: any;
 
 interface NodeModule {
   id: string;

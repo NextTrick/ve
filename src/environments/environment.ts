@@ -6,5 +6,5 @@
 export const environment = {
   production: false,
 
-  backendUrl: 'http://dev.mayorix.com/',
+  backendUrl: 'http://dev.mayorix.com/api/',
 };

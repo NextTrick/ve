@@ -10,10 +10,10 @@ export class UserService {
 
     }
 
-    signup(userName:string, email: string, password: string) {
+    signup(companyName:string, email: string, password: string) {
         return this.http.post(
             environment.backendUrl + 'user',
-            {userName: userName, email: email, password: password}
+            {companyName: companyName, email: email, password: password}
         );
     }
 

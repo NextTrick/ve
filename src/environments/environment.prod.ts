@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
 
-  backendUrl: 'http://dev.mayorix.com',
+  backendUrl: 'http://dev.mayorix.com/api/',
 };
