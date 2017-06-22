@@ -1,49 +1,49 @@
 <div class="app-content content container-fluid">
-  <div class="content-wrapper">
-    <div class="content-header row">
-      <div class="breadcrumb-wrapper col-xs-12">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a>
-          </li>
-          <li class="breadcrumb-item"><a href="#">Usuarios</a>
-          </li>
-          <li class="breadcrumb-item active">Listado
-          </li>
-        </ol>
-      </div>
-      <div class="content-header-left col-md-6 col-xs-12">
-        <h2 class="content-header-title mb-0">Usuarios</h2>
-        <!--<p class="text-muted mb-0">Page header with breadcrumbs &amp; button</p>-->
-      </div>
-      <div class="content-header-right text-md-right col-md-6 col-xs-12">
-        <button type="button" class="btn btn-primary">Crear Usuario</button>
-      </div>
-      <div class="content-header-lead col-xs-12 mt-2">
-        <!--<p class="lead">Page header with page title, breadcrumbs, description, content title and button.</p>-->
-      </div>
-    </div>
-    <div class="content-body">
-    <!-- Description -->
-    <section id="description">
-        <div class="card">
-              <div class="card-header">
-                  <h4 class="card-title">Listado</h4>
-                  <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                  <div class="heading-elements">
-                      <ul class="list-inline mb-0">
-                          <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
-                          <li><a data-action="reload"><i class="icon-reload"></i></a></li>
-                          <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
-                          <li><a data-action="close"><i class="icon-cross2"></i></a></li>
-                      </ul>
-                  </div>
-              </div>
-              <div class="card-body collapse in">
-                  <div class="card-block card-dashboard ">
-                      <!--<p>Grid with filtering, editing, inserting, deleting, sorting and paging. Data provided by controller.</p>-->
-                      <!--<div id="basicScenario" class="jsgrid" style="position: relative; height: auto; width: 100%;">-->
-                      <div id="serviceScenario" class="jsgrid" style="position: relative; height: auto; width: 100%;">
-                        <!--<div class="jsgrid-grid-header">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="breadcrumb-wrapper col-xs-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Usuarios</a>
+                    </li>
+                    <li class="breadcrumb-item active">Listado
+                    </li>
+                </ol>
+            </div>
+            <div class="content-header-left col-md-6 col-xs-12">
+                <h2 class="content-header-title mb-0">Usuarios</h2>
+                <!--<p class="text-muted mb-0">Page header with breadcrumbs &amp; button</p>-->
+            </div>
+            <div class="content-header-right text-md-right col-md-6 col-xs-12">
+                <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/user/create']">Crear usuario</button>
+            </div>
+            <div class="content-header-lead col-xs-12 mt-2">
+                <!--<p class="lead">Page header with page title, breadcrumbs, description, content title and button.</p>-->
+            </div>
+        </div>
+        <div class="content-body">
+            <!-- Description -->
+            <section id="description">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Listado</h4>
+                        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                <li><a data-action="close"><i class="icon-cross2"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body collapse in">
+                        <div class="card-block card-dashboard ">
+                            <!--<p>Grid with filtering, editing, inserting, deleting, sorting and paging. Data provided by controller.</p>-->
+                            <!--<div id="basicScenario" class="jsgrid" style="position: relative; height: auto; width: 100%;">-->
+                            <div id="serviceScenario" class="jsgrid" style="position: relative; height: auto; width: 100%;">
+                                <!--<div class="jsgrid-grid-header">
                             <table class="jsgrid-table">
                               <tbody>
                                   <tr class="jsgrid-header-row">
@@ -95,7 +95,7 @@
                               </tbody>
                             </table>
                         </div>-->
-                        <!--<div class="jsgrid-grid-body">
+                                <!--<div class="jsgrid-grid-body">
                             <table class="jsgrid-table" style="width: 939px;">
                               <tbody>
                                   <tr class="jsgrid-row">
@@ -221,17 +221,17 @@
                               </tbody>
                             </table>
                         </div>-->
-                        <!--<div class="jsgrid-pager-container" style="display: block;">
+                                <!--<div class="jsgrid-pager-container" style="display: block;">
                             <div class="jsgrid-pager">Pages: <span class="jsgrid-pager-nav-button jsgrid-pager-nav-inactive-button"><a href="javascript:void(0);">First</a></span> <span class="jsgrid-pager-nav-button jsgrid-pager-nav-inactive-button"><a href="javascript:void(0);">Prev</a></span> <span class="jsgrid-pager-page jsgrid-pager-current-page">1</span><span class="jsgrid-pager-page"><a href="javascript:void(0);">2</a></span><span class="jsgrid-pager-page"><a href="javascript:void(0);">3</a></span><span class="jsgrid-pager-page"><a href="javascript:void(0);">4</a></span><span class="jsgrid-pager-page"><a href="javascript:void(0);">5</a></span><span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">...</a></span> <span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">Next</a></span> <span class="jsgrid-pager-nav-button"><a href="javascript:void(0);">Last</a></span> &nbsp;&nbsp; 1 of 7 </div>
                         </div>
                         <div class="jsgrid-load-shader" style="display: none; position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; z-index: 1000;"></div>
                         <div class="jsgrid-load-panel" style="display: none; position: absolute; top: 50%; left: 50%; z-index: 1000;">Please, wait...</div>-->
-                      </div>
-                  </div>
-              </div>
-          </div>
-    </section>
-    <!--/ Description -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ Description -->
+        </div>
     </div>
-  </div>
 </div>

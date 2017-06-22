@@ -10,14 +10,21 @@ export class AuthService {
 
     }
 
-    signup(companyName:string, email: string, password: string) {
+    signup(companyName: string, email: string, password: string) {
         return this.http.post(
             environment.backendUrl + 'user',
             {companyName: companyName, email: email, password: password}
+        ).do(
+            (response) => {
+                let body = response.json();
+                if (body.success) {
+                    this.saveToken(body.data.token);
+                }
+            }
         );
     }
 
-    login(email:string, password:string) {        
+    login(email: string, password: string, remember: string) {        
         return this.http.post(
             environment.backendUrl + 'auth/login',
             {email: email, password: password}
@@ -26,7 +33,12 @@ export class AuthService {
             (response) => {
                 let body = response.json();
                 if (body.success) {
-                    this.saveToken(body.data.user.token)
+                    this.saveToken(body.data.token);
+                    if (remember == 'on') {
+                        this.saveRemember(email);
+                    } else {
+                        this.removeRemember();
+                    }
                 }
             }
         );
@@ -43,12 +55,28 @@ export class AuthService {
         return true;
     }
 
+    saveRemember(email: string) {
+        localStorage.setItem('rememberEmail', email);
+    }
+
+    removeRemember() {
+        localStorage.removeItem('rememberEmail');
+    }
+
+    getRemember():any {
+        let email = localStorage.getItem('rememberEmail');
+        if (email == null) {
+            return null;
+        }
+        return email;
+    }
+
     saveToken(token) {
-        localStorage.setItem('tsMyxToken', token);
+        localStorage.setItem('token', token);
     }
 
     getToken() {
-        return localStorage.getItem('tsMyxToken');
+        return localStorage.getItem('token');
     }
 
     recoverPassword(email:string) {

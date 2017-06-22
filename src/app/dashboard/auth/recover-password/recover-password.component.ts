@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../interface/user.interface';
 
-import { MESSAGE } from '../../../common/message';
+import { message } from '../../../common/message';
 
 import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
 

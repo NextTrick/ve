@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../interface/user.interface';
 
-import { MESSAGE } from '../../../common/message';
+import { message } from '../../../common/message';
 
 import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
 
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
 
     form: FormGroup;
     showErrorMsg: boolean = false;
-    alertMsg: string = MESSAGE.success;
+    alertMsg: string = message.success;
 
     constructor(
         private elRef: ElementRef,
@@ -27,20 +27,34 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private router: Router
     ) {
+        let rememberEmail = this.authService.getRemember();
+        var remember = '';
+        var email = '';
+        if (rememberEmail) {
+            remember = 'on';
+            email = rememberEmail;
+        }
+
         this.form = this.formBuilder.group({
             password: [''],
-            email: ['']
-        });
+            email: [email],
+            remember: [remember]
+        });        
     }
 
     ngOnInit() {
         this.initJqBootstrapValidation();
     }
 
-    onSubmit(formValue: any): void {    
+    onSubmit(formValue: any): void {   
+        var remember = 'off';
+        if (formValue.remember) {
+            remember = formValue.remember;
+        } 
         this.authService.login(
             formValue.email,
-            formValue.password
+            formValue.password,
+            remember
         )
         .subscribe(
             response => {
@@ -49,19 +63,31 @@ export class LoginComponent implements OnInit {
                     let body = response.json();
                     if (body.success) {
                         this.router.navigate(['/dashboard']);
-                    } else {
+                    } else {                        
                         this.showErrorMsg = true;
-                        this.alertMsg = body.message;
+                        this.alertMsg = body.message;                        
+                        this.resetForm();
                     }
                 } else {
+                    this.resetForm();
                     this.showErrorMsg = true;
-                }
+                    this.alertMsg =  message.error;
+                }                
             },
             error => {
                 this.showErrorMsg = true;
+                this.alertMsg =  message.error;
                 console.log(error)
+                this.resetForm();
             }
         );
+    }
+
+    resetForm() {
+        this.form = this.formBuilder.group({
+            password: [''],
+            email: ['']
+        });
     }
 
     initJqBootstrapValidation() {

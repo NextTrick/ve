@@ -1,23 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { LayoutService } from '../../service/layout.service';
 
 @Component({
-  selector: 'user-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+    selector: 'user-create',
+    templateUrl: './create.component.html',
+    styleUrls: ['./create.component.css']
 })
-export class CreateComponent implements OnInit {
-  
-  isLoading: boolean = false;
+export class CreateComponent implements OnInit, OnDestroy {
 
-  constructor() { 
+    isLoading: boolean = false;        
 
-  }
+    constructor(private layoutService: LayoutService) {
 
-  ngOnInit() {
-  }
+    }
 
-  toggleLoading() {
-      this.isLoading = !this.isLoading;
-  }
+    ngOnInit() {
+        this.layoutService.showEditBar(true);
+    }
 
+    toggleLoading() {
+        this.isLoading = !this.isLoading;
+    }
+
+    ngOnDestroy() {        
+        this.layoutService.showEditBar(false);
+    }
 }

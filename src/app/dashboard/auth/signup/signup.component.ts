@@ -2,9 +2,8 @@ import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from '../../../service/auth.service';
-import { User } from '../../../interface/user.interface';
 
-import { MESSAGE } from '../../../common/message';
+import { message } from '../../../common/message';
 
 import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
 
@@ -19,7 +18,7 @@ export class SignupComponent implements OnInit {
 
     form: FormGroup;
     showErrorMsg: boolean = false;
-    alertMsg: string = MESSAGE.success;
+    alertMsg: string = message.success;
 
     constructor(
         private elRef: ElementRef,
@@ -63,18 +62,19 @@ export class SignupComponent implements OnInit {
                 if (response.ok) {
                     let body = response.json();
                     if (body.success) {
-                        this.router.navigate(['/dashboard/auth/login']);
+                        this.router.navigate(['/dashboard']);
                     } else {
                         this.showErrorMsg = true;
                         this.alertMsg = body.message;
                     }
                 } else {
                     this.showErrorMsg = true;
+                    this.alertMsg =  message.error;
                 }
             },
             error => {
                 this.showErrorMsg = true;
-                console.log(error)
+                this.alertMsg =  message.error;                
             }
         );
     }

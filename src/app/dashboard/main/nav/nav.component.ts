@@ -1,15 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 
+import { LayoutService } from '../../service/layout.service';
+
 @Component({
-  selector: 'core-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+    selector: 'core-nav',
+    templateUrl: './nav.component.html',
+    styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
+    isLoading:boolean = false;
+    
+    showEditBar = false;
 
-  ngOnInit() {
-  }
+    constructor(private layoutService: LayoutService) { }
+
+    ngOnInit() {
+        this.layoutService.showEditBarEmitter.subscribe(
+            (mode: boolean) => {
+                if (mode) {
+                    this.showEditBar = true;
+                } else {
+                    this.showEditBar = false;
+                }
+            }
+        );
+    }
 
 }
