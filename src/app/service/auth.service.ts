@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 @Injectable()
-export class UserService {
+export class AuthService {
     constructor (private http: Http) {
 
     }
@@ -26,10 +26,21 @@ export class UserService {
             (response) => {
                 let body = response.json();
                 if (body.success) {
-                    this.saveToken(body.suer.token)
+                    this.saveToken(body.data.user.token)
                 }
             }
         );
+    }
+
+    isAuthenticated() {
+        //TODO: call to sever to verify
+        let token = this.getToken();
+        console.log('This is the TOKEN' +  token);
+        if (token == null) {
+            return false;
+        }
+
+        return true;
     }
 
     saveToken(token) {
@@ -37,7 +48,7 @@ export class UserService {
     }
 
     getToken() {
-        localStorage.getItem('tsMyxToken')
+        return localStorage.getItem('tsMyxToken');
     }
 
     recoverPassword(email:string) {

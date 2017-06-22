@@ -8,21 +8,21 @@ import { MainRoutingModule } from './main-routing.module';
 import { LayoutComponent } from './layout/layout.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MainRoutingModule
-  ],
-  declarations: [
-    FooterComponent, 
-    NavComponent,
-    MenuComponent,    
-    LayoutComponent,    
-  ], 
-  exports: [
-    // FooterComponent, 
-    // NavComponent,
-    // MenuComponent,    
-    // LayoutComponent
-  ]  
+    imports: [
+        CommonModule,
+        MainRoutingModule
+    ],
+    declarations: [
+        FooterComponent,
+        NavComponent,
+        MenuComponent,
+        LayoutComponent,
+    ],
+    exports: [
+        // FooterComponent, 
+        // NavComponent,
+        // MenuComponent,    
+        // LayoutComponent
+    ]
 })
 export class MainModule { }

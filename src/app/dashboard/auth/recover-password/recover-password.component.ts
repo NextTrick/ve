@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import { UserService } from '../../../service/user.service';
+import { AuthService } from '../../../service/auth.service';
 import { User } from '../../../interface/user.interface';
 
 import { MESSAGE } from '../../../common/message';
@@ -26,7 +26,7 @@ export class RecoverPasswordComponent implements OnInit {
 
   constructor(
     private elRef:ElementRef,
-    private userService: UserService,
+    private authService: AuthService,
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
@@ -53,7 +53,7 @@ export class RecoverPasswordComponent implements OnInit {
   }
 
   onSubmit(formValue:any):void {
-    this.userService.recoverPassword(
+    this.authService.recoverPassword(
       formValue.email
     )
       .subscribe(

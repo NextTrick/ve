@@ -10,16 +10,17 @@ import { RecoverPasswordComponent } from './recover-password/recover-password.co
 import { AuthComponent } from './auth.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,  
-    AuthRoutingModule
-  ],
-  declarations: [
-    LoginComponent,
-    SignupComponent,
-    RecoverPasswordComponent,
-    AuthComponent
-  ]  
+    imports: [
+        CommonModule,
+        SharedModule,
+        AuthRoutingModule
+    ],
+    declarations: [
+        LoginComponent,
+        SignupComponent,
+        RecoverPasswordComponent,
+        AuthComponent
+    ],
+    bootstrap: [AuthComponent]
 })
 export class AuthModule { }

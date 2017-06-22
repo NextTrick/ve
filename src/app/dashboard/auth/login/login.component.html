@@ -1,62 +1,64 @@
 <div class="app-content content container-fluid">
-  <div class="content-wrapper">
-    <div class="content-header row">
-    </div>
-    <div class="content-body">
-      <section class="flexbox-container">
-      <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1  box-shadow-2 p-0">
-        <div class="card border-grey border-lighten-3 m-0">
-          <div class="card-header no-border">
-            <div class="card-title text-xs-center">
-              <div class="p-1"><img src="../../../../assets/s/app-assets/images/logo/robust-logo-dark.png" alt="branding logo"></div>
-            </div>
-            <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Login with Robust</span></h6>
-          </div>
-          <div class="card-body collapse in">
-            <div class="card-block">
-              <form [formGroup]="form" class="form-horizontal form-simple" novalidate>
-                <fieldset class="form-group position-relative has-icon-left mb-0">
-                  <div class="controls">
-                    <input [formControl]="form.controls['email']" type="email" class="form-control form-control-lg input-lg" id="email" placeholder="Email"
-                           required data-validation-required-message="This field is required">
-                    <div class="form-control-position">
-                      <i class="icon-head"></i>
-                    </div>
-                  </div>
-                </fieldset>
-                <fieldset class="form-group position-relative has-icon-left">
-                  <div class="controls">
-                    <input [formControl]="form.controls['password']"  type="password" class="form-control form-control-lg input-lg" id="user-password" placeholder="Password"
-                           required data-validation-required-message="This field is required"
-                           minlength="4">
-                    <div class="form-control-position">
-                      <i class="icon-key3"></i>
-                    </div>
-                  </div>
-                </fieldset>
-                <fieldset class="form-group row">
-                  <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
-                    <fieldset>
-                      <input type="checkbox" id="remember-me" class="chk-remember">
-                      <label for="remember-me"> Remember Me</label>
-                    </fieldset>
-                  </div>
-                  <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="#" [routerLink]="['/dashboard/auth/recover-password']" class="card-link">Forgot Password?</a></div>
-                </fieldset>
-                <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
-              </form>
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="">
-              <p class="float-sm-left text-xs-center m-0"><a href="#" [routerLink]="['./recover-password']" class="card-link">Recover password</a></p>
-              <p class="float-sm-right text-xs-center m-0">New to Robust? <a href="#" [routerLink]="['./signup']" class="card-link">Sign Up</a></p>
-            </div>
-          </div>
+    <div class="content-wrapper">
+        <div class="content-header row">
         </div>
-      </div>
-    </section>
+        <div class="content-body">
+            <section class="flexbox-container">
+                <div class="col-md-4 offset-md-4 col-xs-10 offset-xs-1  box-shadow-2 p-0">
+                    <div class="card border-grey border-lighten-3 m-0">
+                        <div class="card-header no-border">
+                            <div class="card-title text-xs-center">
+                                <div class="p-1"><img src="../../../../assets/s/app-assets/images/logo/robust-logo-dark.png" alt="branding logo"></div>
+                            </div>
+                            <h6 class="card-subtitle line-on-side text-muted text-xs-center font-small-3 pt-2"><span>Login with Robust</span></h6>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <div *ngIf="showErrorMsg" class="alert bg-danger alert-dismissible fade in mb-2" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button> {{alertMsg}}
+                                </div>
+                                <form [formGroup]="form" class="form-horizontal form-simple" novalidate>
+                                    <fieldset class="form-group position-relative has-icon-left mb-1">
+                                        <div class="controls">
+                                            <input name="email" [formControl]="form.controls['email']" type="email" class="form-control form-control-lg input-lg" id="user-email" placeholder="Email" required data-validation-required-message="This field is required">
+                                            <div class="form-control-position">
+                                                <i class="icon-mail6"></i>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group position-relative has-icon-left">
+                                        <div class="controls">
+                                            <input name="password" [formControl]="form.controls['password']" type="password" class="form-control form-control-lg input-lg" id="user-password" placeholder="Password" required data-validation-required-message="This field is required">
+                                            <div class="form-control-position">
+                                                <i class="icon-key3"></i>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset class="form-group row">
+                                        <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
+                                            <fieldset>
+                                                <input type="checkbox" id="remember-me" class="chk-remember">
+                                                <label for="remember-me"> Remember Me</label>
+                                            </fieldset>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="#" [routerLink]="['/dashboard/auth/recover-password']" class="card-link">Forgot Password?</a></div>
+                                    </fieldset>
+                                    <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="">
+                                <p class="float-sm-left text-xs-center m-0"><a href="#" [routerLink]="['/dashboard/auth/recover-password']" class="card-link">Recover password</a></p>
+                                <p class="float-sm-right text-xs-center m-0">New to Robust? <a href="#" [routerLink]="['/dashboard/auth/signup']" class="card-link">Sign Up</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
+        </div>
     </div>
-  </div>
 </div>
