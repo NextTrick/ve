@@ -1,29 +1,128 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { CustomValidators } from 'ng2-validation';
 
 import { LayoutService } from '../../service/layout.service';
+import { UserService } from '../../../service/user.service';
+import { FormService } from '../../../common/service/form.service';
+
+import { message } from '../../../common/message';
+import { validatorMessage } from '../../../common/validator-message';
+
+import { User } from '../../interface/user.interface';
+
+import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
 
 @Component({
     selector: 'user-create',
     templateUrl: './create.component.html',
-    styleUrls: ['./create.component.css']
+    styleUrls: ['./create.component.css',
+        '../../../../assets/s/app-assets/css/plugins/forms/validation/form-validation.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class CreateComponent implements OnInit, OnDestroy {
 
-    isLoading: boolean = false;        
+    form: FormGroup;
+    isLoading: boolean = false;
+    user: User;
+    validatorMessage:any = validatorMessage.es;
+    mesageErr = message.success;
 
-    constructor(private layoutService: LayoutService) {
+    formErrors = {
+        name: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        password: ''
+    };
+
+    customValidatorMessages = {
+        es: {
+            name: {
+
+            },
+            email: {
+                email: '',
+                required: ''
+            },       
+        }        
+    };
+
+    constructor(
+        private elRef: ElementRef,
+        private layoutService: LayoutService,
+        private userService: UserService,
+        private router: Router,
+        private formBuilder: FormBuilder,
+        private formService: FormService,
+    ) {
 
     }
 
-    ngOnInit() {
-        this.layoutService.showEditBar(true);
+    ngOnInit() {        
+        this.initForm();                
+        this.layoutService.showEditBar(true);             
+    }
+
+    ngAfterViewInit() {    
+        // this.initJqBootstrapValidation();
+    }    
+
+    initForm() {
+        this.form = this.formBuilder.group({
+            name: ['', [Validators.required]],
+            lastName: [''],
+            phone: [''],
+            email: ['', [Validators.email, Validators.required]],
+            password: ['', [Validators.required]]
+        });       
+
+        this.formService.initForm(this.form, this.formErrors, this.customValidatorMessages).subscribe(
+            formErrors => this.formErrors = formErrors,
+            error => console.log(error)
+        );
+    }
+
+    onSubmit(formValue): void {        
+        this.formService.formSubmitted(); 
+        if (this.form.valid) {
+            this.userService.create(this.form.value)
+            .subscribe(
+                response => {
+                    console.log(response);
+                },
+                error => console.log(error)
+            );
+        }
     }
 
     toggleLoading() {
         this.isLoading = !this.isLoading;
     }
 
-    ngOnDestroy() {        
+    ngOnDestroy() {
         this.layoutService.showEditBar(false);
+    }
+
+    initJqBootstrapValidation() {
+        var _this = this;
+        // $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]")
+        $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]")
+            .jqBootstrapValidation({
+                preventSubmit: true,
+                submitError: function ($form, event, errors) {
+                },
+                submitSuccess: function ($form, event) {
+                    console.log('form' + $form.serializeArray());
+                    var values = {};
+                    $.each($form.serializeArray(), function (i, field) {
+                        values[field.name] = field.value;
+                    });
+                    console.log(values);
+
+                    _this.onSubmit(values);
+                }
+            });
     }
 }

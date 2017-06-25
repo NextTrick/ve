@@ -43,3 +43,5 @@ Thumbs.db
 
 # project files
 /src/assets/s/html/*
+
+.editorconfig

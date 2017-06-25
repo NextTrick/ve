@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import { AuthService } from '../../../service/auth.service';
-import { User } from '../../../interface/user.interface';
 
 import { message } from '../../../common/message';
 
@@ -17,12 +16,7 @@ import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapV
 })
 export class RecoverPasswordComponent implements OnInit {
 
-  form: FormGroup;
-  user:User = {
-    companyName: '',
-    email: '',
-    password: ''
-  };
+  form: FormGroup;  
 
   constructor(
     private elRef:ElementRef,
@@ -30,7 +24,7 @@ export class RecoverPasswordComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      email: [this.user.email]
+      email: ['']
     });
   }
 

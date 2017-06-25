@@ -12,6 +12,7 @@ import { NotFoundComponent } from './component/not-found/not-found.component';
 import { UserService } from './service/user.service';
 import { AuthService } from './service/auth.service';
 import { AuthGuardService } from './service/auth-guard.service';
+import { FormService } from './common/service/form.service';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,7 @@ import { AuthGuardService } from './service/auth-guard.service';
         CoreModule,
         AppRoutingModule
     ],
-    providers: [UserService, AuthService, AuthGuardService],
+    providers: [UserService, AuthService, AuthGuardService, FormService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

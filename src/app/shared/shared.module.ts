@@ -5,6 +5,9 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { LaddaModule } from 'angular2-ladda';
 
+//Directives
+import {ValidateDirective} from '../common/directive/validate.directive';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -13,13 +16,16 @@ import { LaddaModule } from 'angular2-ladda';
         ReactiveFormsModule,
         LaddaModule
     ],
-    declarations: [],
+    declarations: [        
+        ValidateDirective
+    ],
     exports: [
         FormsModule,
         HttpModule,
         ReactiveFormsModule,
         LaddaModule,
-        RouterModule
+        RouterModule,
+        ValidateDirective
     ]
 })
 export class SharedModule { }

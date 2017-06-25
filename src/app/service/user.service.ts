@@ -4,6 +4,8 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
+import { User } from '../dashboard/interface/user.interface';
+
 @Injectable()
 export class UserService {
     
@@ -11,5 +13,10 @@ export class UserService {
 
     }
 
-    
+    create(user: User) {
+        return this.http.post(
+            environment.backendUrl + 'user',
+            {user}
+        );
+    }
 }
