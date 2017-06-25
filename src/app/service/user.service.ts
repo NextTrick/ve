@@ -16,7 +16,7 @@ export class UserService {
     create(user: User) {
         return this.http.post(
             environment.backendUrl + 'user',
-            {user}
-        );
+            {user}        
+        )
     }
 }

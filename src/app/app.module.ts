@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
@@ -13,6 +14,7 @@ import { UserService } from './service/user.service';
 import { AuthService } from './service/auth.service';
 import { AuthGuardService } from './service/auth-guard.service';
 import { FormService } from './common/service/form.service';
+import { UtilService } from './common/service/util.service';
 
 @NgModule({
     declarations: [
@@ -23,9 +25,16 @@ import { FormService } from './common/service/form.service';
         BrowserModule,
         HttpModule,
         CoreModule,
-        AppRoutingModule
+        AppRoutingModule,
+        BrowserAnimationsModule
     ],
-    providers: [UserService, AuthService, AuthGuardService, FormService],
+    providers: [
+        UserService, 
+        AuthService, 
+        AuthGuardService, 
+        FormService,
+        UtilService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

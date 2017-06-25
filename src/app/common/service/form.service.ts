@@ -94,22 +94,21 @@ export class FormService {
                 for (let error in input.errors) {                                                          
                     // assign that type of error message to a variable  
 
-                    if (this.customValidatorMessages[this.lang] && this.customValidatorMessages[this.lang][field] &&
-                        this.customValidatorMessages[this.lang][field][error]) {
+                    if (this.customValidatorMessages[this.lang] 
+                        && this.customValidatorMessages[this.lang][field] 
+                        && this.customValidatorMessages[this.lang][field][error]) {
                         this.formErrors[field] = this.customValidatorMessages[this.lang][field][error];
                     } else if (this.validationMessages[this.lang][error]) {
                         this.formErrors[field] = this.validationMessages[this.lang][error];                        
                     } else {
-                        console.log('error does not exists', error, field);
+                        console.log('error key does not exists', error, field);
                         this.formErrors[field] = this.validationMessages[this.lang]['unknownerror'];
                     }
                     
                 }
             }
-        }
-        console.log(this.formErrors);
+        }        
         this.formValidationEmitter.emit(this.formErrors);
-
     }
 
 }

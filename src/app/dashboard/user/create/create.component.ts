@@ -1,12 +1,18 @@
-import { Component, OnInit, ElementRef, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewEncapsulation,
+         OnDestroy, ViewContainerRef } from '@angular/core';
+
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+
 import { CustomValidators } from 'ng2-validation';
 
+//services
 import { LayoutService } from '../../service/layout.service';
 import { UserService } from '../../../service/user.service';
 import { FormService } from '../../../common/service/form.service';
+import { UtilService } from '../../../common/service/util.service';
 
+//consts
 import { message } from '../../../common/message';
 import { validatorMessage } from '../../../common/validator-message';
 
@@ -56,16 +62,17 @@ export class CreateComponent implements OnInit, OnDestroy {
         private router: Router,
         private formBuilder: FormBuilder,
         private formService: FormService,
+        private utilService: UtilService,
     ) {
-
+        
     }
 
-    ngOnInit() {        
+    ngOnInit() {              
         this.initForm();                
         this.layoutService.showEditBar(true);             
     }
 
-    ngAfterViewInit() {    
+    ngAfterViewInit() {            
         // this.initJqBootstrapValidation();
     }    
 
@@ -84,15 +91,23 @@ export class CreateComponent implements OnInit, OnDestroy {
         );
     }
 
-    onSubmit(formValue): void {        
+    onSubmit(formValue): void {             
+        this.utilService.successNotification();               
         this.formService.formSubmitted(); 
         if (this.form.valid) {
             this.userService.create(this.form.value)
             .subscribe(
                 response => {
-                    console.log(response);
+                    let body = response.json();
+                    if (body.success) {
+                        this.router.navigate(['/dashboard']);
+                    } else {
+
+                    }                                      
                 },
-                error => console.log(error)
+                error => {                        
+                    console.log(error)       
+                }
             );
         }
     }

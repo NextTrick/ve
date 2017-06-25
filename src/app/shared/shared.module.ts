@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
@@ -14,7 +15,7 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         FormsModule,
         HttpModule,
         ReactiveFormsModule,
-        LaddaModule
+        LaddaModule        
     ],
     declarations: [        
         ValidateDirective

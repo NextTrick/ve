@@ -20,9 +20,10 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "../node_modules/ladda/css/ladda.scss"
+        "../node_modules/ladda/css/ladda.scss"        
       ],
-      "scripts": [],
+      "scripts": [          
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
