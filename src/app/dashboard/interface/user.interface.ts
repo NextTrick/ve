@@ -5,4 +5,5 @@ export interface User {
     name: string;
     lastName: string;
     phone?: string;
+    clientKey?: string;
 };

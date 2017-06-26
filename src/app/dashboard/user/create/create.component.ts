@@ -91,21 +91,21 @@ export class CreateComponent implements OnInit, OnDestroy {
         );
     }
 
-    onSubmit(formValue): void {             
-        this.utilService.successNotification();               
+    onSubmit(formValue): void {                                    
         this.formService.formSubmitted(); 
         if (this.form.valid) {
             this.userService.create(this.form.value)
             .subscribe(
                 response => {
-                    let body = response.json();
-                    if (body.success) {
-                        this.router.navigate(['/dashboard']);
+                    let res = response.json();
+                    if (res.success) {
+                        this.utilService.successNotification();
                     } else {
-
+                        this.utilService.errorNotification(res.data.message);
                     }                                      
                 },
-                error => {                        
+                error => {
+                    this.utilService.errorNotification();
                     console.log(error)       
                 }
             );

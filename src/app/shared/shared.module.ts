@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { LaddaModule } from 'angular2-ladda';
+import { JsGridModule } from 'ng2-jsgrid';
 
 //Directives
 import {ValidateDirective} from '../common/directive/validate.directive';
@@ -15,7 +16,7 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         FormsModule,
         HttpModule,
         ReactiveFormsModule,
-        LaddaModule        
+        LaddaModule     
     ],
     declarations: [        
         ValidateDirective
@@ -26,7 +27,8 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         ReactiveFormsModule,
         LaddaModule,
         RouterModule,
-        ValidateDirective
+        ValidateDirective,
+        JsGridModule
     ]
 })
 export class SharedModule { }
