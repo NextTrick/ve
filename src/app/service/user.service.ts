@@ -20,6 +20,13 @@ export class UserService {
         )
     }
 
+    delete(item: any) {        
+        return this.http.delete(
+            environment.backendUrl + 'user/' + item.userId
+        )
+        .map(res => res.json());
+    }
+
     getAll(filter: any) {
         let myHeaders = new Headers();
         myHeaders.append('Content-Type', 'application/json');    
