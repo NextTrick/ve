@@ -6,4 +6,5 @@ export interface User {
     lastName: string;
     phone?: string;
     clientKey?: string;
+    imageId?: string | null;
 };

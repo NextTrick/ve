@@ -4,7 +4,9 @@ import { Component, OnInit, ElementRef, ViewEncapsulation,
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
+//thirth party modules
 import { CustomValidators } from 'ng2-validation';
+import { FileUploader } from 'ng2-file-upload';
 
 //services
 import { LayoutService } from '../../service/layout.service';
@@ -16,6 +18,10 @@ import { UtilService } from '../../../common/service/util.service';
 import { message } from '../../../common/message';
 import { validatorMessage } from '../../../common/validator-message';
 
+// const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
+const URL = 'http://dev.mayorix.com/api/image';
+
+//interfaces
 import { User } from '../../interface/user.interface';
 
 import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
@@ -34,6 +40,17 @@ export class CreateComponent implements OnInit, OnDestroy {
     user: User;
     validatorMessage:any = validatorMessage.es;
     mesageErr = message.success;
+
+    uploader:FileUploader = new FileUploader({
+        url: URL,
+        // autoUpload: true, 
+        queueLimit: 1,
+        // headers: [
+        //     {name: 'Content-Type', value: 'multipart/form-data'},
+        //     {name: 'Accept', value: 'application/json'}
+        // ]
+
+    });
 
     formErrors = {
         name: '',
@@ -63,13 +80,21 @@ export class CreateComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private formService: FormService,
         private utilService: UtilService,
-    ) {
-        
+    ) {             
     }
 
-    ngOnInit() {              
+    ngOnInit() {    
+        this.initUploader();    
         this.initForm();                
-        this.layoutService.showEditBar(true);             
+        this.layoutService.showEditBar(true);                     
+    }
+
+    fileChange(event) {
+        let fileList: FileList = event.target.files;        
+    }
+
+    initUpload(uploader: any) {
+        
     }
 
     ngAfterViewInit() {            
@@ -91,8 +116,16 @@ export class CreateComponent implements OnInit, OnDestroy {
         );
     }
 
-    onSubmit(formValue): void {                                    
+    onSubmit(): void {        
         this.formService.formSubmitted(); 
+        if (this.uploader.queue.length > 0) {            
+            this.uploader.uploadAll();            
+        } else {            
+            this.createUser();
+        }
+    }
+
+    createUser() {
         if (this.form.valid) {
             this.userService.create(this.form.value)
             .subscribe(
@@ -100,6 +133,7 @@ export class CreateComponent implements OnInit, OnDestroy {
                     let res = response.json();
                     if (res.success) {
                         this.utilService.successNotification();
+                        this.initForm();
                     } else {
                         this.utilService.errorNotification(res.data.message);
                     }                                      
@@ -120,6 +154,26 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.layoutService.showEditBar(false);
     }
 
+    initUploader() {        
+
+        this.uploader.onBeforeUploadItem = (item) => {
+            item.withCredentials = false;            
+        }
+
+        this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
+            console.log("ImageUpload:uploaded:", item, status, response);
+            console.log("Just response: ", response);            
+            if (status == 200) {
+                let res = JSON.parse(response);
+                console.log(res);
+                if (res.success) {                  
+                    this.userService.imageId = res.data.imageId;
+                    this.createUser();
+                }                
+            }
+        };
+    }
+
     initJqBootstrapValidation() {
         var _this = this;
         // $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]")
@@ -136,8 +190,8 @@ export class CreateComponent implements OnInit, OnDestroy {
                     });
                     console.log(values);
 
-                    _this.onSubmit(values);
+                    // _this.onSubmit(values);
                 }
             });
-    }
+    }    
 }

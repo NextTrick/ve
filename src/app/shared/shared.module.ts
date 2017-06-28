@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { LaddaModule } from 'angular2-ladda';
 import { JsGridModule } from 'ng2-jsgrid';
+import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
 //Directives
 import {ValidateDirective} from '../common/directive/validate.directive';
@@ -19,7 +20,9 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         LaddaModule     
     ],
     declarations: [        
-        ValidateDirective
+        ValidateDirective,
+        FileSelectDirective,
+        FileDropDirective,
     ],
     exports: [
         FormsModule,
@@ -28,7 +31,9 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         LaddaModule,
         RouterModule,
         ValidateDirective,
-        JsGridModule
+        JsGridModule,
+        FileSelectDirective,
+        FileDropDirective
     ]
 })
 export class SharedModule { }

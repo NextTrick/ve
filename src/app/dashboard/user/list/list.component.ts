@@ -83,13 +83,13 @@ export class ListComponent implements OnInit {
             fields: [                
                 { name: 'email', type: 'text', title: 'Email', width: 180,
                     itemTemplate: function(value, item) {                                          
-                        return `<a class='info' href='/dashboard/user/id/${item.ID}'>${value}</a>`;
+                        return `<a class='info' href='/dashboard/user/${item.userId}'>${value}</a>`;
                     },
                 },
                 { name: 'name', type: 'text', title: 'Nombre'},
                 { name: 'lastName', type: 'text', title: 'Apellido' },
                 { name: 'creationDate', type: 'text', title: 'F. Creación', filtering: false},
-                { name: 'status', type: 'checkbox',  title: 'Activo', filtering: false},                
+                { name: 'status', type: 'checkbox',  title: 'Activo', filtering: true},                
                 // { name: 'select', type: 'select', items: [ "", "United States", "Canada", "United Kingdom" ] },
                 { type: 'control',  modeSwitchButton: false, editButton: false, 
                     // itemTemplate: function(value, item) {

@@ -41,7 +41,7 @@
                             </div>
                             <div class="card-body collapse in">
                                 <div class="card-block">
-                                    <form [formGroup]="form" id="form" (ngSubmit)="onSubmit(form.value)" class="form">
+                                    <form [formGroup]="form" id="form" (ngSubmit)="onSubmit()" class="form">
                                         <div class="form-body">
                                             <h4 class="form-section"><i class="icon-head"></i>Información Personal</h4>
                                             <div class="row">
@@ -82,7 +82,7 @@
                                                         <label for="file">Foto</label>
                                                         <label id="photo" class="file center-block">
                                                             <div class="controls">
-                                                                <input type="file" id="file" class="form-control-file">
+                                                                <input [uploader]="uploader" ng2FileSelect (change)="fileChange($event)" type="file" id="file" class="form-control-file">                                                                
                                                                 <span class="file-custom"></span>
                                                             </div>
                                                         </label>

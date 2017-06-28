@@ -8,16 +8,26 @@ import { User } from '../dashboard/interface/user.interface';
 
 @Injectable()
 export class UserService {
-    
-    constructor (private http: Http) {
 
+    imageId: string | null = null; 
+
+    constructor (private http: Http) {
     }
 
-    create(user: User) {            
+    create(user: User) {  
+        if (this.imageId != null) {
+            user.imageId = this.imageId;
+        }   
+        console.log(user);     
         return this.http.post(
                 environment.backendUrl + 'user',
                 {user}        
-        )
+            )
+            .do(
+                (response) => {                    
+                    this.imageId = null;
+                }
+            );
     }
 
     delete(item: any) {        
@@ -47,6 +57,38 @@ export class UserService {
             environment.backendUrl + 'user', options
         )
         .map(res => res.json());
+    }
+
+    uploadImage() {
+
+    }
+
+    testObservable() {
+        let myObservable = Observable.create(function (obs) {
+            obs.next('Im a event  from stream');
+            obs.error('this a second error event')
+            obs.complete();
+        });
+
+        let observer = {
+            next: function (value) {
+                console.log('this value come from stream:' + value);
+            },
+            error: function (error) {
+                console.log(error);
+            },
+            complete: function () {
+                console.log('completed');
+            }
+        }
+
+        myObservable.subscribe(observer);
+        //or
+        // myObservable.subscribe(
+        //     nextResponse => {},
+        //     errorResponse => {},
+        //     () => {}
+        // );
     }
 }
 
