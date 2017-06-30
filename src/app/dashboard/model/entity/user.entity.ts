@@ -1,4 +1,6 @@
-export interface User {    
+import { User as UserInterface } from '../../interface/user.interface';
+
+export class User implements UserInterface {
     userId?: number;
     email: string;
     password: string;
@@ -9,4 +11,4 @@ export interface User {
     clientKey?: string;
     imageId?: string | null;
     image?: string;
-};
+}

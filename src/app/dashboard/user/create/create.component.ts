@@ -1,12 +1,13 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation,
          OnDestroy, ViewContainerRef } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 //thirth party modules
 import { CustomValidators } from 'ng2-validation';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileItem, ParsedResponseHeaders, FileLikeObject} from 'ng2-file-upload';
 
 //services
 import { LayoutService } from '../../service/layout.service';
@@ -17,9 +18,6 @@ import { UtilService } from '../../../common/service/util.service';
 //consts
 import { message } from '../../../common/message';
 import { validatorMessage } from '../../../common/validator-message';
-
-// const URL = 'https://evening-anchorage-3159.herokuapp.com/api/';
-const URL = 'http://dev.mayorix.com/api/image';
 
 //interfaces
 import { User } from '../../interface/user.interface';
@@ -39,17 +37,15 @@ export class CreateComponent implements OnInit, OnDestroy {
     isLoading: boolean = false;
     user: User;
     validatorMessage:any = validatorMessage.es;
-    mesageErr = message.success;
+    mesageErr = message.success;    
+    public filePreviewPath: SafeUrl;
 
     uploader:FileUploader = new FileUploader({
-        url: URL,
-        // autoUpload: true, 
-        queueLimit: 1,
-        // headers: [
-        //     {name: 'Content-Type', value: 'multipart/form-data'},
-        //     {name: 'Accept', value: 'application/json'}
-        // ]
-
+        url: 'http://dev.mayorix.com/api/image',        
+        allowedMimeType: ['image/jpeg', 'image/png', 'image/gif'],
+        allowedFileType: ['image'],
+        removeAfterUpload: true,
+        maxFileSize: 3 * 1024 * 1024,
     });
 
     formErrors = {
@@ -57,7 +53,8 @@ export class CreateComponent implements OnInit, OnDestroy {
         lastName: '',
         phone: '',
         email: '',
-        password: ''
+        password: '',
+        image: ''
     };
 
     customValidatorMessages = {
@@ -80,21 +77,20 @@ export class CreateComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private formService: FormService,
         private utilService: UtilService,
-    ) {             
+        private sanitizer: DomSanitizer,
+    ) {               
     }
 
-    ngOnInit() {    
+    ngOnInit() {        
         this.initUploader();    
         this.initForm();                
-        this.layoutService.showEditBar(true);                     
+        this.layoutService.showEditBar(true); 
+
+        this.initEmitter();      
     }
 
     fileChange(event) {
-        let fileList: FileList = event.target.files;        
-    }
-
-    initUpload(uploader: any) {
-        
+        // let fileList: FileList = event.target.files;           
     }
 
     ngAfterViewInit() {            
@@ -107,7 +103,8 @@ export class CreateComponent implements OnInit, OnDestroy {
             lastName: [''],
             phone: [''],
             email: ['', [Validators.email, Validators.required]],
-            password: ['', [Validators.required]]
+            password: ['', [Validators.required]],
+            image: [''],
         });       
 
         this.formService.initForm(this.form, this.formErrors, this.customValidatorMessages).subscribe(
@@ -116,42 +113,48 @@ export class CreateComponent implements OnInit, OnDestroy {
         );
     }
 
-    onSubmit(): void {        
+    onSubmit(): void {    
+        console.log('subbited');    
         this.formService.formSubmitted(); 
         if (this.uploader.queue.length > 0) {            
             this.uploader.uploadAll();            
-        } else {            
+        } else {                        
             this.createUser();
         }
     }
 
     createUser() {
         if (this.form.valid) {
+            this.utilService.isLoading(true);
             this.userService.create(this.form.value)
-            .subscribe(
-                response => {
-                    let res = response.json();
-                    if (res.success) {
-                        this.utilService.successNotification();
-                        this.initForm();
-                    } else {
-                        this.utilService.errorNotification(res.data.message);
-                    }                                      
-                },
-                error => {
-                    this.utilService.errorNotification();
-                    console.log(error)       
-                }
-            );
+                .finally(() => this.utilService.isLoading(false))
+                .subscribe(
+                    response => {                    
+                        if (response.success) {
+                            this.utilService.successNotification();
+                            this.initForm();
+                        } else {
+                            this.utilService.errorNotification(response.data.message);
+                        }                                                          
+                    },
+                    error => {
+                        this.utilService.errorNotification();                    
+                        console.log(error)       
+                    }
+                );
         }
-    }
-
-    toggleLoading() {
-        this.isLoading = !this.isLoading;
     }
 
     ngOnDestroy() {
         this.layoutService.showEditBar(false);
+    }
+
+    initEmitter() {
+        this.utilService.isLoadingEmitter.subscribe(
+            isLoading => {
+                this.isLoading = isLoading;
+            }
+        );
     }
 
     initUploader() {        
@@ -160,19 +163,36 @@ export class CreateComponent implements OnInit, OnDestroy {
             item.withCredentials = false;            
         }
 
-        this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {
-            console.log("ImageUpload:uploaded:", item, status, response);
-            console.log("Just response: ", response);            
+        this.uploader.onAfterAddingFile = (fileItem) => {
+            this.formErrors.image = '';             
+            this.filePreviewPath  = this.sanitizer.bypassSecurityTrustUrl((window.URL.createObjectURL(fileItem._file)));            
+        } 
+
+        this.uploader.onWhenAddingFileFailed = (item: FileLikeObject, filter: any, options: any) => {
+            this.formErrors.image = '';
+            switch (filter.name) {
+                case 'fileSize':
+                    this.formErrors.image = `Maximum upload size exceeded (${item.size} of ${options.maxFileSize} allowed)`;
+                    break;
+                case 'mimeType':
+                    const allowedTypes = options.allowedMimeType.join();
+                    this.formErrors.image = `Type "${item.type} is not allowed. Allowed types: "${allowedTypes}"`;
+                    break;
+                default:
+                    this.formErrors.image = `Unknown error (filter is ${filter.name})`;
+            }
+        }
+
+        this.uploader.onCompleteItem = (item:any, response:any, status:any, headers:any) => {                    
             if (status == 200) {
-                let res = JSON.parse(response);
-                console.log(res);
+                let res = JSON.parse(response);                
                 if (res.success) {                  
                     this.userService.imageId = res.data.imageId;
                     this.createUser();
                 }                
             }
         };
-    }
+    }    
 
     initJqBootstrapValidation() {
         var _this = this;

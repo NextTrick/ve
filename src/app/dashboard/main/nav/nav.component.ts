@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LayoutService } from '../../service/layout.service';
+import { UtilService } from '../../../common/service/util.service';
 
 @Component({
     selector: 'core-nav',
@@ -13,9 +14,17 @@ export class NavComponent implements OnInit {
     
     showEditBar = false;
 
-    constructor(private layoutService: LayoutService) { }
+    constructor(
+        private layoutService: LayoutService,
+        private utilService: UtilService
+    ) { }
 
     ngOnInit() {
+        this.initEmitter();         
+    }
+
+    initEmitter() {
+
         this.layoutService.showEditBarEmitter.subscribe(
             (mode: boolean) => {
                 if (mode) {
@@ -23,6 +32,12 @@ export class NavComponent implements OnInit {
                 } else {
                     this.showEditBar = false;
                 }
+            }
+        );
+
+        this.utilService.isLoadingEmitter.subscribe(
+            isLoading => {
+                this.isLoading = isLoading;
             }
         );
     }

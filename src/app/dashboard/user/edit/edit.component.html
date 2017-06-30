@@ -1,3 +1,138 @@
-<p>
-  edit works!
-</p>
+<div class="app-content content container-fluid">
+    <div class="content-wrapper">
+        <div class="content-header row">
+            <div class="breadcrumb-wrapper col-xs-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Users</a>
+                    </li>
+                    <li class="breadcrumb-item active">Add
+                    </li>
+                </ol>
+            </div>
+            <div class="content-header-left col-md-6 col-xs-12">
+                <h2 class="content-header-title mb-0">Editar cuenta</h2>
+            </div>
+        </div>
+
+        <div class="content-body">
+            <!-- Description -->
+            <hr>
+            <section id="description">
+                <div class="row match-height">
+                    <div class="col-md-4">
+                        <p class="font-medium-2">Información de la cuenta</p>
+                        <!--<h4 class="text-muted">Información de la cuenta</h4>-->
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="card">
+                            <!--<div class="card-header">
+                                <h4 class="card-title" id="basic-layout-form">Nueva cuenta</h4>
+                                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                <div class="heading-elements">
+                                    <ul class="list-inline mb-0">
+                                        <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                        <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                        <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>-->
+                            <div class="card-body collapse in">
+                                <div class="card-block">
+                                    <form [formGroup]="form" id="form" (ngSubmit)="onSubmit()" class="form">
+                                        <div class="form-body">
+                                            <h4 class="form-section"><i class="icon-head"></i>Información Personal</h4>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">                                                        
+                                                        <label for="name">Nombre</label>
+                                                        <div class="controls">
+                                                            <input [formControl]="form.controls['name']" type="text" id="name" 
+                                                                    maxlength="100" class="form-control" placeholder="Nombre" name="name">
+                                                            <span class="danger" *ngIf="formErrors.name">
+                                                                {{ formErrors.name }}
+                                                            </span>
+                                                        </div>
+                                                    </div>                                                    
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="lastName">Apellido</label>
+                                                        <div class="controls">
+                                                            <input [formControl]="form.controls['lastName']" type="text" #lastName 
+                                                                    id="lastName" maxlength="100" class="form-control" placeholder="Apellido" name="lastName">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">                                                
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="phone">Teléfono</label>
+                                                        <div class="controls">
+                                                            <input [formControl]="form.controls['phone']" type="text" id="phone" 
+                                                                    maxlength="20" class="form-control" placeholder="Teléfono" name="phone">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <h4 class="form-section"><i class="icon-clipboard4"></i>Seguridad</h4>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">                                                        
+                                                        <label for="email">E-mail</label>
+                                                        <div class="controls">                                                        
+                                                            <input [formControl]="form.controls['email']" type="email" id="email" 
+                                                                maxlength="100" class="form-control" placeholder="email" name="email">  
+                                                            <span class="danger" *ngIf="formErrors.email">
+                                                                {{ formErrors.email }}
+                                                            </span>                                                 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group" >                                                        
+                                                        <label class="control-label" for="password">Password</label>
+                                                        <div class="controls">                                                            
+                                                            <input [formControl]="form.controls['password']" type="password" id="password" 
+                                                                    maxlength="100" class="form-control" placeholder="Password" name="password">                                                      
+                                                            <p class="font-small-2 warning">Dejar vacío si no se quiere modificar</p>
+                                                            <span class="danger" *ngIf="formErrors.password">
+                                                                {{ formErrors.password }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="float-md-right float-xs-right mb-2 mb-xs-2">
+                            <button [routerLink]="['/dashboard/user']" type="button" class="btn btn-outline-secondary mr-1">
+                                Cancelar
+                            </button>
+                            <button [ladda]="isLoading" form="form" type="submit" data-style="slide-right" class="btn btn-primary">
+                                <span class="ladda-label">                                    
+                                    Guardar
+                                </span>
+                                <span class="ladda-spinner"></span>                            
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ Description -->
+
+        </div>
+    </div>
+</div>

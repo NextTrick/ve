@@ -4,7 +4,8 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
-import { User } from '../dashboard/interface/user.interface';
+// import { User } from '../dashboard/interface/user.interface';
+import { User } from '../dashboard/model/entity/user.entity';
 
 @Injectable()
 export class UserService {
@@ -17,12 +18,32 @@ export class UserService {
     create(user: User) {  
         if (this.imageId != null) {
             user.imageId = this.imageId;
-        }   
-        console.log(user);     
+        }             
+        let userData = JSON.stringify(user);    
+
         return this.http.post(
                 environment.backendUrl + 'user',
                 {user}        
             )
+            .map(res => res.json())            
+            .do(
+                (response) => {                    
+                    this.imageId = null;
+                }
+            );
+    }
+
+    update(user: User) {  
+        if (this.imageId != null) {
+            user.imageId = this.imageId;
+        }             
+        let userData = JSON.stringify(user);    
+
+        return this.http.put(
+                environment.backendUrl + 'user/' + user.userId,
+                {user}        
+            )
+            .map(res => res.json())
             .do(
                 (response) => {                    
                     this.imageId = null;
@@ -55,6 +76,13 @@ export class UserService {
 
         return this.http.get(
             environment.backendUrl + 'user', options
+        )
+        .map(res => res.json());
+    }
+
+    get(userId: number) {
+        return this.http.get(
+            environment.backendUrl + 'user/' + userId
         )
         .map(res => res.json());
     }

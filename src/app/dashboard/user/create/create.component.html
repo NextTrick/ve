@@ -80,10 +80,16 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="file">Foto</label>
-                                                        <label id="photo" class="file center-block">
-                                                            <div class="controls">
-                                                                <input [uploader]="uploader" ng2FileSelect (change)="fileChange($event)" type="file" id="file" class="form-control-file">                                                                
-                                                                <span class="file-custom"></span>
+                                                        <!--<span><img [src]="filePreviewPath" width="30" *ngIf="filePreviewPath"/></span>-->                                                        
+                                                        <label id="image" class="file center-block">
+                                                            <div class="controls">                                                                
+                                                                <input [formControl]="form.controls['image']" [uploader]="uploader" 
+                                                                    ng2FileSelect (change)="fileChange($event)" type="file" id="file" class="form-control-file" 
+                                                                    accept="image/x-png,image/gif,image/jpeg">                                                                
+                                                                <span class="file-custom"></span>  
+                                                                <span class="danger" *ngIf="formErrors.image">
+                                                                    {{ formErrors.image }}
+                                                                </span>  
                                                             </div>
                                                         </label>
                                                     </div>
@@ -151,13 +157,17 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="float-md-right float-xs-right mb-2 mb-xs-2">
-                            <button type="button" class="btn btn-outline-secondary mr-1">
-                                <i class="icon-cross2"></i> Cancelar
+                        <div class="float-md-right float-xs-right mb-2 mb-xs-2">                            
+                            <button [routerLink]="['/dashboard/user']" type="button" class="btn btn-outline-secondary mr-1">
+                                Cancelar
                             </button>
-                            <button form="form" type="submit" class="btn btn-primary"> 
-                                <i class="icon-check2"></i> Guardar
+                            <button [ladda]="isLoading" form="form" type="submit" data-style="slide-right" class="btn btn-primary">
+                                <span class="ladda-label">                                    
+                                    Guardar
+                                </span>
+                                <span class="ladda-spinner"></span>                            
                             </button>
+
                         </div>
                     </div>
                 </div>

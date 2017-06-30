@@ -10,6 +10,9 @@ import { message } from '../message';
 
 @Injectable()
 export class UtilService {
+
+    public isLoadingEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     processHttpResponse () {
         
     }    
@@ -28,5 +31,9 @@ export class UtilService {
 
     errorNotification(msg = message.error) {
         toastr.error(msg);
-    }       
+    }   
+
+    isLoading(ifLoading: boolean) {
+        this.isLoadingEmitter.emit(ifLoading);
+    }    
 }

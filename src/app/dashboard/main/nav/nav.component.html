@@ -162,20 +162,15 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav float-xs-right">
-                    <li class="nav-item mt-1">
-                        <button [ladda]="isLoading" [routerLink]="['/dashboard/user']" type="button" data-style="zoom-in" class="btn btn-outline-secondary">
-                        <span class="ladda-label">
-                        <i class="icon-cross2"></i>
+                    <li class="nav-item mt-1">                        
+                        <button [routerLink]="['/dashboard/user']" type="button" class="btn btn-outline-secondary">
                             Cancelar
-                        </span>
-                        <span class="ladda-spinner"></span>                            
                         </button>
-                        <button [ladda]="isLoading" form="form" type="submit" data-style="zoom-in" class="btn btn-primary">
-                        <span class="ladda-label">
-                        <i class="icon-check2"></i>
-                            Guardar
-                        </span>
-                        <span class="ladda-spinner"></span>                            
+                        <button [ladda]="isLoading" form="form" type="submit" data-style="slide-right" class="btn btn-primary">
+                            <span class="ladda-label">                                
+                                Guardar
+                            </span>
+                            <span class="ladda-spinner"></span>                            
                         </button>
                     </li>
                 </ul>

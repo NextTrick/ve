@@ -60,7 +60,7 @@ export class FormService {
 
     }
 
-    initForm(form: FormGroup, formErrors: any, customValidatorMessages: any) {
+    initForm(form: FormGroup, formErrors: any, customValidatorMessages: any = {}) {
         this.form = form;
         this.formErrors = formErrors;
         this.customValidatorMessages = customValidatorMessages;
