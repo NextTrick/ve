@@ -1,7 +1,14 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+
+//thirth party modules
+import { CustomValidators } from 'ng2-validation';
+
+//Services
 import { AuthService } from '../../../service/auth.service';
+import { FormService } from '../../../common/service/form.service';
+import { UtilService } from '../../../common/service/util.service';
 
 import { message } from '../../../common/message';
 
@@ -20,63 +27,62 @@ export class SignupComponent implements OnInit {
     showErrorMsg: boolean = false;
     alertMsg: string = message.success;
 
+    formErrors = {
+        email: '',
+        password: '',        
+        companyName: '',
+    }
+
     constructor(
         private elRef: ElementRef,
         private authService: AuthService,
         private formBuilder: FormBuilder,
-        private router: Router
+        private router: Router,
+        private utilService: UtilService,
+        private formService: FormService
     ) {
-        this.form = this.formBuilder.group({
-            companyName: [''],
-            password: [''],
-            email: ['']
-        });
+        
     }
-
+    
     ngOnInit() {
-        var _this = this;
-        $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]")
-            .jqBootstrapValidation({
-                preventSubmit: true,
-                submitSuccess: function ($form, event) {
-                    var values = {};
-                    $.each($form.serializeArray(), function (i, field) {
-                        values[field.name] = field.value;
-                    });
-                    console.log(values);
-
-                    _this.onSubmit(values);
-                }
-            });
+        this.initForm();
     }
 
-    onSubmit(formValue: any): void {
-        this.authService.signup(
-            formValue.companyName,
-            formValue.email,
-            formValue.password
-        )
-        .subscribe(
-            response => {
-                console.log(response)
-                if (response.ok) {
-                    let body = response.json();
-                    if (body.success) {
+    initForm() {
+        this.form = this.formBuilder.group({
+            companyName: ['', [Validators.required]],
+            password: ['', [Validators.required]],
+            email: ['', [Validators.email, Validators.required]]
+        });
+
+        this.formService.initForm(this.form, this.formErrors).subscribe(
+            formErrors => this.formErrors = formErrors,
+            error => console.log(error)
+        );
+    }       
+
+    onSubmit(): void {
+        if (this.form.valid) {
+            this.authService.signup(
+                this.form.value.companyName,
+                this.form.value.email,
+                this.form.value.password
+            )
+            .subscribe(
+                response => {                                                    
+                    if (response.success) {
                         this.router.navigate(['/dashboard']);
                     } else {
                         this.showErrorMsg = true;
-                        this.alertMsg = body.message;
-                    }
-                } else {
+                        this.alertMsg = response.message;
+                    }                
+                },
+                error => {
                     this.showErrorMsg = true;
-                    this.alertMsg =  message.error;
+                    this.alertMsg =  message.error;                
                 }
-            },
-            error => {
-                this.showErrorMsg = true;
-                this.alertMsg =  message.error;                
-            }
-        );
+            );
+        }        
     }
 
 }

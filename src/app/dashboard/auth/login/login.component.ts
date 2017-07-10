@@ -1,7 +1,15 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+
+//thirth party modules
+import { CustomValidators } from 'ng2-validation';
+
+//Services
 import { AuthService } from '../../../service/auth.service';
+import { FormService } from '../../../common/service/form.service';
+import { UtilService } from '../../../common/service/util.service';
+
 import { User } from '../../../interface/user.interface';
 
 import { message } from '../../../common/message';
@@ -21,12 +29,28 @@ export class LoginComponent implements OnInit {
     showErrorMsg: boolean = false;
     alertMsg: string = message.success;
 
+    formErrors = {        
+        password: '',
+        email: ''
+    }
+
     constructor(
         private elRef: ElementRef,
         private authService: AuthService,
         private formBuilder: FormBuilder,
-        private router: Router
-    ) {
+        private router: Router,
+        private utilService: UtilService,
+        private formService: FormService
+    ) {        
+           
+    }
+
+    ngOnInit() {
+        this.initForm();
+        // this.initJqBootstrapValidation();
+    }
+
+    initForm() {
         let rememberEmail = this.authService.getRemember();
         var remember = '';
         var email = '';
@@ -36,58 +60,51 @@ export class LoginComponent implements OnInit {
         }
 
         this.form = this.formBuilder.group({
-            password: [''],
-            email: [email],
+            password: ['', [Validators.required]],
+            email: [email, [Validators.email, Validators.required]],
             remember: [remember]
-        });        
-    }
+        });     
 
-    ngOnInit() {
-        this.initJqBootstrapValidation();
-    }
-
-    onSubmit(formValue: any): void {   
-        var remember = 'off';
-        if (formValue.remember) {
-            remember = formValue.remember;
-        } 
-        this.authService.login(
-            formValue.email,
-            formValue.password,
-            remember
-        )
-        .subscribe(
-            response => {
-                console.log(response)
-                if (response.ok) {
-                    let body = response.json();
-                    if (body.success) {
-                        this.router.navigate(['/dashboard']);
-                    } else {                        
-                        this.showErrorMsg = true;
-                        this.alertMsg = body.message;                        
-                        this.resetForm();
-                    }
-                } else {
-                    this.resetForm();
-                    this.showErrorMsg = true;
-                    this.alertMsg =  message.error;
-                }                
-            },
-            error => {
-                this.showErrorMsg = true;
-                this.alertMsg =  message.error;
-                console.log(error)
-                this.resetForm();
-            }
+        this.formService.initForm(this.form, this.formErrors).subscribe(
+            formErrors => this.formErrors = formErrors,
+            error => console.log(error)
         );
     }
 
+    onSubmit(): void {           
+        this.formService.formSubmitted(); 
+        if (this.form.valid) { 
+            let remember = 'off';        
+            if (this.form.value.remember) {
+                remember = this.form.value.remember;
+            } 
+            this.authService.login(
+                this.form.value.email,
+                this.form.value.password,
+                remember
+            )
+            .subscribe(
+                response => {    
+                    console.log(response);                
+                    if (response.success) {
+                        this.router.navigate(['/dashboard']);
+                    } else {                        
+                        this.showErrorMsg = true;
+                        this.alertMsg = response.message;                        
+                    }                               
+                },
+                error => {
+                    this.showErrorMsg = true;
+                    this.alertMsg =  message.error;
+                    console.log(error)                    
+                }
+            );
+        }
+    }
+
     resetForm() {
-        this.form = this.formBuilder.group({
-            password: [''],
-            email: ['']
-        });
+        this.form.get('email').setValue('');
+        this.form.get('password').setValue('');        
     }
 
     initJqBootstrapValidation() {
@@ -105,7 +122,7 @@ export class LoginComponent implements OnInit {
                     });
                     console.log(values);
 
-                    _this.onSubmit(values);
+                    // _this.onSubmit(values);
                 }
             });
     }

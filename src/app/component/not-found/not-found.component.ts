@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ViewChild, ElementRef, AfterViewInit, Component, OnInit } from '@angular/core';
+
+// declare var jQuery: any;
 
 @Component({
   selector: 'app-not-found',
@@ -6,10 +8,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./not-found.component.css']
 })
 export class NotFoundComponent implements OnInit {
+    @ViewChild('input') input: ElementRef;
 
-  constructor() { }
+    
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
+
+    ngAfterViewInit() {
+        // jQuery(this.input.nativeElement).datepicker();
+    }
 
 }

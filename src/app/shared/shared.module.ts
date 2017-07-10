@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { LaddaModule } from 'angular2-ladda';
 import { JsGridModule } from 'ng2-jsgrid';
+
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
 //Directives
@@ -17,7 +18,7 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         FormsModule,
         HttpModule,
         ReactiveFormsModule,
-        LaddaModule     
+        LaddaModule    
     ],
     declarations: [        
         ValidateDirective,

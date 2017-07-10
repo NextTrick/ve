@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
+import { DatePickerComponent } from './component/date-picker/date-picker.component';
 
 //Services
 import { UserService } from './service/user.service';
@@ -15,17 +16,21 @@ import { AuthService } from './service/auth.service';
 import { AuthGuardService } from './service/auth-guard.service';
 import { FormService } from './common/service/form.service';
 import { UtilService } from './common/service/util.service';
+import { ScriptService } from './common/service/script.service';
+import { GoogleChartComponent } from './common/component/google-chart/google-chart.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        DatePickerComponent,
+        GoogleChartComponent            
     ],
     imports: [
         BrowserModule,
         HttpModule,
-        CoreModule,
-        AppRoutingModule,
+        CoreModule,        
+        AppRoutingModule,        
         BrowserAnimationsModule
     ],
     providers: [
@@ -33,7 +38,8 @@ import { UtilService } from './common/service/util.service';
         AuthService, 
         AuthGuardService, 
         FormService,
-        UtilService
+        UtilService,
+        ScriptService
     ],
     bootstrap: [AppComponent]
 })

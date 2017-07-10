@@ -20,7 +20,7 @@ export class NavComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.initEmitter();         
+        // this.initEmitter();         
     }
 
     initEmitter() {

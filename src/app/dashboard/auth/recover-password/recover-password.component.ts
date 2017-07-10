@@ -58,9 +58,9 @@ export class RecoverPasswordComponent implements OnInit {
 
   updateBodyClass()
   {
-    let body = document.getElementsByTagName('body')[0];
-    body.setAttribute("data-col", "1-column");
-    body.classList.remove("2-columns", 'fixed-navbar');
-    body.classList.add("1-column", "blank-page");
+    // let body = document.getElementsByTagName('body')[0];
+    // body.setAttribute("data-col", "1-column");
+    // body.classList.remove("2-columns", 'fixed-navbar');
+    // body.classList.add("1-column", "blank-page");
   }
 }

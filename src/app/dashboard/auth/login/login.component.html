@@ -19,31 +19,41 @@
                                         <span aria-hidden="true">×</span>
                                     </button> {{alertMsg}}
                                 </div>
-                                <form [formGroup]="form" class="form-horizontal form-simple" novalidate>
+                                <form [formGroup]="form" class="form-horizontal form-simple" (ngSubmit)="onSubmit()">
                                     <fieldset class="form-group position-relative has-icon-left mb-1">
                                         <div class="controls">
-                                            <input name="email" [formControl]="form.controls['email']" type="email" class="form-control form-control-lg input-lg" id="user-email" placeholder="Email" required data-validation-required-message="This field is required">
+                                            <input name="email" [formControl]="form.controls['email']" type="email" 
+                                                class="form-control form-control-lg input-lg" id="user-email" 
+                                                placeholder="Email" required>
                                             <div class="form-control-position">
                                                 <i class="icon-mail6"></i>
                                             </div>
+                                            <span class="danger" *ngIf="formErrors.email">
+                                                {{ formErrors.email }}
+                                            </span>
                                         </div>
                                     </fieldset>
                                     <fieldset class="form-group position-relative has-icon-left">
                                         <div class="controls">
-                                            <input name="password" [formControl]="form.controls['password']" type="password" class="form-control form-control-lg input-lg" id="user-password" placeholder="Password" required data-validation-required-message="This field is required">
+                                            <input name="password" [formControl]="form.controls['password']" type="password" 
+                                                class="form-control form-control-lg input-lg" id="user-password" 
+                                                placeholder="Password" required>
                                             <div class="form-control-position">
                                                 <i class="icon-key3"></i>
                                             </div>
+                                            <span class="danger" *ngIf="formErrors.password">
+                                                {{ formErrors.password }}
+                                            </span>
                                         </div>
                                     </fieldset>
                                     <fieldset class="form-group row">
                                         <div class="col-md-6 col-xs-12 text-xs-center text-md-left">
                                             <fieldset>
                                                 <input name="remember" [formControl]="form.controls['remember']" type="checkbox" id="remember-me" class="chk-remember">
-                                                <label for="remember-me"> Remember Me</label>
+                                                <label for="remember-me"> Recordarme </label>
                                             </fieldset>
                                         </div>
-                                        <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="#" [routerLink]="['/dashboard/auth/recover-password']" class="card-link">Forgot Password?</a></div>
+                                        <div class="col-md-6 col-xs-12 text-xs-center text-md-right"><a href="#" [routerLink]="['/dashboard/auth/recover-password']" class="card-link">Olvidaste tu password?</a></div>
                                     </fieldset>
                                     <button [disabled]="!form.valid" type="submit" class="btn btn-primary btn-lg btn-block"><i class="icon-unlock2"></i> Login</button>
                                 </form>
@@ -51,8 +61,8 @@
                         </div>
                         <div class="card-footer">
                             <div class="">
-                                <p class="float-sm-left text-xs-center m-0"><a href="#" [routerLink]="['/dashboard/auth/recover-password']" class="card-link">Recover password</a></p>
-                                <p class="float-sm-right text-xs-center m-0">New to Robust? <a href="#" [routerLink]="['/dashboard/auth/signup']" class="card-link">Sign Up</a></p>
+                                <!--<p class="float-sm-left text-xs-center m-0"><a href="#" [routerLink]="['/dashboard/auth/recover-password']" class="card-link">Recuperar password</a></p>-->
+                                <p class="float-sm-right text-xs-center m-0">Aún no tienes cuenta? <a href="#" [routerLink]="['/dashboard/auth/signup']" class="card-link">Crear cuenta</a></p>
                             </div>
                         </div>
                     </div>

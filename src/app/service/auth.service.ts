@@ -12,13 +12,14 @@ export class AuthService {
 
     signup(companyName: string, email: string, password: string) {
         return this.http.post(
-            environment.backendUrl + 'user',
+            environment.backendUrl + 'auth/signup',
             {companyName: companyName, email: email, password: password}
-        ).do(
-            (response) => {
-                let body = response.json();
-                if (body.success) {
-                    this.saveToken(body.data.token);
+        )
+        .map(response => response.json()) 
+        .do(
+            (response) => {                
+                if (response.success) {
+                    this.saveToken(response.data.token);
                 }
             }
         );
@@ -28,12 +29,12 @@ export class AuthService {
         return this.http.post(
             environment.backendUrl + 'auth/login',
             {email: email, password: password}
-        )        
+        )
+        .map(res => res.json())
         .do(
-            (response) => {
-                let body = response.json();
-                if (body.success) {
-                    this.saveToken(body.data.token);
+            (response) => {                
+                if (response.success) {
+                    this.saveToken(response.data.token);
                     if (remember == 'on') {
                         this.saveRemember(email);
                     } else {
