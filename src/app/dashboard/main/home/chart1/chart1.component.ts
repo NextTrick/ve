@@ -28,6 +28,7 @@ export class Chart1Component extends GoogleChartComponent implements OnInit {
         ]);
 
         this.options = {
+            backgroundColor: '#f3f5f6',
             title: 'Evolution, 2014',
             // colors: palette('tol', 2).map(function(hex) {
             //         return '#' + hex;

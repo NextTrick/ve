@@ -34,7 +34,11 @@ export class HomeComponent implements OnInit {
     ngOnInit() {        
     }
 
-    ngAfterViewInit() {    
+    ngAfterViewInit() {
+        // this.scriptService
+        //     .load(   
+        //         'dashboard-ecommerce.js'            
+        //     ); 
 
         $(this.elRef.nativeElement).find("input[name='fromDate']").datepicker({
             dateFormat: "dd-mm-yy"

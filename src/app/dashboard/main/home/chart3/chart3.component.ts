@@ -32,7 +32,8 @@ export class Chart3Component extends GoogleChartComponent implements OnInit {
             title: 'Evolution, 2014',            
             colors: ['#657CD0', "#DA68A0", "#06C3C0", "#777B80", "#F75870", "#7C6D70", "#7C0850"],            
             legend: {position: 'right'}, 
-            backgroundColor: {fill:'transparent'},         
+            // backgroundColor: {fill:'transparent'},
+            backgroundColor: '#f3f5f6',         
             chartArea: {
                 left:20,                
                 width:'100%'

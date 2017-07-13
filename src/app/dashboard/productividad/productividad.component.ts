@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'auth-component',
+    selector: 'productividad-component',
     template: `<router-outlet></router-outlet>`
 })
-export class AuthComponent implements OnInit {
+export class ProductividadComponent implements OnInit {
 
     constructor() { }
 

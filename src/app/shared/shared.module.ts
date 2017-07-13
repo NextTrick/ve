@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { LaddaModule } from 'angular2-ladda';
 import { JsGridModule } from 'ng2-jsgrid';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { PaginationModule } from 'ngx-bootstrap';
 
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
@@ -18,7 +20,9 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         FormsModule,
         HttpModule,
         ReactiveFormsModule,
-        LaddaModule    
+        LaddaModule,
+        Ng2TableModule,
+        PaginationModule.forRoot(), 
     ],
     declarations: [        
         ValidateDirective,
@@ -34,7 +38,9 @@ import {ValidateDirective} from '../common/directive/validate.directive';
         ValidateDirective,
         JsGridModule,
         FileSelectDirective,
-        FileDropDirective
+        FileDropDirective,
+        Ng2TableModule,
+        PaginationModule
     ]
 })
 export class SharedModule { }

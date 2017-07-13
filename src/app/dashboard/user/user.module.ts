@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AppRoutingModule } from './user-routing.module';
+import { UserRoutingModule } from './user-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
@@ -15,7 +15,7 @@ import { UserComponent } from './user.component';
     CommonModule,
     SharedModule,
     BsDropdownModule.forRoot(),
-    AppRoutingModule
+    UserRoutingModule
   ],
   declarations: [
     ListComponent, 

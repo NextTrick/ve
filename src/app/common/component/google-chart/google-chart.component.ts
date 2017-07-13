@@ -22,7 +22,7 @@ export class GoogleChartComponent implements OnInit {
         console.log('ngOnInit');
         if (!GoogleChartComponent.googleLoaded) {
             GoogleChartComponent.googleLoaded = true;
-            google.charts.load('current', { packages: ['corechart'], 'language': 'es' });
+            google.charts.load('current', { packages: ['corechart', 'line'], 'language': 'es' });
         }
         google.charts.setOnLoadCallback(() => this.drawGraph());
     }
@@ -37,6 +37,10 @@ export class GoogleChartComponent implements OnInit {
 
     createColumnChart(element: any): any {
         return new google.visualization.ColumnChart(element);
+    }
+
+    createLineChart(element: any): any {
+        return new google.visualization.LineChart(element);
     }
 
     createPieChart(element: any): any {

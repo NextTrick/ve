@@ -26,7 +26,8 @@ import { LayoutService } from '../service/layout.service';
         CommonModule,
         LaddaModule,  
         AmChartsModule,
-        ChartModule,          
+        ChartModule,   
+        // SharedModule,       
         MainRoutingModule
     ],
     declarations: [        

@@ -150,5 +150,5 @@ export class ListComponent implements OnInit {
     }
 
     ngAfterViewInit() {                    
-    }    
+    }        
 }

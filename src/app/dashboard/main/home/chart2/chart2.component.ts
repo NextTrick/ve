@@ -18,6 +18,7 @@ export class Chart2Component extends GoogleChartComponent implements OnInit {
 
     drawGraph() {
         console.log("DrawGraph Evolution...");
+        
         this.data = this.createDataTable([
             ['Evolution', 'Imports', 'Exports', 'ExAnd Expot'],
             ['El Comercio', 8695000, 6422800, 1422800],
@@ -29,6 +30,7 @@ export class Chart2Component extends GoogleChartComponent implements OnInit {
         ]);
 
         this.options = {
+            backgroundColor: '#f3f5f6',
             title: 'Evolution, 2014',
             // titleTextStyle: {                                 
             //     fontSize: 19,                
@@ -46,7 +48,7 @@ export class Chart2Component extends GoogleChartComponent implements OnInit {
             // slices: {0: {offset: 0.02}},
             // legend: {position: 'top', alignment: 'left', maxLines: 2},          
             legend: {position: 'right'}, 
-            backgroundColor: {fill:'transparent'},         
+            // backgroundColor: {fill:'transparent'},         
             chartArea: {
                 left:20,                
                 width:'100%'
