@@ -15,7 +15,7 @@ export class LayoutComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-                    
+        this.updateBodyClass();
     }
 
     ngAfterViewInit() {
@@ -30,5 +30,13 @@ export class LayoutComponent implements OnInit {
                 console.log('script loaded ', data);
             })
             .catch(error => console.log(error));            
+    }
+
+
+    updateBodyClass() {
+        let body = document.getElementsByTagName('body')[0];
+        body.setAttribute("data-col", "2-column");
+        body.classList.remove("1-column", "blank-page");
+        body.classList.add("2-columns");        
     }
 }

@@ -1,6 +1,6 @@
-<div class="app-content content container-fluid">
+<div class="app-content container center-layout mt-2">
     <div class="content-wrapper">
-        <div class="content-header row">
+        <div class="content-header row mb-2">
             <div class="breadcrumb-wrapper col-xs-12">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="index.html">Home</a>
@@ -12,15 +12,11 @@
                 </ol>
             </div>
             <div class="content-header-left col-md-6 col-xs-12">
-                <h2 class="content-header-title mb-0">Usuarios</h2>
-                <!--<p class="text-muted mb-0">Page header with breadcrumbs &amp; button</p>-->
+                <h2 class="content-header-title mb-0">Usuarios</h2>                
             </div>
             <div class="content-header-right text-md-right col-md-6 col-xs-12">
                 <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/user/create']">Crear usuario</button>
-            </div>
-            <div class="content-header-lead col-xs-12 mt-2">
-                <!--<p class="lead">Page header with page title, breadcrumbs, description, content title and button.</p>-->
-            </div>
+            </div>            
         </div>
         <div class="content-body">
             <!-- Description -->
@@ -39,9 +35,48 @@
                         </div>
                     </div>
                     <div class="card-body collapse in">
-                        <div class="card-block card-dashboard ">
-                            <!--<p>Grid with filtering, editing, inserting, deleting, sorting and paging. Data provided by controller.</p>-->
-                            <js-grid [action]="gridAction" [source]="sourceApi" [options]="options" ></js-grid>                                                                                    
+                        <div class="card-block card-dashboard ">                            
+                            <div class="row">
+                                <!--<div class="col-md-4">
+                                    <input *ngIf="config.filtering" placeholder="Filter all columns"
+                                        [ngTableFiltering]="config.filtering"
+                                        class="form-control"
+                                        (tableChanged)="onChangeTable(config)"/>
+                                </div>-->   
+                                <div class="col-sm-12 col-md-6">                                   
+                                    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" class="form-inline form-horizontal">                                        
+                                        <div class="form-group row">
+                                            <label for="search" class="sr-only">Search</label> 
+                                            <div class="col-sm-10">
+                                                <input ngModel type="text" name="search" class="form-control" 
+                                                    id="search" placeholder="Buscar" required>
+                                            </div>                          
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Buscar</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive">
+                                <ng-table [config]="config"
+                                        (tableChanged)="onChangeTable(config)"
+                                        (cellClicked)="onCellClick($event)"
+                                        [rows]="rows" [columns]="columns">
+                                </ng-table>
+                            </div>
+                            <pagination *ngIf="config.paging"
+                                        class="pagination-sm"
+                                        [(ngModel)]="page"
+                                        [totalItems]="length"
+                                        [itemsPerPage]="itemsPerPage"
+                                        [maxSize]="maxSize"
+                                        [boundaryLinks]="true"
+                                        [rotate]="false"
+                                        (pageChanged)="onChangeTable(config, $event)"
+                                        (numPages)="numPages = $event"
+                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+                                        >
+                            </pagination>
                         </div>
                     </div>
                 </div>

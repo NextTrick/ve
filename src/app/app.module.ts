@@ -18,13 +18,15 @@ import { FormService } from './common/service/form.service';
 import { UtilService } from './common/service/util.service';
 import { ScriptService } from './common/service/script.service';
 import { GoogleChartComponent } from './common/component/google-chart/google-chart.component';
+import { NextNg2TableComponent } from './common/component/next-ng2-table/next-ng2-table.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NotFoundComponent,
         DatePickerComponent,
-        GoogleChartComponent            
+        // GoogleChartComponent,
+        // NextNg2TableComponent,               
     ],
     imports: [
         BrowserModule,

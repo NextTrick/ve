@@ -65,6 +65,11 @@ export class UserService {
         let myParams = new URLSearchParams();
         myParams.append('pageIndex', filter.pageIndex);
         myParams.append('pageSize', filter.pageSize);
+
+        if (filter.s) {
+            myParams.append('s', filter.s);	
+        }
+
         if (filter.sortField) {
             myParams.append('sortField', filter.sortField);	
         }
@@ -83,6 +88,19 @@ export class UserService {
     get(userId: number) {
         return this.http.get(
             environment.backendUrl + 'user/' + userId
+        )
+        .map(res => res.json());
+    }
+
+    search(filter) {        
+        let myParams = new URLSearchParams();
+        myParams.append('s', filter.s);           
+        myParams.append('pageSize', filter.pageSize);
+
+        let options = new RequestOptions({params: myParams});
+
+        return this.http.get(
+            environment.backendUrl + 'user/search', options
         )
         .map(res => res.json());
     }

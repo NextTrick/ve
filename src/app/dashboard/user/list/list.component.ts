@@ -1,12 +1,26 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
+import { NgForm } from "@angular/forms";
 
 import { PageResponse, FilterModel, ODataController } from 'ng2-jsgrid';
+
+import { TableData } from './table-data';
 
 //services
 import { UserService } from '../../../service/user.service';
 import { UtilService } from '../../../common/service/util.service';
+
+//components
+import { NextNg2TableComponent } from '../../../common/component/next-ng2-table/next-ng2-table.component';
+
+export class Filter {
+    pageIndex?: number;
+    pageSize?: number;
+    sortField?: string;
+    sortOrder?: string;
+    s?: string;
+}
 
 @Component({
     selector: 'user-list',
@@ -14,139 +28,112 @@ import { UtilService } from '../../../common/service/util.service';
     styleUrls: ['./list.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class ListComponent implements OnInit {
+export class ListComponent extends NextNg2TableComponent implements OnInit {
 
-    options: any;
-    sourceApi: any;
-    gridAction = new ODataController();
+    public rows: Array<any> = [];
+    public columns: Array<any> = [
+        {
+            title: 'Email', name: 'email',
+            sort: false,
+        },
+        {
+            title: 'Nombre',
+            name: 'name',
+            sort: false,            
+        },
+        {
+            title: 'Apellido',
+            name: 'lastName',
+            // className: ['office-header', 'text-success'],             
+            // sort: 'asc'
+            // filtering: { filterString: '', placeholder: 'Filter by extn.' } 
+        },
+        {
+            title: 'Rol',
+            name: 'rolName', 
+            sort: false,                         
+        },
+        {
+            title: 'Productos',            
+            name: 'products'
+        },
+        { 
+            title: 'Action',
+            name: 'action',
+            sort: false 
+        }
+    ];
+    
+    public page: number = 1;
+    public itemsPerPage: number = 5;        
+
+    public config: any = {
+        paging: true,
+        sorting: { columns: this.columns },
+        filtering: { filterString: '' },
+        className: ['table-striped', 'table-bordered']
+    };
+    
+    public filter: Filter =  new Filter();    
 
     constructor(
         private http: Http,
         private userService: UserService,
         private utilService: UtilService,
         private router: Router
-    ) {
-
+    ) {               
+        super();
     }
 
-    ngOnInit() {
-        this.gridAction.updateItem = (item) => {
-                return new Promise(resolve => {
-                    // CALL TO API
-                });
-            };
+    ngOnInit() {                           
+        this.onChangeTable(this.config);
+    }
 
-        this.gridAction.insertItem = (item) => {
-                return new Promise(resolve => {
-                    // CALL TO API
-                });
-            };
-        
-        this.gridAction.deleteItem = (item) => {
-            console.log('delete: ', item);
-                return new Promise(resolve => {
-                    this.userService.delete(item)
-                    .subscribe(response => {   
-                        console.log(response);                                               
-                        if (response.success) {                                                        
-                            resolve();
-                            this.utilService.successNotification();
-                        }  else {
-                            this.utilService.errorNotification();
-                        }                    
-                        
-                    });
-                });
-            };
+    public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {            
+        let sortParms  = this.getSortParams(config);
+        this.filter.pageIndex = page.page;
+        this.filter.pageSize = page.itemsPerPage;                
+        this.filter.sortField = sortParms.columnName;
+        this.filter.sortOrder = sortParms.sort;        
+        this.filter.s = this.config.filtering.filterString;                          
+        console.log('filterLog', this.filter);     
+        this.getAll(this.filter);
+    }    
 
-        this.sourceApi = (filter: FilterModel) => {  
-                console.log(filter);                              
-                return new Promise(resolve => {                    
-                    this.userService.getAll(filter)
-                    .subscribe(response => {   
-                        console.log(response);                                               
-                        if (response.success) {                            
-                            const source: PageResponse = {
-                                data: response.data.listData,
-                                itemsCount: response.data.count
-                            };
-                            resolve(source);
-                        }  else {
-                            this.utilService.errorNotification();
-                        }                    
-                        
-                    });
-                });
-            };
-        
-        this.options = {
-            fields: [                
-                { name: 'email', type: 'text', title: 'Email', width: 180,
-                    itemTemplate: function(value, item) {                                          
-                        return `<a class='info' href='/dashboard/user/${item.userId}'>${value}</a>`;
-                    },
-                },
-                { name: 'name', type: 'text', title: 'Nombre'},
-                { name: 'lastName', type: 'text', title: 'Apellido' },
-                { name: 'creationDate', type: 'text', title: 'F. Creación', filtering: false},
-                { name: 'status', type: 'checkbox',  title: 'Activo', filtering: true},                
-                // { name: 'select', type: 'select', items: [ "", "United States", "Canada", "United Kingdom" ] },
-                { type: 'control',  modeSwitchButton: false, editButton: false, 
-                    // itemTemplate: function(value, item) {
-                    //     var $result = this.__proto__.itemTemplate.call(this, value, item); //the default buttons
-                    //     let iconEl = $('<i>').attr('class', 'icon-edit');                        
-                    //     let editEl = $("<a>").attr({rol: 'button', class: 'btn btn-outline-primary btn-sm'});
-                    //     editEl.append(iconEl);
-                    //     var $myButton = editEl.click(function() { console.log('my button clicked') });
-                        
-                    //     return $result.add($myButton);
-                    // },
-                 },
-                // { name: 'Acción', type: 'text', width: 50,
-                //     itemTemplate: function(value, item) {                                          
-                //         return `
-                //                 <a role="button" [routerLink]="['/dashboard/user/id/${item.ID}']" class="btn btn-outline-primary btn-sm">
-                //                     <i class="icon-edit"></i>
-                //                 </a>
-                //                 <a role="button" (click)="delete(${item.ID})" class="btn btn-outline-secondary btn-sm">
-                //                     <i class="icon-trash-o"></i>
-                //                 </a>`;
-                //     },
-                //     filtering: false,
-                // }
-            ],
-            editing: false,
-            filtering: true,
-            selecting: false,
-            inserting: false,
-            deleteConfirm: function(item) {
-                return "Esta seguro de elminar el registro?";
-            },
-            pageSize: 10,
-            paging: true ,
+    public getAll(filter: Filter) {
+        this.userService.getAll(this.filter)
+            .subscribe(response => {   
+                console.log(response);                                               
+                if (response.success) {                                                        
+                    this.length = response.data.found;                    
+                    this.data = response.data.listData; 
+                    this.rows = this.data;                                          
+                }  else {
+                    this.utilService.errorNotification();
+                }                
+            });        
+    }
 
-            //paginator
-            pagerFormat: "Páginas: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; {pageIndex} de {pageCount}",
-            pagePrevText: "<",
-            pageNextText: ">",
-            pageFirstText: "<<",
-            pageLastText: ">>",        
-            pageNavigatorNextText: "&#8230;",
-            pageNavigatorPrevText: "&#8230;",
+    public onCellClick(data: any): any {
+        switch (data.column) {
+            case 'email': 
+                this.router.navigate(['/dashboard/user/' + data.row.userId]);
+                break;
+            default: 
+                console.log('clicked column', data.column);
+                break;
+        }
+    }
 
-            // onDataLoading: function(args) {
-            //     console.log('onloading', args);
-            // },
+    public onSearch(searchForm: any) {        
+        let searchText = searchForm.value.search;         
+        this.config.filtering.filterString = searchText;
 
-            // onItemDeleting: function(args) {
-            //     console.log('onItemDeleting', args);
-            // },
-
-            // onItemUpdating: function(args) {                
-            //     console.log('onItemDeleting', args);
-            // },
-        };
-        
+        this.page = 1;
+        this.filter.pageSize = this.itemsPerPage;
+        this.filter.s = searchText;
+        this.filter.pageIndex = this.page;
+        this.getAll(this.filter); 
     }
 
     ngAfterViewInit() {                    
