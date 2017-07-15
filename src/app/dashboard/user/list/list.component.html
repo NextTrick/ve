@@ -36,13 +36,7 @@
                     </div>
                     <div class="card-body collapse in">
                         <div class="card-block card-dashboard ">                            
-                            <div class="row">
-                                <!--<div class="col-md-4">
-                                    <input *ngIf="config.filtering" placeholder="Filter all columns"
-                                        [ngTableFiltering]="config.filtering"
-                                        class="form-control"
-                                        (tableChanged)="onChangeTable(config)"/>
-                                </div>-->   
+                            <div class="row">                            
                                 <div class="col-sm-12 col-md-6">                                   
                                     <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" class="form-inline form-horizontal">                                        
                                         <div class="form-group row">
@@ -57,25 +51,26 @@
                                 </div>
                             </div>
                             <br>
+                            
                             <div class="table-responsive">
-                                <ng-table [config]="config"
-                                        (tableChanged)="onChangeTable(config)"
-                                        (cellClicked)="onCellClick($event)"
+                                <ng-table 
+                                        [config]="config"
+                                        (tableChanged)="onChangeTable(config)"                                        
+                                        (removeClicked)="onRemoveClick($event)"
                                         [rows]="rows" [columns]="columns">
                                 </ng-table>
                             </div>
                             <pagination *ngIf="config.paging"
                                         class="pagination-sm"
                                         [(ngModel)]="page"
-                                        [totalItems]="length"
+                                        [totalItems]="totalItems"
                                         [itemsPerPage]="itemsPerPage"
                                         [maxSize]="maxSize"
                                         [boundaryLinks]="true"
                                         [rotate]="false"
                                         (pageChanged)="onChangeTable(config, $event)"
                                         (numPages)="numPages = $event"
-                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
-                                        >
+                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
                             </pagination>
                         </div>
                     </div>

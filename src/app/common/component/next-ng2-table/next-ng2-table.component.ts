@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from "@angular/forms";
 
-import {
-    NgTableComponent, NgTableFilteringDirective,
-    NgTablePagingDirective, NgTableSortingDirective
-} from 'ng2-table/ng2-table';
-
 @Component({
     selector: 'next-ng2-table',
     templateUrl: './next-ng2-table.component.html',
@@ -20,10 +15,15 @@ export class NextNg2TableComponent implements OnInit {
     public itemsPerPage: number = 5;
     public maxSize: number = 4;
     public numPages: number = 1;
-    public length: number = 0;
+    public totalItems: number = 0;
 
     public config: any = {
         paging: true,
+        action: {
+            active: true,
+            edit: {active: false, uri: ''},
+            remove: {active: false}
+        },
         sorting: { columns: this.columns },
         filtering: { filterString: '' },
         className: ['table-striped', 'table-bordered']
@@ -137,7 +137,7 @@ export class NextNg2TableComponent implements OnInit {
         let sortedData = this.changeSort(filteredData, this.config);        
         
         this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;                        
-        this.length = sortedData.length;        
+        this.totalItems = sortedData.length;        
     }
 
     public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
@@ -147,4 +147,8 @@ export class NextNg2TableComponent implements OnInit {
     public onCellClick(data: any): any {
 
     }
+
+    public onRemoveClick(row: any): any {
+        console.log('onRemoveClickLog', row);
+    }    
 }

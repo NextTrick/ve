@@ -44,9 +44,7 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         {
             title: 'Apellido',
             name: 'lastName',
-            // className: ['office-header', 'text-success'],             
-            // sort: 'asc'
-            // filtering: { filterString: '', placeholder: 'Filter by extn.' } 
+            sort: false,
         },
         {
             title: 'Rol',
@@ -55,26 +53,14 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         },
         {
             title: 'Productos',            
-            name: 'products'
-        },
-        { 
-            title: 'Action',
-            name: 'action',
-            sort: false 
-        }
+            name: 'products',
+            sort: false,
+        }        
     ];
     
     public page: number = 1;
     public itemsPerPage: number = 5;        
-
-    public config: any = {
-        paging: true,
-        sorting: { columns: this.columns },
-        filtering: { filterString: '' },
-        className: ['table-striped', 'table-bordered']
-    };
-    
-    public filter: Filter =  new Filter();    
+    public filter: Filter =  new Filter();            
 
     constructor(
         private http: Http,
@@ -83,10 +69,14 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         private router: Router
     ) {               
         super();
+        
+        this.config.action.edit.active = true;
+        this.config.action.edit.uri = '/dashboard/user/';
+        this.config.action.remove.active = true;
     }
 
     ngOnInit() {                           
-        this.onChangeTable(this.config);
+        this.onChangeTable(this.config);        
     }
 
     public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {            
@@ -101,11 +91,11 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
     }    
 
     public getAll(filter: Filter) {
-        this.userService.getAll(this.filter)
+        this.userService.getAll(filter)
             .subscribe(response => {   
                 console.log(response);                                               
-                if (response.success) {                                                        
-                    this.length = response.data.found;                    
+                if (response.success) {                                                                            
+                    this.totalItems = response.data.found;                    
                     this.data = response.data.listData; 
                     this.rows = this.data;                                          
                 }  else {
@@ -114,15 +104,10 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
             });        
     }
 
-    public onCellClick(data: any): any {
-        switch (data.column) {
-            case 'email': 
-                this.router.navigate(['/dashboard/user/' + data.row.userId]);
-                break;
-            default: 
-                console.log('clicked column', data.column);
-                break;
-        }
+    onPageChanged(event: any) {        
+        this.filter.pageIndex = event.page;
+        this.filter.pageSize = event.itemsPerPage;                                   
+        this.getAll(this.filter);
     }
 
     public onSearch(searchForm: any) {        
@@ -136,6 +121,7 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         this.getAll(this.filter); 
     }
 
-    ngAfterViewInit() {                    
+    ngAfterViewInit() {   
+                         
     }        
 }

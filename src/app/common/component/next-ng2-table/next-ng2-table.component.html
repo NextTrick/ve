@@ -1,3 +1,44 @@
-<p>
-  next-ng2-table works!
-</p>
+<div class="row">
+        <div class="col-md-4">
+            <input *ngIf="config.filtering" placeholder="Filter all columns"
+                [ngTableFiltering]="config.filtering"
+                class="form-control"
+                (tableChanged)="onChangeTable(config)"/>
+        </div>   
+        
+        <div class="col-sm-12 col-md-6">                                   
+            <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" class="form-inline form-horizontal">                                        
+                <div class="form-group row">
+                    <label for="search" class="sr-only">Search</label> 
+                    <div class="col-sm-10">
+                        <input ngModel type="text" name="search" class="form-control" 
+                            id="search" placeholder="Buscar" required>
+                    </div>                          
+                </div>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    
+    <div class="table-responsive">
+        <ng-table 
+                [config]="config"
+                (tableChanged)="onChangeTable(config)"
+                (cellChlicked)="onCellClick($event)"                                        
+                (removeClicked)="onRemoveClick($event)"
+                [rows]="rows" [columns]="columns">
+        </ng-table>
+    </div>
+    <pagination *ngIf="config.paging"
+                class="pagination-sm"
+                [(ngModel)]="page"
+                [totalItems]="length"
+                [itemsPerPage]="itemsPerPage"
+                [maxSize]="maxSize"
+                [boundaryLinks]="true"
+                [rotate]="false"
+                (pageChanged)="onChangeTable(config, $event)"
+                (numPages)="numPages = $event"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+    </pagination>

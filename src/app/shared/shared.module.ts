@@ -6,7 +6,8 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { LaddaModule } from 'angular2-ladda';
 import { JsGridModule } from 'ng2-jsgrid';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+
+import { Ng2TableModule } from '../common/module/next-ng2-table/ng-table-module';
 import { PaginationModule } from 'ngx-bootstrap';
 
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
