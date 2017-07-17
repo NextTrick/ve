@@ -5,8 +5,6 @@ import { NgForm } from "@angular/forms";
 
 import { PageResponse, FilterModel, ODataController } from 'ng2-jsgrid';
 
-import { TableData } from './table-data';
-
 //services
 import { UserService } from '../../../service/user.service';
 import { UtilService } from '../../../common/service/util.service';
@@ -110,7 +108,7 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         this.getAll(this.filter);
     }
 
-    public onSearch(searchForm: any) {        
+    onSearch(searchForm: any) {        
         let searchText = searchForm.value.search;         
         this.config.filtering.filterString = searchText;
 

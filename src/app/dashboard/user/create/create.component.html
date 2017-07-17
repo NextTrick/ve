@@ -103,9 +103,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <h4 class="form-section"><i class="icon-clipboard4"></i>Seguridad</h4>
+                                            </div>                                            
+                                            <h4 class="form-section"><i class="icon-security"></i>Seguridad</h4>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">                                                        
@@ -139,6 +138,43 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">                                                   
+                                                <div class="col-sm-12 col-md-6">  
+                                                    <div class="form-group">
+                                                        <label for="rolId">Rol</label>
+                                                        <select name="rolId" id="rolId" class="form-control">
+                                                            <option value="0" disabled selected>Rol</option>
+                                                            <option value="admin" >Administrador</option>
+                                                            <option value="manager"  >Gerente</option>
+                                                            <option value="editor">Editor</option>
+                                                        </select>
+                                                    </div>                                            
+                                                </div>                                             
+                                            </div>
+                                            <div class="row">                                                
+                                                <div class="col-md-12">
+                                                    <div class="row">                                                
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="products">Productos</label>                                                        
+                                                                <select [formControl]="form.controls['products']" multiple name="products" class="form-control select2-size-sm">
+                                                                    <option *ngFor="let product of allProducts" [ngValue]="product">{{ product.name }}  
+                                                                    </option>
+                                                                </select>
+                                                                <span class="danger" *ngIf="formErrors.products">
+                                                                    {{ formErrors.products }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">                                               
+                                                <div class="col-sm-12 col-md-6">                                                      
+                                                        <label for="active">Activo</label>                                                         
+                                                        <input name="active" [formControl]="form.controls['active']" type="checkbox" id="active">                                                                                                                                                                                                                                   
+                                                </div>                                                                                               
+                                            </div>                                            
                                         </div>
 
                                         <!--<div class="form-actions right">

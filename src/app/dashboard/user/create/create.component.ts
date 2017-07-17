@@ -3,7 +3,7 @@ import { Component, OnInit, ElementRef, ViewEncapsulation,
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Router } from '@angular/router';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
 //thirth party modules
 import { CustomValidators } from 'ng2-validation';
@@ -54,7 +54,8 @@ export class CreateComponent implements OnInit, OnDestroy {
         phone: '',
         email: '',
         password: '',
-        image: ''
+        image: '',
+        products: '',
     };
 
     customValidatorMessages = {
@@ -95,9 +96,36 @@ export class CreateComponent implements OnInit, OnDestroy {
 
     ngAfterViewInit() {            
         // this.initJqBootstrapValidation();
-    }    
+                
+        $("select[name='products']").select2({
+            placeholder: "Productos",   
+        });        
+    }   
 
-    initForm() {
+    allProducts = [
+        {
+            name: "Gestion",
+            value: "gestion"
+        }, {
+            name: "El Comercio",
+            value: "comercio"
+        }, {
+            name: "Peru 21",
+            value: "peru21"        
+        }, {
+            name: "Trome",
+            value: "trome"        
+        }, {
+            name: "Ojo",
+            value: "ojo"
+        }, {            
+            name: "Autos",
+            value: "auto"
+        }];
+
+    
+
+   initForm() {
         this.form = this.formBuilder.group({
             name: ['', [Validators.required]],
             lastName: [''],
@@ -105,7 +133,12 @@ export class CreateComponent implements OnInit, OnDestroy {
             email: ['', [Validators.email, Validators.required]],
             password: ['', [Validators.required]],
             image: [''],
-        });       
+            active: [''],
+            products: [[this.allProducts[5], this.allProducts[3]]],
+        });  
+
+        // (<FormControl>this.form.controls['allFuits'])
+        //     .setValue(this.fruits[4], { onlySelf: true });     
 
         this.formService.initForm(this.form, this.formErrors, this.customValidatorMessages).subscribe(
             formErrors => this.formErrors = formErrors,
@@ -114,7 +147,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     }
 
     onSubmit(): void {    
-        console.log('subbited');    
+        console.log('subbited');  
+        console.log(this.form.value);          
         this.formService.formSubmitted(); 
         if (this.uploader.queue.length > 0) {            
             this.uploader.uploadAll();            
