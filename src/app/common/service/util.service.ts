@@ -7,7 +7,6 @@ import 'rxjs/Rx';
 //consts
 import { message } from '../message';
 
-
 @Injectable()
 export class UtilService {
 

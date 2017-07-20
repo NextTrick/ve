@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
         <tr *ngFor="let row of rows">            
           <td *ngFor="let column of columns" [innerHtml]="sanitize(getData(row, column.name))"></td>
           <td *ngIf="config.action.active" >            
-                <a *ngIf="config.action.edit.active" role="button" [routerLink]="[config.action.edit.uri, row.userId]" class="btn btn-outline-primary btn-sm">
+                <a *ngIf="config.action.edit.active" role="button" [routerLink]="[config.action.edit.uri, row.id]" class="btn btn-outline-primary btn-sm">
                     <i class="icon-edit"></i>
                 </a>
                 <a *ngIf="config.action.remove.active" (click)="removeClick(row)" role="button" class="btn btn-outline-secondary btn-sm">

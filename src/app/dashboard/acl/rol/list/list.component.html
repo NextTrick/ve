@@ -1,3 +1,82 @@
-<p>
-  list works!
-</p>
+<div class="app-content container center-layout mt-2">
+    <div class="content-wrapper">
+        <div class="content-header row mb-2">
+            <div class="breadcrumb-wrapper col-xs-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Roles</a>
+                    </li>
+                    <li class="breadcrumb-item active">Listado
+                    </li>
+                </ol>
+            </div>
+            <div class="content-header-left col-md-6 col-xs-12">
+                <h2 class="content-header-title mb-0">Roles</h2>                
+            </div>
+            <div class="content-header-right text-md-right col-md-6 col-xs-12">
+                <button type="button" class="btn btn-primary" [routerLink]="['/dashboard/user/create']">Crear usuario</button>
+            </div>            
+        </div>
+        <div class="content-body">
+            <!-- Description -->
+            <section id="description">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Listado</h4>
+                        <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
+                                <li><a data-action="reload"><i class="icon-reload"></i></a></li>
+                                <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
+                                <li><a data-action="close"><i class="icon-cross2"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-body collapse in">
+                        <div class="card-block card-dashboard ">                            
+                            <div class="row">                            
+                                <div class="col-sm-12 col-md-6">                                   
+                                    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" class="form-inline form-horizontal">                                        
+                                        <div class="form-group row">
+                                            <label for="search" class="sr-only">Search</label> 
+                                            <div class="col-sm-10">
+                                                <input ngModel type="text" name="search" class="form-control" 
+                                                    id="search" placeholder="Buscar" required>
+                                            </div>                          
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Buscar</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <br>
+                            
+                            <div class="table-responsive">
+                                <ng-table 
+                                        [config]="config"
+                                        (tableChanged)="onChangeTable(config)"                                        
+                                        (removeClicked)="onRemoveClick($event)"
+                                        [rows]="rows" [columns]="columns">
+                                </ng-table>
+                            </div>
+                            <pagination *ngIf="config.paging"
+                                        class="pagination-sm"
+                                        [(ngModel)]="page"
+                                        [totalItems]="totalItems"
+                                        [itemsPerPage]="itemsPerPage"
+                                        [maxSize]="maxSize"
+                                        [boundaryLinks]="true"
+                                        [rotate]="false"
+                                        (pageChanged)="onChangeTable(config, $event)"
+                                        (numPages)="numPages = $event"
+                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                            </pagination>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--/ Description -->
+        </div>
+    </div>
+</div>

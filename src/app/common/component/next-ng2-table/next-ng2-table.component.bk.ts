@@ -25,10 +25,6 @@ export class NextNg2TableComponent implements OnInit {
     public numPages: number = 1;
     public totalItems: number = 0;
 
-    public objectService: any;
-    public utilService: any
-    public filter: Filter =  new Filter(); 
-
     public config: any = {
         paging: true,
         action: {
@@ -38,60 +34,14 @@ export class NextNg2TableComponent implements OnInit {
         },
         sorting: { columns: this.columns },
         filtering: { filterString: '' },
-        className: ['table-striped', 'table-bordered'],
-        oneLoad: false,
+        className: ['table-striped', 'table-bordered']
     };
 
     public data: Array<any>;
 
     constructor() { }
 
-    ngOnInit() {  
-        this.loadData(); 
-    }
-
-    loadData() {
-        let sortParms  = this.getSortParams(this.config);
-        this.filter.pageIndex = this.page;
-        this.filter.pageSize = this.itemsPerPage;                
-        this.filter.sortField = sortParms.columnName;
-        this.filter.sortOrder = sortParms.sort;        
-        this.filter.s = this.config.filtering.filterString;
-
-        this.getAll(this.filter);
-    }
-
-    public getAll(filter: Filter) {
-        this.objectService.getAll(filter)
-            .subscribe(response => {   
-                console.log(response);                                               
-                if (response.success) {                                                                            
-                    this.totalItems = response.data.found;                    
-                    this.data = response.data.listData; 
-                    this.rows = this.data;                                          
-                }  else {
-                    this.utilService.errorNotification();
-                }                
-            });        
-    }
-
-    public onRemoveClick(row: any): any {
-        console.log('onRemoveClickLog', row);
-    }    
-
-    onSearch(searchForm: any) {        
-        let searchText = searchForm.value.search;         
-        this.config.filtering.filterString = searchText;
-
-        this.page = 1;
-        this.filter.pageSize = this.itemsPerPage;
-        this.filter.s = searchText;
-        this.filter.pageIndex = this.page;
-        this.getAll(this.filter); 
-    }
-
-    public onCellClick(data: any): any {
-
+    ngOnInit() {
     }
 
     public changePage(page: any, data: Array<any> = this.data): Array<any> {
@@ -199,24 +149,14 @@ export class NextNg2TableComponent implements OnInit {
     }
 
     public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-        if (config.oneLoad) {
-            let sortParms  = this.getSortParams(config);
-            this.filter.pageIndex = page.page;
-            this.filter.pageSize = page.itemsPerPage;                
-            this.filter.sortField = sortParms.columnName;
-            this.filter.sortOrder = sortParms.sort;        
-            this.filter.s = this.config.filtering.filterString;            
-            this.getAll(this.filter);
-        } else {
-            this.processConfig(config, page);
-        }        
+        this.processConfig(config, page);
     }
 
-    setObjectService(objectService: any) {
-        this.objectService = objectService;
+    public onCellClick(data: any): any {
+
     }
 
-    setUtilService(utilService: any) {
-        this.utilService = utilService;
-    }
+    public onRemoveClick(row: any): any {
+        console.log('onRemoveClickLog', row);
+    }    
 }

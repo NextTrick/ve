@@ -4,10 +4,14 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
+import { AclService } from './acl.service';
+
 @Injectable()
 export class AuthService {
-    constructor (private http: Http) {
-
+    constructor (
+        private http: Http,
+        private aclService: AclService,
+    ) {
     }
 
     signup(companyName: string, email: string, password: string) {
@@ -34,7 +38,10 @@ export class AuthService {
         .do(
             (response) => {                
                 if (response.success) {
-                    this.saveToken(response.data.token);
+                    let token = response.data.token
+                    let permissions = response.data.permissions;
+                    this.saveToken(token);
+                    this.aclService.setPermissions(permissions);
                     if (remember == 'on') {
                         this.saveRemember(email);
                     } else {

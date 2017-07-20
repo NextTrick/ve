@@ -1,16 +1,14 @@
 <!-- Horizontal navigation-->
-<!--<a href="#" [routerLink]="['/dashboard/productividad/']" >Indicadores de Productitivad</a>
-<a href="#" [routerLink]="['/dashboard/productividad/detalle-indicadores-productividad']" >Detalle Indicadores de Productitivad</a>-->
 <div role="navigation" data-menu="menu-wrapper" class="header-navbar navbar navbar-horizontal navbar-fixed navbar-light navbar-without-dd-arrow navbar-bordered navbar-shadow">
     <!-- Horizontal menu content-->
     <div data-menu="menu-container" class="navbar-container main-menu-content container center-layout">
         <!-- include ../../../includes/mixins-->
         <ul id="main-menu-navigation" data-menu="menu-navigation" class="nav navbar-nav">            
-            <li data-menu="dropdown" class="dropdown nav-item"><a href="#" data-toggle="dropdown" class="dropdown-toggle nav-link"><i class="icon-home3"></i><span data-i18n="nav.templates.main">Productividad</span></a>
+            <li data-menu="dropdown" class="dropdown nav-item"><a href="#" acl [routerLink]="['/dashboard']" data-toggle="dropdown" class="dropdown-toggle nav-link"><i class="icon-home3"></i><span data-i18n="nav.templates.main">Productividad</span></a>
                 <ul class="dropdown-menu">                 
-                    <li data-menu="" class="active"><a href="#" [routerLink]="['/dashboard']" data-toggle="dropdown" class="dropdown-item">Indicadores de Productitivad</a>
+                    <li data-menu="" class="active"><a acl href="#" [routerLink]="['/dashboard']" data-toggle="dropdown" class="dropdown-item">Indicadores de Productitivad</a>
                     </li>
-                    <li data-menu=""><a href="#" [routerLink]="['/dashboard/productividad/detalle-indicadores']" class="dropdown-item">Detalle de Indicadores de Productitivad</a>
+                    <li data-menu=""><a href="#" acl [routerLink]="['/dashboard/productividad/detalle-indicadores']" class="dropdown-item">Detalle de Indicadores de Productitivad</a>
                     </li>                    
                 </ul>
             </li>

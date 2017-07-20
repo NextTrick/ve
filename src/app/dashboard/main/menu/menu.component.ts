@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
+import { AclDirective } from '../../../common/directive/acl.directive';
+
 // import { Router } from '@angular/router';
 
 // import '../../../../assets/s/app-assets/vendors/js/ui/jquery.sticky.js';

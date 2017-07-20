@@ -4,14 +4,28 @@ import { RouterModule, Routes }  from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
 
+import { AuthGuardService } from '../../service/auth-guard.service';
+import { AclGuardService } from '../../service/acl-guard.service';
+
 const mainRoutes: Routes = [  
   { path: '', component:  LayoutComponent,
     children: [      
-        { path: 'user', loadChildren: 'app/dashboard/user/user.module#UserModule' },
-        { path: 'acl', loadChildren: 'app/dashboard/acl/acl.module#AclModule' },
+        { 
+            path: 'user', 
+            loadChildren: 'app/dashboard/user/user.module#UserModule', 
+            canActivate: [AclGuardService] 
+        },
+        { 
+            path: 'acl', 
+            loadChildren: 'app/dashboard/acl/acl.module#AclModule',
+            canActivate: [AclGuardService] 
+        },        
+        { 
+            path: 'productividad', 
+            loadChildren: 'app/dashboard/productividad/productividad.module#ProductividadModule', 
+            canActivate: [AclGuardService] 
+        },        
         { path: '', component:  HomeComponent},
-        { path: 'productividad', loadChildren: 'app/dashboard/productividad/productividad.module#ProductividadModule'},
-        // { path: '', redirectTo: 'productividad', pathMatch: 'full' }
     ]
   }
 ];

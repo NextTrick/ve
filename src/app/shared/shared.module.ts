@@ -13,7 +13,8 @@ import { PaginationModule } from 'ngx-bootstrap';
 import { FileSelectDirective, FileDropDirective } from 'ng2-file-upload';
 
 //Directives
-import {ValidateDirective} from '../common/directive/validate.directive';
+import { ValidateDirective } from '../common/directive/validate.directive';
+import { AclDirective } from '../common/directive/acl.directive';
 
 @NgModule({
     imports: [
@@ -27,6 +28,7 @@ import {ValidateDirective} from '../common/directive/validate.directive';
     ],
     declarations: [        
         ValidateDirective,
+        // AclDirective,
         FileSelectDirective,
         FileDropDirective,
     ],

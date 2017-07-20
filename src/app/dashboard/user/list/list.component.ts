@@ -7,18 +7,11 @@ import { PageResponse, FilterModel, ODataController } from 'ng2-jsgrid';
 
 //services
 import { UserService } from '../../../service/user.service';
+import { AclService } from '../../../service/acl.service';
 import { UtilService } from '../../../common/service/util.service';
 
 //components
-import { NextNg2TableComponent } from '../../../common/component/next-ng2-table/next-ng2-table.component';
-
-export class Filter {
-    pageIndex?: number;
-    pageSize?: number;
-    sortField?: string;
-    sortOrder?: string;
-    s?: string;
-}
+import { NextNg2TableComponent, Filter } from '../../../common/component/next-ng2-table/next-ng2-table.component';
 
 @Component({
     selector: 'user-list',
@@ -62,62 +55,66 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
 
     constructor(
         private http: Http,
-        private userService: UserService,
-        private utilService: UtilService,
-        private router: Router
+        private router: Router,
+        private userService: UserService,        
+        private aclService: AclService,
+        public utilService: UtilService,
     ) {               
         super();
-        
+        super.setObjectService(this.userService);        
+
+        this.config.oneLoad = false;       
         this.config.action.edit.active = true;
         this.config.action.edit.uri = '/dashboard/user/';
-        this.config.action.remove.active = true;
+        this.config.action.remove.active = true;        
     }
 
-    ngOnInit() {                           
-        this.onChangeTable(this.config);        
+    ngOnInit() {             
+        super.ngOnInit();
+        // this.onChangeTable(this.config);
     }
 
-    public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {            
-        let sortParms  = this.getSortParams(config);
-        this.filter.pageIndex = page.page;
-        this.filter.pageSize = page.itemsPerPage;                
-        this.filter.sortField = sortParms.columnName;
-        this.filter.sortOrder = sortParms.sort;        
-        this.filter.s = this.config.filtering.filterString;                          
-        console.log('filterLog', this.filter);     
-        this.getAll(this.filter);
-    }    
+    // public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {            
+    //     let sortParms  = this.getSortParams(config);
+    //     this.filter.pageIndex = page.page;
+    //     this.filter.pageSize = page.itemsPerPage;                
+    //     this.filter.sortField = sortParms.columnName;
+    //     this.filter.sortOrder = sortParms.sort;        
+    //     this.filter.s = this.config.filtering.filterString;                          
+        
+    //     this.getAll(this.filter);
+    // }    
 
-    public getAll(filter: Filter) {
-        this.userService.getAll(filter)
-            .subscribe(response => {   
-                console.log(response);                                               
-                if (response.success) {                                                                            
-                    this.totalItems = response.data.found;                    
-                    this.data = response.data.listData; 
-                    this.rows = this.data;                                          
-                }  else {
-                    this.utilService.errorNotification();
-                }                
-            });        
-    }
+    // public getAll(filter: Filter) {
+    //     this.userService.getAll(filter)
+    //         .subscribe(response => {   
+    //             console.log(response);                                               
+    //             if (response.success) {                                                                            
+    //                 this.totalItems = response.data.found;                    
+    //                 this.data = response.data.listData; 
+    //                 this.rows = this.data;                                          
+    //             }  else {
+    //                 this.utilService.errorNotification();
+    //             }                
+    //         });        
+    // }
 
-    onPageChanged(event: any) {        
-        this.filter.pageIndex = event.page;
-        this.filter.pageSize = event.itemsPerPage;                                   
-        this.getAll(this.filter);
-    }
+    // onPageChanged(event: any) {        
+    //     this.filter.pageIndex = event.page;
+    //     this.filter.pageSize = event.itemsPerPage;                                   
+    //     this.getAll(this.filter);
+    // }
 
-    onSearch(searchForm: any) {        
-        let searchText = searchForm.value.search;         
-        this.config.filtering.filterString = searchText;
+    // onSearch(searchForm: any) {        
+    //     let searchText = searchForm.value.search;         
+    //     this.config.filtering.filterString = searchText;
 
-        this.page = 1;
-        this.filter.pageSize = this.itemsPerPage;
-        this.filter.s = searchText;
-        this.filter.pageIndex = this.page;
-        this.getAll(this.filter); 
-    }
+    //     this.page = 1;
+    //     this.filter.pageSize = this.itemsPerPage;
+    //     this.filter.s = searchText;
+    //     this.filter.pageIndex = this.page;
+    //     this.getAll(this.filter); 
+    // }
 
     ngAfterViewInit() {   
                          

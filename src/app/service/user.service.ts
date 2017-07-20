@@ -12,6 +12,9 @@ export class UserService {
 
     imageId: string | null = null; 
 
+    path: string =  'user';
+    searchPath: string = 'user/search'; 
+
     constructor (private http: Http) {
     }
 

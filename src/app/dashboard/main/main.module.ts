@@ -21,6 +21,9 @@ import { Chart4Component } from './home/chart4/chart4.component';
 //Services
 import { LayoutService } from '../service/layout.service';
 
+//Directives
+import { AclDirective } from '../../common/directive/acl.directive';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -39,13 +42,10 @@ import { LayoutService } from '../service/layout.service';
         Chart1Component,
         Chart2Component,
         Chart3Component,
-        Chart4Component,        
+        Chart4Component,   
+        AclDirective,
     ],
-    exports: [
-        // FooterComponent, 
-        // NavComponent,
-        // MenuComponent,    
-        // LayoutComponent
+    exports: [        
     ],
     providers: [LayoutService]
 })

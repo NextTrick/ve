@@ -12,6 +12,7 @@ import { FileUploader, FileItem, ParsedResponseHeaders, FileLikeObject} from 'ng
 //services
 import { LayoutService } from '../../service/layout.service';
 import { UserService } from '../../../service/user.service';
+import { AclService } from '../../../service/acl.service';
 import { FormService } from '../../../common/service/form.service';
 import { UtilService } from '../../../common/service/util.service';
 
@@ -78,11 +79,13 @@ export class CreateComponent implements OnInit, OnDestroy {
         private formBuilder: FormBuilder,
         private formService: FormService,
         private utilService: UtilService,
+        private aclService: AclService,
         private sanitizer: DomSanitizer,
     ) {               
     }
 
     ngOnInit() {        
+        console.log('aclServiceLog userList', this.aclService.getPermissions());
         this.initUploader();    
         this.initForm();                
         this.layoutService.showEditBar(true); 

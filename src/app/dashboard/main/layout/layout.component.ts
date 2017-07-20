@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 
 import { ScriptService } from '../../../common/service/script.service';
+import { AclService } from '../../../service/acl.service';
 
 @Component({
     selector: 'app-layout',
@@ -11,10 +12,13 @@ export class LayoutComponent implements OnInit {
 
     constructor(
         private scriptService: ScriptService,
+        private aclService: AclService,
         private elRef: ElementRef,
     ) { }
 
     ngOnInit() {
+        console.log('aclServiceLog layout', this.aclService.getPermissions());
+
         this.updateBodyClass();
     }
 

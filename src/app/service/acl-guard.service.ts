@@ -12,11 +12,12 @@ import { AuthService } from './auth.service';
 import { AclService } from './acl.service';
 
 @Injectable()
-export class AuthGuardService {
+export class AclGuardService {
     constructor (
         private location: Location,
         private router: Router,
-        private authService: AuthService
+        private authService: AuthService,
+        private aclService: AclService,
     ) {
 
     }
@@ -24,13 +25,18 @@ export class AuthGuardService {
     canActivate(        
         route: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
-    ): Observable<boolean> | boolean {   
-        console.log('ActivatedRouteSnapshot Auth', route.routeConfig);                   
-        if (this.authService.isAuthenticated()) {            
-            return true;
+    ): Observable<boolean> | boolean {              
+        let uri = this.location.path();            
+        let path = route.routeConfig.path; 
+        
+        if (this.authService.isAuthenticated()) {
+            if (this.aclService.isAuthorized(uri)) {
+                return true;
+            } else {
+                this.router.navigate(['/dashboard/auth/login']);    
+            }
         } else {
-            this.router.navigate(['/dashboard/auth/login'])
-            return false;
+            this.router.navigate(['/dashboard/auth/login']);
         }
     }
 }
