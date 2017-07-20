@@ -12,12 +12,11 @@ import { CustomValidators } from 'ng2-validation';
 //services
 import { LayoutService } from '../../../service/layout.service';
 import { RolService } from '../../../../service/rol.service';
-import { AclService } from '../../../../service/acl.service';
 import { FormService } from '../../../../common/service/form.service';
 import { UtilService } from '../../../../common/service/util.service';
 
-//consts
-import { message } from '../../../../common/message';
+//Abstract
+import { AbstractCreateComponent } from '../../../../common/component/crud/abstract-create.component';
 
 @Component({
     selector: 'rol-create',
@@ -26,29 +25,25 @@ import { message } from '../../../../common/message';
         '../../../../../assets/s/app-assets/css/plugins/forms/validation/form-validation.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class CreateComponent implements OnInit {
-
-    form: FormGroup;
-    isLoading: boolean = false;
+export class CreateComponent extends AbstractCreateComponent implements OnInit {
 
     formErrors = {
         name: '',
         status: '',    
     };
 
-    constructor(        
+    constructor(
+        protected formBuilder: FormBuilder,
+        protected formService: FormService,
+        protected utilService: UtilService,                   
         private layoutService: LayoutService,
-        private rolService: RolService,
-        private router: Router,
-        private formBuilder: FormBuilder,
-        private formService: FormService,
-        private utilService: UtilService,
-        private aclService: AclService,
-    ) { }
+        private rolService: RolService,         
+    ) { 
+        super(formBuilder, formService, utilService, rolService);
+    }
 
     ngOnInit() {                    
-        this.initForm();    
-        this.initEmitter();                            
+        this.initForm();                                       
     }
 
     initForm() {
@@ -63,35 +58,35 @@ export class CreateComponent implements OnInit {
         );
     }
 
-    onSubmit(): void {                            
-        this.formService.formSubmitted();
-        if (this.form.valid) {
-            this.utilService.isLoading(true);
-            this.rolService.create(this.form.value)
-                .finally(() => this.utilService.isLoading(false))
-                .subscribe(
-                    response => {                    
-                        if (response.success) {
-                            this.utilService.successNotification();
-                            this.initForm();
-                        } else {
-                            this.utilService.errorNotification(response.data.message);
-                        }                                                          
-                    },
-                    error => {
-                        this.utilService.errorNotification();                    
-                        console.log(error)       
-                    }
-                );
-        }
-    }
+    // onSubmit(): void {                            
+    //     this.formService.formSubmitted();
+    //     if (this.form.valid) {
+    //         this.utilService.isLoading(true);
+    //         this.rolService.create(this.form.value)
+    //             .finally(() => this.utilService.isLoading(false))
+    //             .subscribe(
+    //                 response => {                    
+    //                     if (response.success) {
+    //                         this.utilService.successNotification();
+    //                         this.initForm();
+    //                     } else {
+    //                         this.utilService.errorNotification(response.data.message);
+    //                     }                                                          
+    //                 },
+    //                 error => {
+    //                     this.utilService.errorNotification();                    
+    //                     console.log(error)       
+    //                 }
+    //             );
+    //     }
+    // }
 
-    initEmitter() {
-        this.utilService.isLoadingEmitter.subscribe(
-            isLoading => {
-                this.isLoading = isLoading;
-            }
-        );
-    }
+    // initEmitter() {
+    //     this.utilService.isLoadingEmitter.subscribe(
+    //         isLoading => {
+    //             this.isLoading = isLoading;
+    //         }
+    //     );
+    // }
 
 }

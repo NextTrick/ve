@@ -9,11 +9,11 @@ export class Filter {
     s?: string;
 }
 
-@Component({
-    selector: 'next-ng2-table',
-    templateUrl: './next-ng2-table.component.html',
-    styleUrls: ['./next-ng2-table.component.css']
-})
+// @Component({
+//     selector: 'next-ng2-table',
+//     templateUrl: './next-ng2-table.component.html',
+//     styleUrls: ['./next-ng2-table.component.css']
+// })
 export class NextNg2TableComponent implements OnInit {
 
     public rows: Array<any> = [];
@@ -25,8 +25,6 @@ export class NextNg2TableComponent implements OnInit {
     public numPages: number = 1;
     public totalItems: number = 0;
 
-    public objectService: any;
-    public utilService: any
     public filter: Filter =  new Filter(); 
 
     public config: any = {
@@ -44,7 +42,10 @@ export class NextNg2TableComponent implements OnInit {
 
     public data: Array<any>;
 
-    constructor() { }
+    constructor(
+        protected utilService: any = {},
+        protected objectService: any = {}
+    ) {}
 
     ngOnInit() {  
         this.loadData(); 

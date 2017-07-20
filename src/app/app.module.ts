@@ -12,6 +12,7 @@ import { NotFoundComponent } from './component/not-found/not-found.component';
 //Services
 import { UserService } from './service/user.service';
 import { RolService } from './service/rol.service';
+import { ResourceService } from './service/resource.service';
 import { AuthService } from './service/auth.service';
 import { AclService } from './service/acl.service';
 import { AuthGuardService } from './service/auth-guard.service';
@@ -35,6 +36,7 @@ import { ScriptService } from './common/service/script.service';
     providers: [
         UserService, 
         RolService,
+        ResourceService,
         AuthService, 
         AclService,
         AuthGuardService, 

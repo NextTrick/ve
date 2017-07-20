@@ -1,3 +1,92 @@
-<p>
-  create works!
-</p>
+<div class="app-content container center-layout mt-2">
+    <div class="content-wrapper">
+        <div class="content-header row mb-2">
+            <div class="breadcrumb-wrapper col-xs-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Recurso</a>
+                    </li>
+                    <li class="breadcrumb-item active">Crear
+                    </li>
+                </ol>
+            </div>
+            <div class="content-header-left col-md-6 col-xs-12">
+                <h2 class="content-header-title mb-0">Crear Recurso</h2>
+            </div>
+        </div>
+
+        <div class="content-body">            
+            <hr>
+            <section id="description">
+                <div class="row match-height">
+                    <div class="col-md-4">
+                        <p class="font-medium-2">Información</p>                    
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">                            
+                            <div class="card-body collapse in">
+                                <div class="card-block">
+                                    <form [formGroup]="form" id="form" (ngSubmit)="onSubmit()" class="form">
+                                        <div class="form-body"> 
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6">
+                                                    <div class="form-group">                                                        
+                                                        <label for="uri">Nombre</label>
+                                                        <div class="controls">
+                                                            <input [formControl]="form.controls['name']" type="text" id="name" 
+                                                                    maxlength="100" class="form-control" placeholder="Nombre" name="name">
+                                                            <span class="danger" *ngIf="formErrors.name">
+                                                                {{ formErrors.name }}
+                                                            </span>
+                                                        </div>
+                                                    </div>                                                   
+                                                </div>                                                                                               
+                                            </div>                                           
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <div class="form-group">                                                        
+                                                        <label for="uri">Url</label>
+                                                        <div class="controls">
+                                                            <input [formControl]="form.controls['uri']" type="text" id="uri" 
+                                                                    maxlength="100" class="form-control" placeholder="Url" name="uri">
+                                                            <span class="danger" *ngIf="formErrors.uri">
+                                                                {{ formErrors.uri }}
+                                                            </span>
+                                                        </div>
+                                                    </div>                                                   
+                                                </div>                                                                                               
+                                            </div>                                                                                                                                                                    
+                                            <div class="row">                                               
+                                                <div class="col-sm-12 col-md-6">                                                      
+                                                        <label for="status">Activo</label>                                                         
+                                                        <input name="status" [formControl]="form.controls['status']" type="checkbox" id="status">
+                                                </div>                                                                                               
+                                            </div>                                            
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="float-md-right float-xs-right mb-2 mb-xs-2">                            
+                            <button [routerLink]="['/dashboard/acl/resource']" type="button" class="btn btn-outline-secondary mr-1">
+                                Cancelar
+                            </button>
+                            <button [ladda]="isLoading" form="form" type="submit" data-style="slide-right" class="btn btn-primary">
+                                <span class="ladda-label">                                    
+                                    Guardar
+                                </span>
+                                <span class="ladda-spinner"></span>                            
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

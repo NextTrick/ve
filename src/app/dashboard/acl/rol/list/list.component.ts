@@ -31,10 +31,9 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         private router: Router,
         private rolService: RolService,        
         private aclService: AclService,        
-        public utilService: UtilService,
+        protected utilService: UtilService,
     ) {               
-        super();
-        super.setObjectService(this.rolService);
+        super(utilService, rolService);     
         
         this.config.action.edit.active = true;
         this.config.action.edit.uri = '/dashboard/acl/rol/';
