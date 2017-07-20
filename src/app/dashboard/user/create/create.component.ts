@@ -36,9 +36,11 @@ export class CreateComponent implements OnInit, OnDestroy {
 
     form: FormGroup;
     isLoading: boolean = false;
+    
     user: User;
     validatorMessage:any = validatorMessage.es;
-    mesageErr = message.success;    
+    mesageErr = message.success; 
+
     public filePreviewPath: SafeUrl;
 
     uploader:FileUploader = new FileUploader({
@@ -90,7 +92,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         this.initForm();                
         this.layoutService.showEditBar(true); 
 
-        this.initEmitter();      
+        this.initEmitter();
     }
 
     fileChange(event) {

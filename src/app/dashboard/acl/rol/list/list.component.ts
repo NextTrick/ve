@@ -16,8 +16,7 @@ import { NextNg2TableComponent, Filter } from '../../../../common/component/next
     styleUrls: ['./list.component.css']
 })
 export class ListComponent extends NextNg2TableComponent implements OnInit {
-    
-    public rows: Array<any> = [];
+        
     public columns: Array<any> = [        
         {
             title: 'Nombre', name: 'name', sort: false,       
@@ -26,8 +25,6 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
             title: 'Estado', name: 'statusAlias', sort: false,       
         },        
     ];
-
-    public filter: Filter =  new Filter();  
 
     constructor(
         private http: Http,
@@ -40,7 +37,7 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         super.setObjectService(this.rolService);
         
         this.config.action.edit.active = true;
-        this.config.action.edit.uri = '/dashboard/rol/';
+        this.config.action.edit.uri = '/dashboard/acl/rol/';
         this.config.action.remove.active = true;
     }
 

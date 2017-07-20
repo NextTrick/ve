@@ -1,6 +1,6 @@
 
 export class Rol {
-    rolId: number;
+    rolId?: number;
     name: string;    
     status?: number;
 }

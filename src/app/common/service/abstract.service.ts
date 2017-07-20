@@ -23,9 +23,9 @@ export class AbstractService {
             .map(res => res.json());            
     }
 
-    update(data: any) {        
+    update(id: number, data: any) {        
         return this.http.put(
-                environment.backendUrl + this.path,
+                environment.backendUrl + this.path + '/' + id,
                 {data}        
             )
             .map(res => res.json());            
@@ -44,7 +44,7 @@ export class AbstractService {
         
         let myParams = new URLSearchParams();
 
-        for (var prop in objectParams) {
+        for (let prop in objectParams) {
             myParams.append(prop, objectParams[prop]);
         }
 
