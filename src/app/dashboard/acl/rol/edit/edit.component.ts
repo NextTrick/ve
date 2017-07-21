@@ -53,28 +53,7 @@ export class EditComponent extends AbstractEditComponent implements OnInit {
     }
 
     ngOnInit() {
-        super.ngOnInit();
-        // let id = this.route.snapshot.params['id'];
-        // this.utilService.isLoading(true);
-        // this.rolService.get(id)
-        //     .finally(() => this.utilService.isLoading(false))
-        //     .subscribe(
-        //     response => {
-        //         if (response.success) {
-        //             this.rol = response.data.rol;
-        //             this.populateForm();
-        //         } else {
-        //             this.utilService.errorNotification(response.data.message);
-        //         }
-        //     },
-        //     error => {
-        //         this.utilService.errorNotification();
-        //         this.router.navigate(['/not-found']);
-        //     }
-        //     );
-
-        // this.initForm();
-        // this.initEmitter();
+        super.ngOnInit();        
     }
 
     initForm() {
@@ -88,53 +67,5 @@ export class EditComponent extends AbstractEditComponent implements OnInit {
             error => console.log(error)
         );
     }
-
-    // populateForm() {
-    //     for (let prop in this.rol) {
-    //         let control = this.form.get(prop);
-    //         if (control) {
-    //             console.log(prop);
-    //             if (prop == 'status') {
-    //                 if (this.rol[prop] == 0) {
-    //                     control.setValue(false);
-    //                 } else {
-    //                     control.setValue(true);
-    //                 }             
-    //             } else {
-    //                 control.setValue(this.rol[prop]);
-    //             }                
-    //         }
-    //     }
-    // }
-
-    // onSubmit(): void {
-    //     this.formService.formSubmitted();
-    //     if (this.form.valid) {
-    //         this.utilService.isLoading(true);
-    //         this.rolService.update(this.rol.rolId, this.form.value)
-    //             .finally(() => this.utilService.isLoading(false))
-    //             .subscribe(
-    //             response => {
-    //                 if (response.success) {
-    //                     this.utilService.successNotification();
-    //                     this.initForm();
-    //                 } else {
-    //                     this.utilService.errorNotification(response.data.message);
-    //                 }
-    //             },
-    //             error => {
-    //                 this.utilService.errorNotification();
-    //                 console.log(error)
-    //             }
-    //             );
-    //     }
-    // }
-
-    // initEmitter() {
-    //     this.utilService.isLoadingEmitter.subscribe(
-    //         isLoading => {
-    //             this.isLoading = isLoading;
-    //         }
-    //     );
-    // }
+    
 }

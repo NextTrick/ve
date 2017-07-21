@@ -57,36 +57,5 @@ export class CreateComponent extends AbstractCreateComponent implements OnInit {
             error => console.log(error)
         );
     }
-
-    // onSubmit(): void {                            
-    //     this.formService.formSubmitted();
-    //     if (this.form.valid) {
-    //         this.utilService.isLoading(true);
-    //         this.rolService.create(this.form.value)
-    //             .finally(() => this.utilService.isLoading(false))
-    //             .subscribe(
-    //                 response => {                    
-    //                     if (response.success) {
-    //                         this.utilService.successNotification();
-    //                         this.initForm();
-    //                     } else {
-    //                         this.utilService.errorNotification(response.data.message);
-    //                     }                                                          
-    //                 },
-    //                 error => {
-    //                     this.utilService.errorNotification();                    
-    //                     console.log(error)       
-    //                 }
-    //             );
-    //     }
-    // }
-
-    // initEmitter() {
-    //     this.utilService.isLoadingEmitter.subscribe(
-    //         isLoading => {
-    //             this.isLoading = isLoading;
-    //         }
-    //     );
-    // }
-
+    
 }
