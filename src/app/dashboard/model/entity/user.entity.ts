@@ -1,6 +1,8 @@
 import { User as UserInterface } from '../../interface/user.interface';
+import { AbstractEntity } from './abstract.entity';
 
-export class User implements UserInterface {
+export class User extends AbstractEntity implements UserInterface {
+    id?: number;
     userId?: number;
     email: string;
     password: string;

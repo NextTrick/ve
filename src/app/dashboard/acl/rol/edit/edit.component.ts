@@ -16,10 +16,11 @@ import { AclService } from '../../../../service/acl.service';
 import { FormService } from '../../../../common/service/form.service';
 import { UtilService } from '../../../../common/service/util.service';
 
-//consts
-import { message } from '../../../../common/message';
-
+//Entities
 import { Rol } from '../../../model/entity/rol.entity';
+
+//Abstract
+import { AbstractEditComponent } from '../../../../common/component/crud/abstract-edit.component';
 
 @Component({
     selector: 'app-edit',
@@ -28,68 +29,52 @@ import { Rol } from '../../../model/entity/rol.entity';
         '../../../../../assets/s/app-assets/css/plugins/forms/validation/form-validation.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class EditComponent implements OnInit {
-
-    form: FormGroup;
-    isLoading: boolean = false;
-    rol =  new Rol();
-
+export class EditComponent extends AbstractEditComponent implements OnInit {
+        
     formErrors = {
         name: '',
         status: '',
     };
 
+    rol: Rol = new Rol();    
+
     constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private formBuilder: FormBuilder,
+        protected formBuilder: FormBuilder,
+        protected formService: FormService,
+        protected router: Router,
+        protected route: ActivatedRoute,
+        protected utilService: UtilService,                           
         private layoutService: LayoutService,
-        private rolService: RolService,
-        private formService: FormService,
-        private utilService: UtilService,
+        private rolService: RolService,                     
         private aclService: AclService,
-    ) { }
-
-    ngOnInit() {
-        let id = this.route.snapshot.params['id'];
-        this.utilService.isLoading(true);
-        this.rolService.get(id)
-            .finally(() => this.utilService.isLoading(false))
-            .subscribe(
-            response => {
-                if (response.success) {
-                    this.rol = response.data.rol;
-                    this.populateForm();
-                } else {
-                    this.utilService.errorNotification(response.data.message);
-                }
-            },
-            error => {
-                this.utilService.errorNotification();
-                this.router.navigate(['/not-found']);
-            }
-            );
-
-        this.initForm();
-        this.initEmitter();
+    ) { 
+        super(formBuilder, formService, utilService, rolService, route, router);
+        this.setObject(this.rol);
     }
 
-    populateForm() {
-        for (let prop in this.rol) {
-            let control = this.form.get(prop);
-            if (control) {
-                console.log(prop);
-                if (prop == 'status') {
-                    if (this.rol[prop] == 0) {
-                        control.setValue(false);
-                    } else {
-                        control.setValue(true);
-                    }             
-                } else {
-                    control.setValue(this.rol[prop]);
-                }                
-            }
-        }
+    ngOnInit() {
+        super.ngOnInit();
+        // let id = this.route.snapshot.params['id'];
+        // this.utilService.isLoading(true);
+        // this.rolService.get(id)
+        //     .finally(() => this.utilService.isLoading(false))
+        //     .subscribe(
+        //     response => {
+        //         if (response.success) {
+        //             this.rol = response.data.rol;
+        //             this.populateForm();
+        //         } else {
+        //             this.utilService.errorNotification(response.data.message);
+        //         }
+        //     },
+        //     error => {
+        //         this.utilService.errorNotification();
+        //         this.router.navigate(['/not-found']);
+        //     }
+        //     );
+
+        // this.initForm();
+        // this.initEmitter();
     }
 
     initForm() {
@@ -104,34 +89,52 @@ export class EditComponent implements OnInit {
         );
     }
 
-    onSubmit(): void {
-        this.formService.formSubmitted();
-        if (this.form.valid) {
-            this.utilService.isLoading(true);
-            this.rolService.update(this.rol.rolId, this.form.value)
-                .finally(() => this.utilService.isLoading(false))
-                .subscribe(
-                response => {
-                    if (response.success) {
-                        this.utilService.successNotification();
-                        this.initForm();
-                    } else {
-                        this.utilService.errorNotification(response.data.message);
-                    }
-                },
-                error => {
-                    this.utilService.errorNotification();
-                    console.log(error)
-                }
-                );
-        }
-    }
+    // populateForm() {
+    //     for (let prop in this.rol) {
+    //         let control = this.form.get(prop);
+    //         if (control) {
+    //             console.log(prop);
+    //             if (prop == 'status') {
+    //                 if (this.rol[prop] == 0) {
+    //                     control.setValue(false);
+    //                 } else {
+    //                     control.setValue(true);
+    //                 }             
+    //             } else {
+    //                 control.setValue(this.rol[prop]);
+    //             }                
+    //         }
+    //     }
+    // }
 
-    initEmitter() {
-        this.utilService.isLoadingEmitter.subscribe(
-            isLoading => {
-                this.isLoading = isLoading;
-            }
-        );
-    }
+    // onSubmit(): void {
+    //     this.formService.formSubmitted();
+    //     if (this.form.valid) {
+    //         this.utilService.isLoading(true);
+    //         this.rolService.update(this.rol.rolId, this.form.value)
+    //             .finally(() => this.utilService.isLoading(false))
+    //             .subscribe(
+    //             response => {
+    //                 if (response.success) {
+    //                     this.utilService.successNotification();
+    //                     this.initForm();
+    //                 } else {
+    //                     this.utilService.errorNotification(response.data.message);
+    //                 }
+    //             },
+    //             error => {
+    //                 this.utilService.errorNotification();
+    //                 console.log(error)
+    //             }
+    //             );
+    //     }
+    // }
+
+    // initEmitter() {
+    //     this.utilService.isLoadingEmitter.subscribe(
+    //         isLoading => {
+    //             this.isLoading = isLoading;
+    //         }
+    //     );
+    // }
 }
