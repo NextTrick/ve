@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
            role="grid" style="width: 100%;">
       <thead>
         <tr role="row">
+        <th *ngIf="config.selection.active" ></th>
           <th *ngFor="let column of columns" [ngTableSorting]="config" [column]="column" 
               (sortChanged)="onChangeTable($event)" ngClass="{{column.className || ''}}">
             {{column.title}}
@@ -28,7 +29,10 @@ import { Router } from '@angular/router';
                  (tableChanged)="onChangeTable(config)"/>
         </td>
       </tr>
-        <tr *ngFor="let row of rows">            
+        <tr *ngFor="let row of rows">   
+            <td *ngIf="config.selection.active" >            
+                <input type="checkbox" name="selection" [value]="row.id">
+            </td>         
           <td *ngFor="let column of columns" [innerHtml]="sanitize(getData(row, column.name))"></td>
           <td *ngIf="config.action.active" >            
                 <a *ngIf="config.action.edit.active" role="button" [routerLink]="[config.action.edit.uri, row.id]" class="btn btn-outline-primary btn-sm">

@@ -7,6 +7,7 @@ export class Filter {
     sortField?: string;
     sortOrder?: string;
     s?: string;
+    oneLoad?: boolean = false;
 }
 
 // @Component({
@@ -20,7 +21,7 @@ export class NextNg2TableComponent implements OnInit {
     public columns: Array<any> = [];
     
     public page: number = 1;
-    public itemsPerPage: number = 15;
+    public itemsPerPage: number = 10;
     public maxSize: number = 4;
     public numPages: number = 1;
     public totalItems: number = 0;
@@ -33,6 +34,9 @@ export class NextNg2TableComponent implements OnInit {
             active: true,
             edit: {active: false, uri: ''},
             remove: {active: false}
+        },
+        selection: {
+            active: false,
         },
         sorting: { columns: this.columns },
         filtering: { filterString: '' },
@@ -48,28 +52,32 @@ export class NextNg2TableComponent implements OnInit {
     ) {}
 
     ngOnInit() {  
-        this.loadData(); 
+        this.loadData(this.config); 
     }
 
-    loadData() {
-        let sortParms  = this.getSortParams(this.config);
-        this.filter.pageIndex = this.page;
-        this.filter.pageSize = this.itemsPerPage;                
+    public loadData(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }) {
+        let sortParms  = this.getSortParams(config);
+        this.filter.pageIndex = page.page;
+        this.filter.pageSize = page.itemsPerPage;                
         this.filter.sortField = sortParms.columnName;
         this.filter.sortOrder = sortParms.sort;        
-        this.filter.s = this.config.filtering.filterString;
+        this.filter.s = this.config.filtering.filterString; 
 
-        this.getAll(this.filter);
-    }
+        if (this.config.oneLoad) {
+            this.filter.oneLoad = true;
+        }    
 
-    public getAll(filter: Filter) {
-        this.objectService.getAll(filter)
+        this.objectService.getAll(this.filter)
             .subscribe(response => {   
                 console.log(response);                                               
-                if (response.success) {                                                                            
-                    this.totalItems = response.data.found;                    
-                    this.data = response.data.listData; 
-                    this.rows = this.data;                                          
+                if (response.success) {                                                                                                                 
+                    this.data = response.data.listData;                                         
+                    if (this.config.oneLoad) {
+                        this.processConfig(config, page);                                                         
+                    } else {
+                        this.totalItems = response.data.found;   
+                        this.rows = this.data;
+                    }                    
                 }  else {
                     this.utilService.errorNotification();
                 }                
@@ -84,11 +92,7 @@ export class NextNg2TableComponent implements OnInit {
         let searchText = searchForm.value.search;         
         this.config.filtering.filterString = searchText;
 
-        this.page = 1;
-        this.filter.pageSize = this.itemsPerPage;
-        this.filter.s = searchText;
-        this.filter.pageIndex = this.page;
-        this.getAll(this.filter); 
+        this.loadData(this.config); 
     }
 
     public onCellClick(data: any): any {
@@ -143,8 +147,7 @@ export class NextNg2TableComponent implements OnInit {
         });
     }
 
-    public changeFilter(data: any, config: any): any {
-        console.log('changeFilter');
+    public changeFilter(data: any, config: any): any {        
         let filteredData: Array<any> = data;
         this.columns.forEach((column: any) => {
             if (column.filtering) {
@@ -153,7 +156,7 @@ export class NextNg2TableComponent implements OnInit {
                 });
             }
         });
-
+        
         if (!config.filtering) {
             return filteredData;
         }
@@ -193,23 +196,16 @@ export class NextNg2TableComponent implements OnInit {
         }
 
         let filteredData = this.changeFilter(this.data, this.config);        
-        let sortedData = this.changeSort(filteredData, this.config);        
-        
-        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;                        
-        this.totalItems = sortedData.length;        
+        let sortedData = this.changeSort(filteredData, this.config);                
+        this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;                  
+        this.totalItems = sortedData.length;                
     }
 
-    public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {
-        if (config.oneLoad) {
-            let sortParms  = this.getSortParams(config);
-            this.filter.pageIndex = page.page;
-            this.filter.pageSize = page.itemsPerPage;                
-            this.filter.sortField = sortParms.columnName;
-            this.filter.sortOrder = sortParms.sort;        
-            this.filter.s = this.config.filtering.filterString;            
-            this.getAll(this.filter);
-        } else {
+    public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {    
+        if (this.config.oneLoad) {                               
             this.processConfig(config, page);
+        } else {            
+            this.loadData(config, page);            
         }        
     }
 

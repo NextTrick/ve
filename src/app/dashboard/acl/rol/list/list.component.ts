@@ -11,7 +11,7 @@ import { UtilService } from '../../../../common/service/util.service';
 import { NextNg2TableComponent, Filter } from '../../../../common/component/next-ng2-table/next-ng2-table.component';
 
 @Component({
-    selector: 'app-list',
+    selector: 'rol-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.css']
 })
@@ -38,6 +38,9 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         this.config.action.edit.active = true;
         this.config.action.edit.uri = '/dashboard/acl/rol/';
         this.config.action.remove.active = true;
+        this.config.oneLoad = true;
+        this.itemsPerPage = 3;
+        this.config.filtering.columnName = 'name';
     }
 
     ngOnInit() {

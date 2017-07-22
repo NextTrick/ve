@@ -4,10 +4,21 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
+import { Acl } from '../dashboard/model/entity/Acl.entity';
+import { AbstractService } from '../common/service/abstract.service';
+
 @Injectable()
-export class AclService {
+export class AclService extends AbstractService {
+    
     private permissions: Array<any> = [];
-    constructor (private http: Http) {
+
+    path: string; 'acl';
+    searchPath: string; 'acl/search';
+
+    constructor (
+        protected http: Http
+    ) {
+        super(http);
     }    
 
     isAllowed(uri: string) {

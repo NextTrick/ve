@@ -1,3 +1,82 @@
-<p>
-  list works!
-</p>
+<div class="app-content container center-layout mt-2">
+    <div class="content-wrapper">
+        <div class="content-header row mb-2">
+            <div class="breadcrumb-wrapper col-xs-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Acl</a>
+                    </li>
+                    <li class="breadcrumb-item active">Asignar
+                    </li>
+                </ol>
+            </div>
+            <div class="content-header-left col-md-6 col-xs-12">
+                <h2 class="content-header-title mb-0">Asignar Recursos</h2>                
+            </div>            
+        </div>
+        <div class="content-body">            
+            <section id="description">
+                <div class="card">                   
+                    <div class="card-body collapse in">                                                               
+                        <div class="card-block card-dashboard pb-0">
+                            <form>
+                                <div class="form-group row">
+                                    <label for="rolId" class="col-sm-1 col-form-label">Rol :</label>
+                                    <div class="col-sm-3">
+                                        <select name="rolId" class="form-control">
+                                            <option>Admin</option>
+                                            <option>Gerente</option>
+                                            <option>Admin</option>
+                                            <option>Admin</option>
+                                        </select>                                        
+                                    </div>
+                                    <label for="inputEmail3" class="sr-only col-form-label">Filtrar :</label>
+                                    <div class="offset-sm-5 col-sm-3">
+                                        <input *ngIf="config.filtering" placeholder="Filtrar" [ngTableFiltering]="config.filtering" class="form-control"
+                                            (tableChanged)="onChangeTable(config)" />
+                                    </div>        
+                                </div>                                                                                                                               
+                            </form>
+                            <div class="table-responsive">
+                                <ng-table 
+                                        [config]="config"
+                                        (tableChanged)="onChangeTable(config)"                                        
+                                        (removeClicked)="onRemoveClick($event)"
+                                        [rows]="rows" [columns]="columns">
+                                </ng-table>
+                            </div>
+                            <pagination *ngIf="config.paging"
+                                        class="pagination-sm"
+                                        [(ngModel)]="page"
+                                        [totalItems]="totalItems"
+                                        [itemsPerPage]="itemsPerPage"
+                                        [maxSize]="maxSize"
+                                        [boundaryLinks]="true"
+                                        [rotate]="false"
+                                        (pageChanged)="onChangeTable(config, $event)"
+                                        (numPages)="numPages = $event"
+                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
+                            </pagination>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="float-md-right float-xs-right mb-2 mb-xs-2">                            
+                            <button [routerLink]="['/dashboard/acl/resource']" type="button" class="btn btn-outline-secondary mr-1">
+                                Cancelar
+                            </button>
+                            <button [ladda]="isLoading" form="form" type="submit" data-style="slide-right" class="btn btn-primary">
+                                <span class="ladda-label">                                    
+                                    Guardar
+                                </span>
+                                <span class="ladda-spinner"></span>                            
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>            
+        </div>
+    </div>
+</div>  
