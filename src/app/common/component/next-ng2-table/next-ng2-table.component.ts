@@ -60,7 +60,7 @@ export class NextNg2TableComponent implements OnInit {
         this.loadData(this.config); 
     }
 
-    public loadData(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }) {
+    public loadData(config: any = this.config, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }) {
         let sortParms  = this.getSortParams(config);
         this.filter.pageIndex = page.page;
         this.filter.pageSize = page.itemsPerPage;                
@@ -77,8 +77,7 @@ export class NextNg2TableComponent implements OnInit {
 
     public getAll(filter: Filter, config, page) {
         this.objectService.getAll(filter)
-            .subscribe(response => {   
-                console.log(response);                                               
+            .subscribe(response => {                                                                  
                 if (response.success) {
                     this.data = response.data.listData;                                         
                     if (this.config.oneLoad) {
@@ -93,8 +92,17 @@ export class NextNg2TableComponent implements OnInit {
             });  
     }
 
-    public onRemoveClick(row: any): any {
-        console.log('onRemoveClickLog', row);
+    public onRemoveClick(row: any): any {        
+        this.objectService.delete(row.id)
+            .subscribe(response => {   
+                console.log(response);                                               
+                if (response.success) {
+                    this.loadData();
+                    this.utilService.successNotification();                    
+                }  else {
+                    this.utilService.errorNotification();
+                }                
+            });  
     }    
 
     onSearch(searchForm: any) {        
