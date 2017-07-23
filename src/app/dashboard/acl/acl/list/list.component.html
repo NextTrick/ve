@@ -19,30 +19,42 @@
             <section id="description">
                 <div class="card">                   
                     <div class="card-body collapse in">                                                               
-                        <div class="card-block card-dashboard pb-0">
-                            <form>
-                                <div class="form-group row">
-                                    <label for="rolId" class="col-sm-1 col-form-label">Rol :</label>
-                                    <div class="col-sm-3">
-                                        <select name="rolId" class="form-control">
-                                            <option>Admin</option>
-                                            <option>Gerente</option>
-                                            <option>Admin</option>
-                                            <option>Admin</option>
-                                        </select>                                        
-                                    </div>
-                                    <label for="inputEmail3" class="sr-only col-form-label">Filtrar :</label>
-                                    <div class="offset-sm-5 col-sm-3">
-                                        <input *ngIf="config.filtering" placeholder="Filtrar" [ngTableFiltering]="config.filtering" class="form-control"
-                                            (tableChanged)="onChangeTable(config)" />
-                                    </div>        
-                                </div>                                                                                                                               
-                            </form>
+                        <div class="card-block card-dashboard pb-0">                        
+                            <div class="row mb-1">
+                                <label for="rolId" class="col-md-1 col-form-label">Rol :</label>
+                                <div class="col-md-3 float-md-left">
+                                    <select #rolId (change)="onRolChange($event.target.value)" name="rolId" class="form-control">
+                                        <option selected value="">[ Seleccione ]</option>
+                                        <option [value]="rol.rolId" *ngFor="let rol of roles">{{ rol.name }}</option>                                        
+                                    </select>                                        
+                                </div>                                    
+                                <div class="col-md-4 float-md-right">
+                                    <input *ngIf="config.filtering" placeholder="Filtrar por Nombre"
+                                        [ngTableFiltering]="config.filtering"
+                                        class="form-control"
+                                        (tableChanged)="onChangeTable(config)"/>
+                                </div>                                  
+                                <!--<div class="col-md-6 float-md-right">                                   
+                                    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)">                                        
+                                        <div class="form-group row">
+                                            <label for="search" class="sr-only col-form-label">Search</label> 
+                                            <div class="col-md-9">
+                                                <input ngModel type="text" name="search" class="form-control" 
+                                                    id="search" placeholder="Buscar" required>
+                                            </div>                 
+                                            <div class="col-md-3">         
+                                                <button type="submit" class="btn btn-primary">Buscar</button>
+                                            </div>
+                                        </div>                                        
+                                    </form>
+                                </div>  -->
+                            </div>                                                        
                             <div class="table-responsive">
                                 <ng-table 
                                         [config]="config"
                                         (tableChanged)="onChangeTable(config)"                                        
                                         (removeClicked)="onRemoveClick($event)"
+                                        (itemCheckboxChanged)="onItemCheckboxChange($event)"                                        
                                         [rows]="rows" [columns]="columns">
                                 </ng-table>
                             </div>
@@ -63,11 +75,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="float-md-right float-xs-right mb-2 mb-xs-2">                            
-                            <button [routerLink]="['/dashboard/acl/resource']" type="button" class="btn btn-outline-secondary mr-1">
-                                Cancelar
-                            </button>
-                            <button [ladda]="isLoading" form="form" type="submit" data-style="slide-right" class="btn btn-primary">
+                        <div class="float-md-right float-xs-right mb-2 mb-xs-2">                                                        
+                            <button [ladda]="isLoading" [disabled]="rolId.value == ''" (click)="onSave(rolId.value)" type="submit" data-style="slide-right" class="btn btn-primary">
                                 <span class="ladda-label">                                    
                                     Guardar
                                 </span>

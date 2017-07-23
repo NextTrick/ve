@@ -22,8 +22,8 @@ const aclRoutes: Routes = [
       { path: 'resource/create', component: ResourceCreateComponent },
       { path: 'resource/:id', component: ResourceEditComponent },
       { path: 'resource', component: ResourceListComponent },
-      { path: 'create', component: CreateComponent },
-      { path: ':id', component: EditComponent },
+    //   { path: 'create', component: CreateComponent },
+    //   { path: ':id', component: EditComponent },
       { path: '', component: ListComponent },      
     ]
   },

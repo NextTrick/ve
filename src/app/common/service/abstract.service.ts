@@ -45,12 +45,16 @@ export class AbstractService {
         let myParams = new URLSearchParams();
 
         for (let prop in objectParams) {
-            myParams.append(prop, objectParams[prop]);
+            if (prop == 'extra') {
+                 objectParams[prop].forEach((value) => {
+                    for (let subProp in value) {
+                        myParams.append(subProp, value[subProp]);        
+                    }    
+                });
+            } else {
+                myParams.append(prop, objectParams[prop]);
+            }            
         }
-
-        // params.forEach((element, index) => {
-        //     myParams.append(index, element);    
-        // });
 
         let options = new RequestOptions({params: myParams});
 

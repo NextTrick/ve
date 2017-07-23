@@ -8,6 +8,7 @@ export class Filter {
     sortOrder?: string;
     s?: string;
     oneLoad?: boolean = false;
+    extra?: Array<any> = [];
 }
 
 // @Component({
@@ -17,6 +18,8 @@ export class Filter {
 // })
 export class NextNg2TableComponent implements OnInit {
 
+    isLoading: boolean = false;
+    
     public rows: Array<any> = [];
     public columns: Array<any> = [];
     
@@ -49,7 +52,9 @@ export class NextNg2TableComponent implements OnInit {
     constructor(
         protected utilService: any = {},
         protected objectService: any = {}
-    ) {}
+    ) {
+        this.initEmitter();
+    }
 
     ngOnInit() {  
         this.loadData(this.config); 
@@ -67,10 +72,14 @@ export class NextNg2TableComponent implements OnInit {
             this.filter.oneLoad = true;
         }    
 
-        this.objectService.getAll(this.filter)
+        this.getAll(this.filter, config, page);              
+    }
+
+    public getAll(filter: Filter, config, page) {
+        this.objectService.getAll(filter)
             .subscribe(response => {   
                 console.log(response);                                               
-                if (response.success) {                                                                                                                 
+                if (response.success) {
                     this.data = response.data.listData;                                         
                     if (this.config.oneLoad) {
                         this.processConfig(config, page);                                                         
@@ -81,7 +90,7 @@ export class NextNg2TableComponent implements OnInit {
                 }  else {
                     this.utilService.errorNotification();
                 }                
-            });        
+            });  
     }
 
     public onRemoveClick(row: any): any {
@@ -185,7 +194,7 @@ export class NextNg2TableComponent implements OnInit {
         return filteredData;
     }
 
-    public processConfig(config: any, page: any) {
+    public processConfig(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }) {
         
         if (config.filtering) {
             Object.assign(this.config.filtering, config.filtering);
@@ -215,5 +224,13 @@ export class NextNg2TableComponent implements OnInit {
 
     setUtilService(utilService: any) {
         this.utilService = utilService;
+    }
+
+    initEmitter() {
+        this.utilService.isLoadingEmitter.subscribe(
+            isLoading => {
+                this.isLoading = isLoading;
+            }
+        );
     }
 }

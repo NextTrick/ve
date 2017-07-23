@@ -12,8 +12,8 @@ export class AclService extends AbstractService {
     
     private permissions: Array<any> = [];
 
-    path: string; 'acl';
-    searchPath: string; 'acl/search';
+    path: string = 'acl';
+    searchPath: string = 'acl/search';
 
     constructor (
         protected http: Http

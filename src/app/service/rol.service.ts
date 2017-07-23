@@ -11,5 +11,12 @@ import { AbstractService } from '../common/service/abstract.service';
 export class RolService extends AbstractService {
     path: string =  'rol';
     searchPath: string = 'rol/search'; 
+
+    getActiveRoles() {
+        return this.http.get(
+            environment.backendUrl + this.path + '/get-active-roles'
+        )
+        .map(res => res.json());
+    }
 }
 

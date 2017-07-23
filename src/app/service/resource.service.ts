@@ -11,5 +11,28 @@ import { AbstractService } from '../common/service/abstract.service';
 export class ResourceService extends AbstractService {
     path: string =  'resource';
     searchPath: string = 'resource/search'; 
+
+    getAllByRol(filter) {
+        
+        let myParams = new URLSearchParams();
+        for (let prop in filter) {
+            if (prop == 'extra') {
+                 filter[prop].forEach((value) => {
+                    for (let subProp in value) {
+                        myParams.append(subProp, value[subProp]);        
+                    }    
+                });
+            } else {
+                myParams.append(prop, filter[prop]);
+            }            
+        }
+
+        let options = new RequestOptions({params: myParams});
+
+        return this.http.get(
+            environment.backendUrl + this.path + '/get-all-by-rol', options
+        )
+        .map(res => res.json());
+    }
 }
 

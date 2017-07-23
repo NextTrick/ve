@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
       </tr>
         <tr *ngFor="let row of rows">   
             <td *ngIf="config.selection.active" >            
-                <input type="checkbox" name="selection" [value]="row.id">
+                <input type="checkbox" name="selection" [(ngModel)]="row.active" (change)="changeItemCheckbox(row, $event)">
             </td>         
           <td *ngFor="let column of columns" [innerHtml]="sanitize(getData(row, column.name))"></td>
           <td *ngIf="config.action.active" >            
@@ -69,6 +69,7 @@ export class NgTableComponent {
   @Output() public tableChanged:EventEmitter<any> = new EventEmitter();
   @Output() public cellClicked:EventEmitter<any> = new EventEmitter();
   @Output() public removeClicked:EventEmitter<any> = new EventEmitter();
+  @Output() public itemCheckboxChanged:EventEmitter<any> = new EventEmitter();
 
   public showFilterRow:Boolean = false;
 
@@ -140,5 +141,9 @@ export class NgTableComponent {
 
   public removeClick(row:any):void {
     this.removeClicked.emit(row);
+  }
+
+  public changeItemCheckbox(row:any, event:any):void {
+    this.itemCheckboxChanged.emit({row: row, value: event.target.checked});
   }
 }
