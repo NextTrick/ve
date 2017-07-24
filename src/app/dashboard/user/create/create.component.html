@@ -27,18 +27,7 @@
                     </div>
 
                     <div class="col-md-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title" id="basic-layout-form">Nueva cuenta</h4>
-                                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                                <div class="heading-elements">
-                                    <ul class="list-inline mb-0">
-                                        <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
-                                        <li><a data-action="reload"><i class="icon-reload"></i></a></li>
-                                        <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="card">                            
                             <div class="card-body collapse in">
                                 <div class="card-block">
                                     <form [formGroup]="form" id="form" (ngSubmit)="onSubmit()" class="form">
@@ -55,15 +44,7 @@
                                                                 {{ formErrors.name }}
                                                             </span>
                                                         </div>
-                                                    </div>
-                                                    <!--<div class="form-group">                                                        
-                                                        <label for="name">Nombre</label>
-                                                        <div class="controls">
-                                                            <input [formControl]="form.controls['name']" type="text" id="name" 
-                                                                    maxlength="100" class="form-control" placeholder="Nombre" name="name"                                                                                                                                  
-                                                                    required [attr.data-validation-required-message]="validatorMessage.required">
-                                                        </div>
-                                                    </div>-->
+                                                    </div>                                                    
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -109,11 +90,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">                                                        
                                                         <label for="email">E-mail</label>
-                                                        <div class="controls">
-                                                            <!--<input [formControl]="form.controls['email']" type="email" id="email" 
-                                                                    maxlength="100" class="form-control" placeholder="email" name="email"
-                                                                    required [attr.data-validation-email-message]="validatorMessage.email"
-                                                                    [attr.data-validation-required-message]="validatorMessage.required" >    -->
+                                                        <div class="controls">                                                            
                                                             <input [formControl]="form.controls['email']" type="email" id="email" 
                                                                 maxlength="100" class="form-control" placeholder="email" name="email">  
                                                             <span class="danger" *ngIf="formErrors.email">
@@ -125,10 +102,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group" >                                                        
                                                         <label class="control-label" for="password">Password</label>
-                                                        <div class="controls">
-                                                            <!--<input [formControl]="form.controls['password']" type="password" id="password" 
-                                                                    maxlength="100" class="form-control" placeholder="Password" name="password" 
-                                                                    required [attr.data-validation-required-message]="validatorMessage.required"> -->
+                                                        <div class="controls">                                                            
                                                             <input [formControl]="form.controls['password']" type="password" id="password" 
                                                                     maxlength="100" class="form-control" placeholder="Password" name="password">                                                      
                                                             <span class="danger" *ngIf="formErrors.password">
@@ -141,13 +115,14 @@
                                             <div class="row">                                                   
                                                 <div class="col-sm-12 col-md-6">  
                                                     <div class="form-group">
-                                                        <label for="rolId">Rol</label>
-                                                        <select name="rolId" id="rolId" class="form-control">
-                                                            <option value="0" disabled selected>Rol</option>
-                                                            <option value="admin" >Administrador</option>
-                                                            <option value="manager"  >Gerente</option>
-                                                            <option value="editor">Editor</option>
+                                                        <label for="rolId" class="control-label">Rol</label>
+                                                        <select name="rolId" [formControl]="form.controls['rolId']" id="rolId" class="form-control">
+                                                            <option value="" disabled selected>Rol</option>
+                                                            <option *ngFor="let rol of roles" [ngValue]="rol.rolId" >{{ rol.name }}</option>                                                            
                                                         </select>
+                                                        <span class="danger" *ngIf="formErrors.rolId">
+                                                            {{ formErrors.rolId }}
+                                                        </span>
                                                     </div>                                            
                                                 </div>                                             
                                             </div>
@@ -171,20 +146,11 @@
                                             </div>
                                             <div class="row">                                               
                                                 <div class="col-sm-12 col-md-6">                                                      
-                                                        <label for="active">Activo</label>                                                         
-                                                        <input name="active" [formControl]="form.controls['active']" type="checkbox" id="active">                                                                                                                                                                                                                                   
+                                                    <label for="status">Activo</label>                                                         
+                                                    <input name="status" [formControl]="form.controls['status']" type="checkbox" id="status">
                                                 </div>                                                                                               
                                             </div>                                            
                                         </div>
-
-                                        <!--<div class="form-actions right">
-                                            <button type="button" class="btn btn-warning mr-1">
-                                                <i class="icon-cross2"></i> Cancel
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">
-                                                <i class="icon-check2"></i> Save
-                                            </button>
-                                        </div>-->
                                     </form>
                                 </div>
                             </div>

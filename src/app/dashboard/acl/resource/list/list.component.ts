@@ -40,7 +40,7 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         this.config.action.edit.uri = '/dashboard/acl/resource/';
         this.config.action.remove.active = true;
         this.config.oneLoad = true;
-        this.itemsPerPage = 3;
+        this.itemsPerPage = 5;
         this.config.filtering.columnName = 'name';
     }
 

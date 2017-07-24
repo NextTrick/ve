@@ -47,21 +47,17 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
             name: 'products',
             sort: false,
         }        
-    ];
-    
-    public page: number = 1;
-    public itemsPerPage: number = 5;        
-    public filter: Filter =  new Filter();            
+    ];    
 
     constructor(
         private http: Http,
         private router: Router,
         private userService: UserService,        
         private aclService: AclService,
-        public utilService: UtilService,
+        protected utilService: UtilService,
     ) {               
-        super();
-        super.setObjectService(this.userService);        
+        super(utilService, userService);
+        // super.setObjectService(this.userService);        
 
         this.config.oneLoad = false;       
         this.config.action.edit.active = true;
@@ -73,48 +69,6 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         super.ngOnInit();
         // this.onChangeTable(this.config);
     }
-
-    // public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {            
-    //     let sortParms  = this.getSortParams(config);
-    //     this.filter.pageIndex = page.page;
-    //     this.filter.pageSize = page.itemsPerPage;                
-    //     this.filter.sortField = sortParms.columnName;
-    //     this.filter.sortOrder = sortParms.sort;        
-    //     this.filter.s = this.config.filtering.filterString;                          
-        
-    //     this.getAll(this.filter);
-    // }    
-
-    // public getAll(filter: Filter) {
-    //     this.userService.getAll(filter)
-    //         .subscribe(response => {   
-    //             console.log(response);                                               
-    //             if (response.success) {                                                                            
-    //                 this.totalItems = response.data.found;                    
-    //                 this.data = response.data.listData; 
-    //                 this.rows = this.data;                                          
-    //             }  else {
-    //                 this.utilService.errorNotification();
-    //             }                
-    //         });        
-    // }
-
-    // onPageChanged(event: any) {        
-    //     this.filter.pageIndex = event.page;
-    //     this.filter.pageSize = event.itemsPerPage;                                   
-    //     this.getAll(this.filter);
-    // }
-
-    // onSearch(searchForm: any) {        
-    //     let searchText = searchForm.value.search;         
-    //     this.config.filtering.filterString = searchText;
-
-    //     this.page = 1;
-    //     this.filter.pageSize = this.itemsPerPage;
-    //     this.filter.s = searchText;
-    //     this.filter.pageIndex = this.page;
-    //     this.getAll(this.filter); 
-    // }
 
     ngAfterViewInit() {   
                          

@@ -22,7 +22,7 @@
             <!-- Description -->
             <section id="description">
                 <div class="card">
-                    <div class="card-header">
+                    <!--<div class="card-header">
                         <h4 class="card-title">Listado</h4>
                         <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
                         <div class="heading-elements">
@@ -33,25 +33,25 @@
                                 <li><a data-action="close"><i class="icon-cross2"></i></a></li>
                             </ul>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="card-body collapse in">
                         <div class="card-block card-dashboard ">                            
                             <div class="row">                            
-                                <div class="col-sm-12 col-md-6">                                   
-                                    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)" class="form-inline form-horizontal">                                        
+                                <div class="col-md-6 float-md-left">                                   
+                                    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)">                                        
                                         <div class="form-group row">
-                                            <label for="search" class="sr-only">Search</label> 
-                                            <div class="col-sm-10">
+                                            <label for="search" class="sr-only col-form-label">Search</label> 
+                                            <div class="col-md-9">
                                                 <input ngModel type="text" name="search" class="form-control" 
                                                     id="search" placeholder="Buscar" required>
-                                            </div>                          
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Buscar</button>
+                                            </div>                 
+                                            <div class="col-md-3">         
+                                                <button type="submit" class="btn btn-primary">Buscar</button>
+                                            </div>
+                                        </div>                                        
                                     </form>
-                                </div>
-                            </div>
-                            <br>
-                            
+                                </div>  
+                            </div>                            
                             <div class="table-responsive">
                                 <ng-table 
                                         [config]="config"

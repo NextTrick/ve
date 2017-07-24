@@ -7,7 +7,7 @@
                     </li>
                     <li class="breadcrumb-item"><a href="#">Users</a>
                     </li>
-                    <li class="breadcrumb-item active">Add
+                    <li class="breadcrumb-item active">Editar
                     </li>
                 </ol>
             </div>
@@ -27,18 +27,7 @@
                     </div>
 
                     <div class="col-md-8">
-                        <div class="card">
-                            <!--<div class="card-header">
-                                <h4 class="card-title" id="basic-layout-form">Nueva cuenta</h4>
-                                <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
-                                <div class="heading-elements">
-                                    <ul class="list-inline mb-0">
-                                        <li><a data-action="collapse"><i class="icon-minus4"></i></a></li>
-                                        <li><a data-action="reload"><i class="icon-reload"></i></a></li>
-                                        <li><a data-action="expand"><i class="icon-expand2"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>-->
+                        <div class="card">                            
                             <div class="card-body collapse in">
                                 <div class="card-block">
                                     <form [formGroup]="form" id="form" (ngSubmit)="onSubmit()" class="form">
@@ -55,7 +44,7 @@
                                                                 {{ formErrors.name }}
                                                             </span>
                                                         </div>
-                                                    </div>                                                    
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
@@ -68,7 +57,23 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">                                                
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="file">Foto</label>                                                        
+                                                        <label id="image" class="file center-block">
+                                                            <div class="controls">                                                                
+                                                                <input [formControl]="form.controls['image']" [uploader]="uploader" 
+                                                                    ng2FileSelect (change)="fileChange($event)" type="file" id="file" class="form-control-file" 
+                                                                    accept="image/x-png,image/gif,image/jpeg">                                                                
+                                                                <span class="file-custom"></span>  
+                                                                <span class="danger" *ngIf="formErrors.image">
+                                                                    {{ formErrors.image }}
+                                                                </span>  
+                                                            </div>
+                                                        </label>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="phone">Teléfono</label>
@@ -78,14 +83,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <h4 class="form-section"><i class="icon-clipboard4"></i>Seguridad</h4>
+                                            </div>                                            
+                                            <h4 class="form-section"><i class="icon-security"></i>Seguridad</h4>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">                                                        
                                                         <label for="email">E-mail</label>
-                                                        <div class="controls">                                                        
+                                                        <div class="controls">                                                            
                                                             <input [formControl]="form.controls['email']" type="email" id="email" 
                                                                 maxlength="100" class="form-control" placeholder="email" name="email">  
                                                             <span class="danger" *ngIf="formErrors.email">
@@ -100,7 +104,6 @@
                                                         <div class="controls">                                                            
                                                             <input [formControl]="form.controls['password']" type="password" id="password" 
                                                                     maxlength="100" class="form-control" placeholder="Password" name="password">                                                      
-                                                            <p class="font-small-2 warning">Dejar vacío si no se quiere modificar</p>
                                                             <span class="danger" *ngIf="formErrors.password">
                                                                 {{ formErrors.password }}
                                                             </span>
@@ -108,6 +111,44 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row">                                                   
+                                                <div class="col-sm-12 col-md-6">  
+                                                    <div class="form-group">
+                                                        <label for="rolId" class="control-label">Rol</label>
+                                                        <select name="rolId" [formControl]="form.controls['rolId']" id="rolId" class="form-control">
+                                                            <option value="" disabled selected>Rol</option>
+                                                            <option *ngFor="let rol of roles" [ngValue]="rol.rolId" >{{ rol.name }}</option>                                                            
+                                                        </select>
+                                                        <span class="danger" *ngIf="formErrors.rolId">
+                                                            {{ formErrors.rolId }}
+                                                        </span>
+                                                    </div>                                            
+                                                </div>                                             
+                                            </div>
+                                            <div class="row">                                                
+                                                <div class="col-md-12">
+                                                    <div class="row">                                                
+                                                        <div class="col-md-12">
+                                                            <div class="form-group">
+                                                                <label for="products">Productos</label>                                                        
+                                                                <select [formControl]="form.controls['products']" multiple name="products" class="form-control select2-size-sm">
+                                                                    <option *ngFor="let product of allProducts" [ngValue]="product">{{ product.name }}  
+                                                                    </option>
+                                                                </select>
+                                                                <span class="danger" *ngIf="formErrors.products">
+                                                                    {{ formErrors.products }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">                                               
+                                                <div class="col-sm-12 col-md-6">                                                      
+                                                    <label for="status">Activo</label>                                                         
+                                                    <input name="status" [formControl]="form.controls['status']" type="checkbox" id="status">                                                        
+                                                </div>                                                                                               
+                                            </div>                                            
                                         </div>
                                     </form>
                                 </div>

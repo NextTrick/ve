@@ -46,8 +46,7 @@ export abstract class AbstractEditComponent {
             .subscribe(
             response => {
                     if (response.success) {
-                        this.objectEntity = response.data.object;
-                        console.log('this.objectEntityLog', this.objectEntity);
+                        this.objectEntity = response.data.object;                        
                         this.populateForm();
                     } else {
                         this.utilService.errorNotification(response.data.message);
@@ -64,9 +63,9 @@ export abstract class AbstractEditComponent {
         for (let prop in this.objectEntity) {
             let control = this.form.get(prop);
             if (control) {
-                console.log(prop);
+                console.log(prop);                
                 if (prop == 'status') {
-                    if (this.objectEntity[prop] == 0) {
+                    if (this.objectEntity[prop] == 0 || this.objectEntity[prop] == '0') {
                         control.setValue(false);
                     } else {
                         control.setValue(true);
@@ -80,6 +79,7 @@ export abstract class AbstractEditComponent {
 
     onSubmit(): void {
         this.formService.formSubmitted();
+        console.log('this.objectEntityLog', this.objectEntity);
         if (this.form.valid) {
             this.utilService.isLoading(true);
             this.objectService.update(this.objectEntity.id, this.form.value)

@@ -13,6 +13,7 @@ import { FileUploader, FileItem, ParsedResponseHeaders, FileLikeObject} from 'ng
 import { LayoutService } from '../../service/layout.service';
 import { UserService } from '../../../service/user.service';
 import { AclService } from '../../../service/acl.service';
+import { RolService } from '../../../service/rol.service';
 import { FormService } from '../../../common/service/form.service';
 import { UtilService } from '../../../common/service/util.service';
 
@@ -20,8 +21,8 @@ import { UtilService } from '../../../common/service/util.service';
 import { message } from '../../../common/message';
 import { validatorMessage } from '../../../common/validator-message';
 
-//interfaces
-import { User } from '../../interface/user.interface';
+//Abstract
+import { AbstractCreateComponent } from '../../../common/component/crud/abstract-create.component';
 
 import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapValidation.js';
 
@@ -32,14 +33,9 @@ import '../../../../assets/s/app-assets/vendors/js/forms/validation/jqBootstrapV
         '../../../../assets/s/app-assets/css/plugins/forms/validation/form-validation.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class CreateComponent implements OnInit, OnDestroy {
+export class CreateComponent extends AbstractCreateComponent implements OnInit, OnDestroy {
 
-    form: FormGroup;
-    isLoading: boolean = false;
-    
-    user: User;
-    validatorMessage:any = validatorMessage.es;
-    mesageErr = message.success; 
+    roles: Array<any> = [];
 
     public filePreviewPath: SafeUrl;
 
@@ -58,6 +54,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         email: '',
         password: '',
         image: '',
+        rolId: '',
         products: '',
     };
 
@@ -72,40 +69,6 @@ export class CreateComponent implements OnInit, OnDestroy {
             },       
         }        
     };
-
-    constructor(
-        private elRef: ElementRef,
-        private layoutService: LayoutService,
-        private userService: UserService,
-        private router: Router,
-        private formBuilder: FormBuilder,
-        private formService: FormService,
-        private utilService: UtilService,
-        private aclService: AclService,
-        private sanitizer: DomSanitizer,
-    ) {               
-    }
-
-    ngOnInit() {        
-        console.log('aclServiceLog userList', this.aclService.getPermissions());
-        this.initUploader();    
-        this.initForm();                
-        this.layoutService.showEditBar(true); 
-
-        this.initEmitter();
-    }
-
-    fileChange(event) {
-        // let fileList: FileList = event.target.files;           
-    }
-
-    ngAfterViewInit() {            
-        // this.initJqBootstrapValidation();
-                
-        $("select[name='products']").select2({
-            placeholder: "Productos",   
-        });        
-    }   
 
     allProducts = [
         {
@@ -128,9 +91,40 @@ export class CreateComponent implements OnInit, OnDestroy {
             value: "auto"
         }];
 
-    
+    constructor(
+        private elRef: ElementRef,
+        private layoutService: LayoutService,
+        protected userService: UserService,
+        private rolService: RolService,
+        private router: Router,
+        protected formBuilder: FormBuilder,
+        protected formService: FormService,
+        protected utilService: UtilService,
+        private aclService: AclService,
+        private sanitizer: DomSanitizer,
+    ) {      
+        super(formBuilder, formService, utilService, userService);         
+    }
+
+    ngOnInit() {                
+        this.initUploader();    
+        this.initForm();                
+        this.layoutService.showEditBar(true);         
+    }
+
+    fileChange(event) {
+        // let fileList: FileList = event.target.files;           
+    }
+
+    ngAfterViewInit() {                    
+        $("select[name='products']").select2({
+            placeholder: "Productos",   
+        });        
+    }       
 
    initForm() {
+        this.loadRoles();
+
         this.form = this.formBuilder.group({
             name: ['', [Validators.required]],
             lastName: [''],
@@ -138,7 +132,8 @@ export class CreateComponent implements OnInit, OnDestroy {
             email: ['', [Validators.email, Validators.required]],
             password: ['', [Validators.required]],
             image: [''],
-            active: [''],
+            status: [''],
+            rolId: ['', [Validators.required]],
             products: [[this.allProducts[5], this.allProducts[3]]],
         });  
 
@@ -151,9 +146,24 @@ export class CreateComponent implements OnInit, OnDestroy {
         );
     }
 
-    onSubmit(): void {    
-        console.log('subbited');  
-        console.log(this.form.value);          
+    loadProducts() {
+        //Load products
+    }
+
+    loadRoles() {
+        this.rolService.getActiveRoles()
+            .subscribe(
+                (response) => {
+                    if (response.success) {
+                        this.roles = response.data.roles;                                                               
+                    }  else {
+                        this.utilService.errorNotification();
+                    }
+                }
+            );        
+    }
+
+    onSubmit(): void {        
         this.formService.formSubmitted(); 
         if (this.uploader.queue.length > 0) {            
             this.uploader.uploadAll();            
@@ -186,14 +196,6 @@ export class CreateComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.layoutService.showEditBar(false);
-    }
-
-    initEmitter() {
-        this.utilService.isLoadingEmitter.subscribe(
-            isLoading => {
-                this.isLoading = isLoading;
-            }
-        );
     }
 
     initUploader() {        
@@ -231,26 +233,6 @@ export class CreateComponent implements OnInit, OnDestroy {
                 }                
             }
         };
-    }    
+    }
 
-    initJqBootstrapValidation() {
-        var _this = this;
-        // $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]")
-        $(this.elRef.nativeElement).find("input,select,textarea").not("[type=submit]")
-            .jqBootstrapValidation({
-                preventSubmit: true,
-                submitError: function ($form, event, errors) {
-                },
-                submitSuccess: function ($form, event) {
-                    console.log('form' + $form.serializeArray());
-                    var values = {};
-                    $.each($form.serializeArray(), function (i, field) {
-                        values[field.name] = field.value;
-                    });
-                    console.log(values);
-
-                    // _this.onSubmit(values);
-                }
-            });
-    }    
 }

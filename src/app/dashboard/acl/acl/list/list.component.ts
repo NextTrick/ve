@@ -47,23 +47,21 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.loadRoles();
+        super.ngOnInit();
+    }
+    
+    loadRoles() {
         this.rolService.getActiveRoles()
             .subscribe(
                 (response) => {
                     if (response.success) {
-                        let roles = response.data.roles; 
-                        this.loadRoles(roles);                                          
+                        this.roles = response.data.roles;                                                               
                     }  else {
                         this.utilService.errorNotification();
                     }
                 }
-            );
-
-        super.ngOnInit();
-    }
-
-    loadRoles(roles) {
-        this.roles = roles;
+            );        
     }
 
     onRolChange(rolId: number) {

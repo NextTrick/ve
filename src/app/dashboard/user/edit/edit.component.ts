@@ -10,6 +10,7 @@ import { CustomValidators } from 'ng2-validation';
 //services
 import { LayoutService } from '../../service/layout.service';
 import { UserService } from '../../../service/user.service';
+import { RolService } from '../../../service/rol.service';
 import { FormService } from '../../../common/service/form.service';
 import { UtilService } from '../../../common/service/util.service';
 
@@ -17,8 +18,8 @@ import { UtilService } from '../../../common/service/util.service';
 import { message } from '../../../common/message';
 import { validatorMessage } from '../../../common/validator-message';
 
-//interfaces
-// import { User } from '../../interface/user.interface';
+//Abstract
+import { AbstractEditComponent } from '../../../common/component/crud/abstract-edit.component';
 
 // model
 import { User } from '../../model/entity/user.entity';
@@ -28,13 +29,10 @@ import { User } from '../../model/entity/user.entity';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit {
+export class EditComponent extends AbstractEditComponent implements OnInit {
 
-  form: FormGroup;
-    isLoading: boolean = false;
-    user: User = new User();
-    validatorMessage:any = validatorMessage.es;
-    mesageErr = message.success;    
+    user: User = new User();   
+    roles: Array<any> = []; 
 
     formErrors = {
         name: '',
@@ -42,65 +40,55 @@ export class EditComponent implements OnInit {
         phone: '',
         email: '',
         password: '',
-        image: ''
-    };
+        image: '',
+        rolId: '',
+        products: '',
+    };    
 
-    customValidatorMessages = {};
+    allProducts = [
+        {
+            name: "Gestion",
+            value: "gestion"
+        }, {
+            name: "El Comercio",
+            value: "comercio"
+        }, {
+            name: "Peru 21",
+            value: "peru21"        
+        }, {
+            name: "Trome",
+            value: "trome"        
+        }, {
+            name: "Ojo",
+            value: "ojo"
+        }, {            
+            name: "Autos",
+            value: "auto"
+        }];
 
     constructor(
         private elRef: ElementRef,
         private layoutService: LayoutService,
-        private userService: UserService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private formBuilder: FormBuilder,
-        private formService: FormService,
-        private utilService: UtilService,
+        protected userService: UserService,
+        private rolService: RolService,
+        protected router: Router,
+        protected route: ActivatedRoute,
+        protected formBuilder: FormBuilder,
+        protected formService: FormService,
+        protected utilService: UtilService,
         private sanitizer: DomSanitizer,
-    ) {               
+    ) {    
+        super(formBuilder, formService, utilService, userService, route, router);     
     }
 
-    ngOnInit() {                           
-        let userId = this.route.snapshot.params['id'];
-        this.utilService.isLoading(true);
-        this.userService.get(userId)
-            .finally(() => this.utilService.isLoading(false))
-            .subscribe(
-                response => {
-                    if (response.success) {
-                        this.user = response.data.user;                       
-                        this.populateForm();                 
-                    } else {
-                        this.utilService.errorNotification()
-                    }
-                }, 
-                error => {                
-                    this.utilService.errorNotification()
-                    this.router.navigate(['/not-found']);
-                }
-            );   
-
-        this.initForm();        
-        this.layoutService.showEditBar(true);   
-        this.initEmitter();                        
+    ngOnInit() {        
+        super.ngOnInit();        
+        this.layoutService.showEditBar(true);           
     }
 
-    populateForm() {
-        this.form.get('name').setValue(this.user.name); 
-        this.form.get('lastName').setValue(this.user.lastName); 
-        this.form.get('phone').setValue(this.user.phone); 
-        this.form.get('email').setValue(this.user.email);    
+    initForm() {    
+        this.loadRoles();
 
-        // Object.keys(this.user).forEach(k => {
-        //     let control = this.form.get(k);
-        //     if (control)
-        //         // control.setValue(this.user[k], {onlySelf:true});
-        //         control.setValue(this.user[k]);
-        //     }
-        // );
-    }
-
-    initForm() {        
         this.form = this.formBuilder.group({
             name: ['', [Validators.required]],
             lastName: [''],
@@ -108,6 +96,9 @@ export class EditComponent implements OnInit {
             email: ['', [Validators.email, Validators.required]],
             password: [''],
             image: [''],
+            status: [''],
+            rolId: ['', [Validators.required]],
+            products: [[this.allProducts[5], this.allProducts[3]]],
         });       
 
         this.formService.initForm(this.form, this.formErrors, this.customValidatorMessages).subscribe(
@@ -116,49 +107,26 @@ export class EditComponent implements OnInit {
         );
     }
 
-    onSubmit(): void {    
-        console.log('subbited');    
-        this.formService.formSubmitted();                             
-        this.updateUser();        
-    }
-
-    updateUser() {
-        if (this.form.valid) {
-
-            this.user.name = this.form.value.name;
-            this.user.lastName = this.form.value.lastName;
-            this.user.email = this.form.value.email;
-            this.user.password = this.form.value.password;
-
-            this.utilService.isLoading(true);
-
-            this.userService.update(this.user)
-                .finally(() => this.utilService.isLoading(false))
-                .subscribe(
-                    response => {                    
-                        if (response.success) {
-                            this.utilService.successNotification();                        
-                        } else {
-                            this.utilService.errorNotification(response.data.message);
-                        }                                      
-                    },
-                    error => {
+    loadRoles() {
+        this.rolService.getActiveRoles()
+            .subscribe(
+                (response) => {
+                    if (response.success) {
+                        this.roles = response.data.roles;                                                               
+                    }  else {
                         this.utilService.errorNotification();
-                        console.log(error)       
                     }
-                );
-        }
+                }
+            );        
     }    
 
     ngOnDestroy() {
         this.layoutService.showEditBar(false);
-    }        
+    }
 
-    initEmitter() {
-        this.utilService.isLoadingEmitter.subscribe(
-            isLoading => {
-                this.isLoading = isLoading;
-            }
-        );
+    ngAfterViewInit() {                    
+        $("select[name='products']").select2({
+            placeholder: "Productos",   
+        });        
     }
 }

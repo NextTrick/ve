@@ -4,108 +4,42 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
-// import { User } from '../dashboard/interface/user.interface';
 import { User } from '../dashboard/model/entity/user.entity';
 
+import { AbstractService } from '../common/service/abstract.service';
+
 @Injectable()
-export class UserService {
+export class UserService extends AbstractService {
 
     imageId: string | null = null; 
 
     path: string =  'user';
-    searchPath: string = 'user/search'; 
+    searchPath: string = 'user/search';     
 
-    constructor (private http: Http) {
-    }
-
-    create(user: User) {  
+    create(user: User) {          
         if (this.imageId != null) {
             user.imageId = this.imageId;
-        }             
-        let userData = JSON.stringify(user);    
+        }   
 
-        return this.http.post(
-                environment.backendUrl + 'user',
-                {user}        
-            )
-            .map(res => res.json())            
+        return super.create(user)
+            .do(
+                (response) => {                    
+                    this.imageId = null;
+                }
+            );       
+    }
+
+    update(userId: number, user: User) {  
+        if (this.imageId != null) {
+            user.imageId = this.imageId;
+        }   
+
+        return super.update(userId, user)
             .do(
                 (response) => {                    
                     this.imageId = null;
                 }
             );
-    }
-
-    update(user: User) {  
-        if (this.imageId != null) {
-            user.imageId = this.imageId;
-        }             
-        let userData = JSON.stringify(user);    
-
-        return this.http.put(
-                environment.backendUrl + 'user/' + user.userId,
-                {user}        
-            )
-            .map(res => res.json())
-            .do(
-                (response) => {                    
-                    this.imageId = null;
-                }
-            );
-    }
-
-    delete(item: any) {        
-        return this.http.delete(
-            environment.backendUrl + 'user/' + item.userId
-        )
-        .map(res => res.json());
-    }
-
-    getAll(filter: any) {
-        let myHeaders = new Headers();
-        myHeaders.append('Content-Type', 'application/json');    
-        
-        let myParams = new URLSearchParams();
-        myParams.append('pageIndex', filter.pageIndex);
-        myParams.append('pageSize', filter.pageSize);
-
-        if (filter.s) {
-            myParams.append('s', filter.s);	
-        }
-
-        if (filter.sortField) {
-            myParams.append('sortField', filter.sortField);	
-        }
-
-        if (filter.sortOrder) {
-            myParams.append('sortOrder', filter.sortOrder);	
-        }
-        let options = new RequestOptions({params: myParams});
-
-        return this.http.get(
-            environment.backendUrl + 'user', options
-        )
-        .map(res => res.json());
-    }
-
-    get(userId: number) {
-        return this.http.get(
-            environment.backendUrl + 'user/' + userId
-        )
-        .map(res => res.json());
-    }
-
-    search(filter) {        
-        let myParams = new URLSearchParams();
-        myParams.append('s', filter.s);           
-        myParams.append('pageSize', filter.pageSize);
-
-        let options = new RequestOptions({params: myParams});
-
-        return this.http.get(
-            environment.backendUrl + 'user/search', options
-        )
-        .map(res => res.json());
     }
 
     uploadImage() {

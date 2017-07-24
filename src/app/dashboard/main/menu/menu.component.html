@@ -36,11 +36,13 @@
                             </li>
                         </ul>
                     </li>
-                    <li data-menu=""><a href="#" data-toggle="dropdown" class="dropdown-item">Usuarios</a>                        
+                    <li data-menu=""><a href="#"  [routerLink]="['/dashboard/user']" data-toggle="dropdown" class="dropdown-item">Usuarios</a>                        
                     </li>
-                    <li data-menu=""><a href="#" data-toggle="dropdown" class="dropdown-item">Roles</a>                        
+                    <li data-menu=""><a href="#" [routerLink]="['/dashboard/acl/rol']" data-toggle="dropdown" class="dropdown-item">Roles</a>                        
                     </li>
-                    <li data-menu=""><a href="#" data-toggle="dropdown" class="dropdown-item">Recursos</a>                        
+                    <li data-menu=""><a href="#" [routerLink]="['/dashboard/acl/resource']" data-toggle="dropdown" class="dropdown-item">Recursos</a>                        
+                    </li>
+                    <li data-menu=""><a href="#" [routerLink]="['/dashboard/acl']" data-toggle="dropdown" class="dropdown-item">Permisos</a>                        
                     </li>
                 </ul>
             </li>
