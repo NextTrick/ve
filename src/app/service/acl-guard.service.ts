@@ -9,15 +9,13 @@ import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 import { AuthService } from './auth.service';
-import { AclService } from './acl.service';
 
 @Injectable()
 export class AclGuardService {
     constructor (
         private location: Location,
         private router: Router,
-        private authService: AuthService,
-        private aclService: AclService,
+        private authService: AuthService,        
     ) {
 
     }
@@ -29,12 +27,12 @@ export class AclGuardService {
         let uri = this.location.path();            
         let path = route.routeConfig.path; 
         
-        if (this.authService.isAuthenticated()) {
-            if (this.aclService.isAuthorized(uri)) {
+        if (this.authService.isAuthenticated()) {            
+            if (this.authService.isAuthorized(uri)) {                
                 return true;
             } else {
-                this.router.navigate(['/dashboard/auth/login']);    
-            }
+                this.router.navigate(['/access-denied']);    
+            }                                               
         } else {
             this.router.navigate(['/dashboard/auth/login']);
         }

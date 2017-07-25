@@ -1,7 +1,7 @@
 import {Directive, HostBinding, Renderer, Renderer2, ElementRef, Input} from '@angular/core';
 import { Router } from '@angular/router'
 
-import { AclService } from '../../service/acl.service';
+import { AuthService } from '../../service/auth.service';
 
 @Directive({selector: '[acl]'})
 export class AclDirective {
@@ -17,7 +17,7 @@ export class AclDirective {
         private el: ElementRef,
         private renderer: Renderer,
         private renderer2: Renderer2,
-        private aclService: AclService,
+        private authService: AuthService,
         private router: Router,
     ) {        
         this.nativeElement = this.el.nativeElement;
@@ -25,6 +25,6 @@ export class AclDirective {
 
     ngOnInit() {        
         let uri = this.routeParams[0];               
-        this.hideRouterLink = !this.aclService.isAllowed(uri);        
+        this.hideRouterLink = !this.authService.isAuthorized(uri);        
     }
 }

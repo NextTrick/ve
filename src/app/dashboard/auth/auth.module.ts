@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RecoverPasswordComponent } from './recover-password/recover-password.component';
 import { AuthComponent } from './auth.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
     imports: [
@@ -19,7 +20,8 @@ import { AuthComponent } from './auth.component';
         LoginComponent,
         SignupComponent,
         RecoverPasswordComponent,
-        AuthComponent
+        AuthComponent,
+        LogoutComponent
     ],
     bootstrap: [AuthComponent]
 })

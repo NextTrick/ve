@@ -4,6 +4,8 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
+import { AuthService } from '../../service/auth.service';
+
 @Injectable()
 export class AbstractService {
 
@@ -11,14 +13,15 @@ export class AbstractService {
     searchPath: string; '';
 
     constructor (
-        protected http: Http
+        protected http: Http,
+        protected authService: AuthService   
     ) {
     }
 
-    create(data: any) {
+    create(data: any) {        
         return this.http.post(
                 environment.backendUrl + this.path,
-                {data}        
+                {data}, this.getTokenAsOption()       
             )
             .map(res => res.json());            
     }
@@ -26,14 +29,14 @@ export class AbstractService {
     update(id: number, data: any) {        
         return this.http.put(
                 environment.backendUrl + this.path + '/' + id,
-                {data}        
+                {data}, this.getTokenAsOption()      
             )
             .map(res => res.json());            
     }
 
     delete(id: number) {        
         return this.http.delete(
-            environment.backendUrl + this.path + '/' + id
+            environment.backendUrl + this.path + '/' + id, this.getTokenAsOption()
         )
         .map(res => res.json());
     }
@@ -56,6 +59,8 @@ export class AbstractService {
             }            
         }
 
+        myParams.append('token', this.getToken());
+
         let options = new RequestOptions({params: myParams});
 
         return this.http.get(
@@ -66,7 +71,7 @@ export class AbstractService {
 
     get(id: number) {
         return this.http.get(
-            environment.backendUrl + this.path + '/' + id
+            environment.backendUrl + this.path + '/' + id, this.getTokenAsOption()
         )
         .map(res => res.json());
     }
@@ -76,6 +81,7 @@ export class AbstractService {
 
         myParams.append('s', filter.s);           
         myParams.append('pageSize', filter.pageSize);
+        myParams.append('token', this.getToken());
 
         let options = new RequestOptions({params: myParams});
 
@@ -84,5 +90,18 @@ export class AbstractService {
         )
         .map(res => res.json());
     }    
+
+    getTokenAsOption() {
+        let myParams = new URLSearchParams();
+        myParams.append('token', this.getToken());
+
+        return new RequestOptions({params: myParams});
+    }
+
+    getToken() {
+        let token = this.authService.getToken();    
+            
+        return token;
+    }
 }
 

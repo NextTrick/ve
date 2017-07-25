@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LayoutService } from '../../service/layout.service';
+import { AuthService } from '../../../service/auth.service';
 import { UtilService } from '../../../common/service/util.service';
 
 @Component({
@@ -11,16 +12,19 @@ import { UtilService } from '../../../common/service/util.service';
 export class NavComponent implements OnInit {
 
     isLoading:boolean = false;
-    
+    authUser: any;
     showEditBar = false;
 
     constructor(
         private layoutService: LayoutService,
-        private utilService: UtilService
+        private utilService: UtilService,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
-        // this.initEmitter();         
+        // this.initEmitter();    
+        console.log('authUserLog', this.authService.getAuthUser());
+        this.authUser = this.authService.getAuthUser();   
     }
 
     initEmitter() {

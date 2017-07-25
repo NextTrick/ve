@@ -9,8 +9,7 @@ import { ViewChild, ElementRef, AfterViewInit, Component, OnInit } from '@angula
 })
 export class NotFoundComponent implements OnInit {
     @ViewChild('input') input: ElementRef;
-
-    
+     
     constructor() { }
 
     ngOnInit() {

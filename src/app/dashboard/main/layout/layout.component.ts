@@ -16,9 +16,7 @@ export class LayoutComponent implements OnInit {
         private elRef: ElementRef,
     ) { }
 
-    ngOnInit() {
-        console.log('aclServiceLog layout', this.aclService.getPermissions());
-
+    ngOnInit() {        
         this.updateBodyClass();
     }
 

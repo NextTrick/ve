@@ -10,10 +10,9 @@ import { AbstractService } from '../common/service/abstract.service';
 @Injectable()
 export class ResourceService extends AbstractService {
     path: string =  'resource';
-    searchPath: string = 'resource/search'; 
+    searchPath: string = 'resource/search';    
 
-    getAllByRol(filter) {
-        
+    getAllByRol(filter) {        
         let myParams = new URLSearchParams();
         for (let prop in filter) {
             if (prop == 'extra') {
@@ -26,6 +25,8 @@ export class ResourceService extends AbstractService {
                 myParams.append(prop, filter[prop]);
             }            
         }
+
+        myParams.append('token', this.getToken());
 
         let options = new RequestOptions({params: myParams});
 

@@ -8,6 +8,7 @@ import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
+import { AccessDeniedComponent } from './component/access-denied/access-denied.component';
 
 //Services
 import { UserService } from './service/user.service';
@@ -24,14 +25,15 @@ import { ScriptService } from './common/service/script.service';
 @NgModule({
     declarations: [
         AppComponent,
-        NotFoundComponent,        
+        NotFoundComponent,
+        AccessDeniedComponent,        
     ],
     imports: [
         BrowserModule,
         HttpModule,
         CoreModule,        
-        AppRoutingModule,        
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        AppRoutingModule,                
     ],
     providers: [
         UserService, 

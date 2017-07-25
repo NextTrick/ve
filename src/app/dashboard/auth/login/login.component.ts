@@ -71,7 +71,7 @@ export class LoginComponent implements OnInit {
         );
     }
 
-    onSubmit(): void {           
+    onSubmit(): void {
         this.formService.formSubmitted(); 
         if (this.form.valid) { 
             let remember = 'off';        

@@ -56,8 +56,7 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
         private aclService: AclService,
         protected utilService: UtilService,
     ) {               
-        super(utilService, userService);
-        // super.setObjectService(this.userService);        
+        super(utilService, userService);        
 
         this.config.oneLoad = false;       
         this.config.action.edit.active = true;

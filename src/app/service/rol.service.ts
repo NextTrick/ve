@@ -14,7 +14,7 @@ export class RolService extends AbstractService {
 
     getActiveRoles() {
         return this.http.get(
-            environment.backendUrl + this.path + '/get-active-roles'
+            environment.backendUrl + this.path + '/get-active-roles', this.getTokenAsOption()
         )
         .map(res => res.json());
     }
