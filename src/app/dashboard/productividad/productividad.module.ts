@@ -12,6 +12,11 @@ import { IndicadoresComponent } from './indicadores/indicadores.component';
 import { Chart1Component } from './detalle-indicadores/chart1/chart1.component';
 import { Table1Component } from './detalle-indicadores/table1/table1.component';
 
+import { Chart1Component as IndicadoresChart1Componenet} from './indicadores/chart1/chart1.component';
+import { Chart2Component } from './indicadores/chart2/chart2.component';
+import { Chart3Component } from './indicadores/chart3/chart3.component';
+import { Chart4Component } from './indicadores/chart4/chart4.component';
+
 @NgModule({
     imports: [
         CommonModule,      
@@ -26,6 +31,11 @@ import { Table1Component } from './detalle-indicadores/table1/table1.component';
         ProductividadComponent,
         Chart1Component,
         Table1Component,
+
+        IndicadoresChart1Componenet,
+        Chart2Component,
+        Chart3Component,
+        Chart4Component,
     ]
 })
 export class ProductividadModule { }

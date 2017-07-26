@@ -1,3 +1,228 @@
-<p>
-  indicadores-productividad works!
-</p>
+<div class="app-content container center-layout mt-2">
+    <div class="content-wrapper">
+        <div class="content-header row mb-2">
+            <div class="breadcrumb-wrapper col-xs-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#">Page headers</a>
+                    </li>
+                    <li class="breadcrumb-item active">Breadcrumbs
+                    </li>
+                </ol>
+            </div>
+            <div class="content-header-left col-md-6 col-xs-12">
+                <h3 class="content-header-title mb-0">Indicadores de Productividad</h3>
+                <!--<p class="text-muted mb-0">Page header with description &amp; breadcrumbs at top</p>-->
+            </div>
+            <br/>
+            <!--<div class="content-header-right col-md-6 col-xs-12">
+                <div role="group" aria-label="Button group with nested dropdown" class="btn-group float-md-right">
+                    <div role="group" class="btn-group">
+                        <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i class="icon-cog3 icon-left"></i> Settings</button>
+                        <div aria-labelledby="btnGroupDrop1" class="dropdown-menu"><a href="card-bootstrap.html" class="dropdown-item">Bootstrap Cards</a><a href="component-buttons-extended.html"
+                                class="dropdown-item">Buttons Extended</a></div>
+                    </div><a href="calendars-clndr.html" class="btn btn-outline-primary"><i class="icon-calendar5"></i></a><a href="timeline-center.html"
+                        class="btn btn-outline-primary"><i class="icon-bar-graph-2"></i></a>
+                </div>
+            </div>-->
+            <!--<div class="content-header-lead col-xs-12 mt-1">
+                <p class="lead">Page header with page title, description, breadcrumbs at top &amp; content title.</p>
+            </div>-->
+        </div>
+        <div class="content-body">
+            <!-- Sales stats -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title" id="basic-layout-form">Filtros</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">                                    
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>                                    
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">
+                            <div class="card-block">
+                                <form class="form">
+                                    <div class="form-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="fromDate">Fecha de Inicio</label> 
+                                                    <div class="input-group date">
+                                                        <span class="input-group-addon">
+                                                            <span class="icon-calendar5"></span>
+                                                        </span>
+                                                        <input type="text" class="form-control" placeholder="Fecha de Inicio" name="fromDate">
+                                                    </div>                                                 
+                                                                                                                                                                  
+                                                    <!--<input type="text" class="form-control pickadate-dropdown" placeholder="First Name" name="fname">-->
+                                                    <!--<input #myinput type="text" id="projectinput1" class="form-control pickadate-dropdown" placeholder="First Name" name="fname">-->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="toDate">Fecha Fín</label>
+                                                    <div class='input-group date'>
+                                                        <span class="input-group-addon">
+                                                            <span class="icon-calendar5"></span>
+                                                        </span>
+                                                        <input type="text" class="form-control" placeholder="Fecha Fín" name="toDate">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="projectinput5">Región</label>
+                                                    <select id="projectinput5" name="interested" class="form-control">
+                                                        <option value="none" selected="" disabled="">Región</option>
+                                                        <option value="design">Lima</option>
+                                                        <option value="development">Arequipa</option>
+                                                        <option value="illustration">Cusco</option>
+                                                        <option value="branding">Puno</option>
+                                                        <option value="video">Trujillo</option>
+                                                    </select>
+                                                </div>
+                                            </div>                                            
+                                        </div>                                    
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn btn-secondary btn-min-width mr-1">Imprmir</button>
+                                        <button type="button" class="btn btn-primary btn-min-width">Generar Reporte</button>                                                                            
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4">
+                    <div class="row">
+                        <div class="col-lg-12 col-xs-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title" id="basic-layout-form">Cantidad de Artículos</h4>
+                                    <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                                    <div class="heading-elements">
+                                        <ul class="list-inline mb-0">                                            
+                                            <li><a data-action="reload"><i class="icon-reload"></i></a></li>                                            
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body collapse in">
+                                    <div class="card-block">
+                                        <div class="media">
+                                            <div class="media-left media-middle">
+                                                <i class="icon-newspaper cyan font-large-3 float-xs-left"></i>
+                                            </div>
+                                            <div class="media-body text-xs-right">
+                                                <div class="font-large-2 text-bold-300">278</div>
+                                                <span>Total Impresos</span>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <hr>                                    
+                                    <div class="card-block mb-2">
+                                        <div class="media">
+                                            <div class="media-left media-middle">
+                                                <i class="icon-world deep-orange font-large-3 float-xs-left"></i>
+                                            </div>
+                                            <div class="media-body text-xs-right">
+                                                <div class="font-large-2 text-bold-300">34</div>
+                                                <span>Total Web</span>
+                                            </div>
+                                        </div>
+                                    </div>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header no-border-bottom">
+                            <h4 class="card-title">Impresos por Secciones</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">                                            
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>                                            
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">                            
+                            <div class="card-block">
+                                <home-chart1></home-chart1>
+                                <!--<div class="chartjs">-->
+                                    <!--<canvas id="yearly-sales" class="height-350 px-2 pt-2"></canvas>-->                                    
+                                <!--</div>-->
+                                <!--<div id="chartdiv" [style.width.%]="100" [style.height.px]="500"></div>-->                                
+                            </div>
+                        </div>
+                    </div>                    
+                </div> 
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header no-border-bottom">
+                            <h4 class="card-title">Porcentaje de Texto vs Porcentaje de Aviso</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">                                            
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>                                            
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">                            
+                            <div class="card-block">
+                                <home-chart2></home-chart2>                              
+                            </div>
+                        </div>
+                    </div>                    
+                </div>               
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header no-border-bottom">
+                            <h4 class="card-title">Porcentaje de Texto vs Porcentaje de Imágenes</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">                                            
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>                                            
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">                            
+                            <div class="card-block">
+                                <home-chart3></home-chart3>                                 
+                            </div>
+                        </div>
+                    </div>                    
+                </div> 
+                <div class="col-xs-12 col-sm-12 col-md-6">
+                    <div class="card">
+                        <div class="card-header no-border-bottom">
+                            <h4 class="card-title">Detalle de Imágenes</h4>
+                            <a class="heading-elements-toggle"><i class="icon-ellipsis font-medium-3"></i></a>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">                                            
+                                    <li><a data-action="reload"><i class="icon-reload"></i></a></li>                                            
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-body collapse in">                            
+                            <div class="card-block">
+                                <home-chart4></home-chart4>                              
+                            </div>
+                        </div>
+                    </div>                    
+                </div>               
+            </div>
+        </div>
+    </div>
+</div>

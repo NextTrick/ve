@@ -5,7 +5,6 @@ import { IndicadoresComponent } from './indicadores/indicadores.component';
 import { DetalleIndicadoresComponent } from './detalle-indicadores/detalle-indicadores.component';
 import { ProductividadComponent } from './productividad.component';
 
- 
 const productividadRoutes: Routes = [
   { path: '', component: ProductividadComponent,
     children: [          
