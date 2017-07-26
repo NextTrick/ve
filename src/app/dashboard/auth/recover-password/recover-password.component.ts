@@ -1,7 +1,8 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import { AuthService } from '../../../service/auth.service';
+
+import { AuthService } from '../../service/auth.service';
 
 import { message } from '../../../common/message';
 

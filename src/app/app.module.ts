@@ -5,21 +5,15 @@ import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
+import { MainModule } from './dashboard/main/main.module';
 
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './component/not-found/not-found.component';
 import { AccessDeniedComponent } from './component/access-denied/access-denied.component';
 
-//Services
-import { UserService } from './service/user.service';
-import { RolService } from './service/rol.service';
-import { ResourceService } from './service/resource.service';
-import { AuthService } from './service/auth.service';
-import { AclService } from './service/acl.service';
-import { AuthGuardService } from './service/auth-guard.service';
-import { AclGuardService } from './service/acl-guard.service';
-import { FormService } from './common/service/form.service';
+// //Services
 import { UtilService } from './common/service/util.service';
+import { FormService } from './common/service/form.service';
 import { ScriptService } from './common/service/script.service';
 
 @NgModule({
@@ -31,21 +25,15 @@ import { ScriptService } from './common/service/script.service';
     imports: [
         BrowserModule,
         HttpModule,
-        CoreModule,        
+        CoreModule, 
+        MainModule,       
         BrowserAnimationsModule,
         AppRoutingModule,                
     ],
     providers: [
-        UserService, 
-        RolService,
-        ResourceService,
-        AuthService, 
-        AclService,
-        AuthGuardService, 
-        AclGuardService,
-        FormService,
         UtilService,
-        ScriptService
+        FormService,        
+        ScriptService,        
     ],
     bootstrap: [AppComponent]
 })

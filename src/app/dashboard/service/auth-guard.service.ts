@@ -4,7 +4,7 @@ import {
     Router, CanActivate, ActivatedRouteSnapshot,
     RouterStateSnapshot
 } from '@angular/router';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 

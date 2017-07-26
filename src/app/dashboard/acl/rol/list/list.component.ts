@@ -3,8 +3,8 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 
 //services
-import { RolService } from '../../../../service/rol.service';
-import { AclService } from '../../../../service/acl.service';
+import { RolService } from '../../../service/rol.service';
+import { AclService } from '../../../service/acl.service';
 import { UtilService } from '../../../../common/service/util.service';
 
 //components

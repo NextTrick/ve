@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { LayoutService } from '../../service/layout.service';
-import { AuthService } from '../../../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { UtilService } from '../../../common/service/util.service';
 
 @Component({
@@ -22,8 +22,7 @@ export class NavComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        // this.initEmitter();    
-        console.log('authUserLog', this.authService.getAuthUser());
+        // this.initEmitter();            
         this.authUser = this.authService.getAuthUser();   
     }
 

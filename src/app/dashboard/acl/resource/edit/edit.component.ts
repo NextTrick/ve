@@ -11,8 +11,8 @@ import { CustomValidators } from 'ng2-validation';
 
 //services
 import { LayoutService } from '../../../service/layout.service';
-import { ResourceService } from '../../../../service/resource.service';
-import { AclService } from '../../../../service/acl.service';
+import { ResourceService } from '../../../service/resource.service';
+import { AclService } from '../../../service/acl.service';
 import { FormService } from '../../../../common/service/form.service';
 import { UtilService } from '../../../../common/service/util.service';
 

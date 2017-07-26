@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angula
 import { CustomValidators } from 'ng2-validation';
 
 //Services
-import { AuthService } from '../../../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { FormService } from '../../../common/service/form.service';
 import { UtilService } from '../../../common/service/util.service';
 

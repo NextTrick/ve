@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 
 import { ScriptService } from '../../../common/service/script.service';
-import { AclService } from '../../../service/acl.service';
+import { AclService } from '../../service/acl.service';
 
 @Component({
     selector: 'app-layout',

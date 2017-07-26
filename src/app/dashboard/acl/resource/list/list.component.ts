@@ -3,7 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 
 //services
-import { ResourceService } from '../../../../service/resource.service';
+import { ResourceService } from '../../../service/resource.service';
 import { UtilService } from '../../../../common/service/util.service';
 
 //components

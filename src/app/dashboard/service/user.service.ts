@@ -1,12 +1,12 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
-import { User } from '../dashboard/model/entity/user.entity';
+import { User } from '../model/entity/user.entity';
 
-import { AbstractService } from '../common/service/abstract.service';
+import { AbstractService } from '../../common/service/abstract.service';
 
 @Injectable()
 export class UserService extends AbstractService {

@@ -3,9 +3,9 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 
 //services
-import { ResourceService } from '../../../../service/resource.service';
-import { AclService } from '../../../../service/acl.service';
-import { RolService } from '../../../../service/rol.service';
+import { ResourceService } from '../../../service/resource.service';
+import { AclService } from '../../../service/acl.service';
+import { RolService } from '../../../service/rol.service';
 import { UtilService } from '../../../../common/service/util.service';
 
 //components

@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
-import { AuthService } from '../../service/auth.service';
+import { AuthService } from '../../dashboard/service/auth.service';
 
 @Injectable()
 export class AbstractService {
@@ -14,7 +14,7 @@ export class AbstractService {
 
     constructor (
         protected http: Http,
-        protected authService: AuthService   
+        protected AuthService: AuthService   
     ) {
     }
 
@@ -67,6 +67,16 @@ export class AbstractService {
             environment.backendUrl + this.path, options
         )
         .map(res => res.json());
+        // .map(res => { 
+        //     console.log('responseLog', res);
+        //     return res.json() 
+        //     }
+        // )
+        // .catch(error => { 
+        //         console.log('Captured by catch', error); 
+        //         throw 'error in source. Details: ';             
+        //     }
+        // );
     }
 
     get(id: number) {
@@ -99,7 +109,7 @@ export class AbstractService {
     }
 
     getToken() {
-        let token = this.authService.getToken();    
+        let token = this.AuthService.getToken();    
             
         return token;
     }

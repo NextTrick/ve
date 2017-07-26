@@ -1,7 +1,7 @@
 import {Directive, HostBinding, Renderer, Renderer2, ElementRef, Input} from '@angular/core';
 import { Router } from '@angular/router'
 
-import { AuthService } from '../../service/auth.service';
+import { AuthService } from '../../dashboard/service/auth.service';
 
 @Directive({selector: '[acl]'})
 export class AclDirective {

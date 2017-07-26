@@ -62,8 +62,7 @@ export abstract class AbstractEditComponent {
     populateForm() {
         for (let prop in this.objectEntity) {
             let control = this.form.get(prop);
-            if (control) {
-                console.log(prop);                
+            if (control) {                            
                 if (prop == 'status') {
                     if (this.objectEntity[prop] == 0 || this.objectEntity[prop] == '0') {
                         control.setValue(false);

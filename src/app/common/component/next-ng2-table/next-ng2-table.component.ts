@@ -89,7 +89,9 @@ export class NextNg2TableComponent implements OnInit {
                 }  else {
                     this.utilService.errorNotification();
                 }                
-            });  
+            },
+            error => console.log('error capturado', error)
+        );  
     }
 
     public onRemoveClick(row: any): any {        
