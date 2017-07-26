@@ -26,7 +26,7 @@ const mainRoutes: Routes = [
                 loadChildren: 'app/dashboard/productividad/productividad.module#ProductividadModule',
                 canActivate: [AclGuardService]
             },
-            { path: '', redirectTo: 'productividad', pathMatch: 'full' },
+            { path: '', redirectTo: 'productividad', pathMatch: 'full' }, 
         ]
     },    
     { 

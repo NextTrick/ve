@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 import { Acl } from '../model/entity/Acl.entity';
-import { AbstractService } from '../../common/service/abstract.service';
+import { AbstractService } from './abstract.service';
 
 @Injectable()
 export class AclService extends AbstractService {

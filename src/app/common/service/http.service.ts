@@ -1,45 +1,54 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions, URLSearchParams } from '@angular/http';
+import { Http, Response, Headers, RequestOptions, RequestOptionsArgs, URLSearchParams } from '@angular/http';
 
 @Injectable()
-export class httpService {
+export class HttpService {
 
-    constructor(private http: Http) { }
+    protected authObjectService: any;
+
+    constructor(private http: Http) {
+    }
+
+    setAuthObjectService(authObjectService: any) {
+        this.authObjectService = authObjectService;
+    }
+
+    get(url, options?: RequestOptions) {
+        let headers = new Headers();              
+        options = this.prepareOption(options);        
+        return this.http.get(url, options);
+    }
+
+    post(url, data, options?: RequestOptions) {
+        options = this.prepareOption(options);
+        return this.http.post(url, data, options);
+    }
+
+    put(url, data, options?: RequestOptions) {
+        options = this.prepareOption(options);        
+        return this.http.post(url, data, options);
+    }
+
+    delete(url, options?: RequestOptions) {
+        options = this.prepareOption(options);  
+        return this.http.delete(url, options);
+    }
+
+    private prepareOption(options?: RequestOptions) {
+        if (options) {
+            options.params.append('token', this.authObjectService.getToken());        
+        } else {
+            let myParams = new URLSearchParams();
+            myParams.append('token', this.authObjectService.getToken());
+
+            options = new RequestOptions({params: myParams});
+        }
+
+        return options;
+    }
 
     createAuthorizationHeader(headers: Headers) {
         headers.append('Authorization', 'Basic ' +
             btoa('username:password'));
-    }
-
-    get(url, options?: RequestOptions) {
-        let headers = new Headers();
-        this.createAuthorizationHeader(headers);
-        return this.http.get(url, {
-            headers: headers
-        });
-    }
-
-    post(url, data, options?: RequestOptions) {
-        let headers = new Headers();
-        this.createAuthorizationHeader(headers);
-        return this.http.post(url, data, {
-            headers: headers
-        });
-    }
-
-    put(url, data, options?: RequestOptions) {
-        let headers = new Headers();
-        this.createAuthorizationHeader(headers);
-        return this.http.post(url, data, {
-            headers: headers
-        });
-    }
-
-    delete(url, options?: RequestOptions) {
-        let headers = new Headers();
-        this.createAuthorizationHeader(headers);
-        return this.http.delete(url, {
-            headers: headers
-        });
     }
 }

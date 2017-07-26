@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 import { Rol } from '../model/entity/rol.entity';
-import { AbstractService } from '../../common/service/abstract.service';
+import { AbstractService } from './abstract.service';
 
 @Injectable()
 export class RolService extends AbstractService {
@@ -13,8 +13,8 @@ export class RolService extends AbstractService {
     searchPath: string = 'rol/search'; 
 
     getActiveRoles() {
-        return this.http.get(
-            environment.backendUrl + this.path + '/get-active-roles', this.getTokenAsOption()
+        return this.httpService.get(
+            environment.backendUrl + this.path + '/get-active-roles'
         )
         .map(res => res.json());
     }

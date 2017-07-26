@@ -15,6 +15,7 @@ import { AccessDeniedComponent } from './component/access-denied/access-denied.c
 import { UtilService } from './common/service/util.service';
 import { FormService } from './common/service/form.service';
 import { ScriptService } from './common/service/script.service';
+import { HttpService } from './common/service/http.service';
 
 @NgModule({
     declarations: [
@@ -33,7 +34,8 @@ import { ScriptService } from './common/service/script.service';
     providers: [
         UtilService,
         FormService,        
-        ScriptService,        
+        ScriptService, 
+        HttpService       
     ],
     bootstrap: [AppComponent]
 })

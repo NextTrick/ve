@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 import { AuthService } from '../../dashboard/service/auth.service';
+import { HttpService } from './../../common/service/http.service';
 
 @Injectable()
 export class AbstractService {
@@ -12,31 +13,33 @@ export class AbstractService {
     path: string; '';
     searchPath: string; '';
 
-    constructor (
-        protected http: Http,
-        protected AuthService: AuthService   
+    constructor (        
+        protected authService: AuthService,
+        protected httpService: HttpService,
+        protected http?: Http,
     ) {
+        httpService.setAuthObjectService(authService);
     }
 
     create(data: any) {        
-        return this.http.post(
+        return this.httpService.post(
                 environment.backendUrl + this.path,
-                {data}, this.getTokenAsOption()       
+                {data}
             )
             .map(res => res.json());            
     }
 
     update(id: number, data: any) {        
-        return this.http.put(
+        return this.httpService.put(
                 environment.backendUrl + this.path + '/' + id,
-                {data}, this.getTokenAsOption()      
+                {data}
             )
             .map(res => res.json());            
     }
 
     delete(id: number) {        
-        return this.http.delete(
-            environment.backendUrl + this.path + '/' + id, this.getTokenAsOption()
+        return this.httpService.delete(
+            environment.backendUrl + this.path + '/' + id
         )
         .map(res => res.json());
     }
@@ -58,12 +61,10 @@ export class AbstractService {
                 myParams.append(prop, objectParams[prop]);
             }            
         }
-
-        myParams.append('token', this.getToken());
-
+        
         let options = new RequestOptions({params: myParams});
 
-        return this.http.get(
+        return this.httpService.get(
             environment.backendUrl + this.path, options
         )
         .map(res => res.json());
@@ -80,8 +81,8 @@ export class AbstractService {
     }
 
     get(id: number) {
-        return this.http.get(
-            environment.backendUrl + this.path + '/' + id, this.getTokenAsOption()
+        return this.httpService.get(
+            environment.backendUrl + this.path + '/' + id
         )
         .map(res => res.json());
     }
@@ -90,12 +91,11 @@ export class AbstractService {
         let myParams = new URLSearchParams();
 
         myParams.append('s', filter.s);           
-        myParams.append('pageSize', filter.pageSize);
-        myParams.append('token', this.getToken());
+        myParams.append('pageSize', filter.pageSize);        
 
         let options = new RequestOptions({params: myParams});
 
-        return this.http.get(
+        return this.httpService.get(
             environment.backendUrl + this.searchPath, options
         )
         .map(res => res.json());
@@ -109,7 +109,7 @@ export class AbstractService {
     }
 
     getToken() {
-        let token = this.AuthService.getToken();    
+        let token = this.authService.getToken();    
             
         return token;
     }

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import 'rxjs/Rx';
 
 import { Resource } from '../model/entity/resource.entity';
-import { AbstractService } from '../../common/service/abstract.service';
+import { AbstractService } from './abstract.service';
 
 @Injectable()
 export class ResourceService extends AbstractService {
@@ -25,12 +25,10 @@ export class ResourceService extends AbstractService {
                 myParams.append(prop, filter[prop]);
             }            
         }
-
-        myParams.append('token', this.getToken());
-
+        
         let options = new RequestOptions({params: myParams});
 
-        return this.http.get(
+        return this.httpService.get(
             environment.backendUrl + this.path + '/get-all-by-rol', options
         )
         .map(res => res.json());

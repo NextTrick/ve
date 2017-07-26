@@ -6,7 +6,7 @@ import 'rxjs/Rx';
 
 import { User } from '../model/entity/user.entity';
 
-import { AbstractService } from '../../common/service/abstract.service';
+import { AbstractService } from './abstract.service';
 
 @Injectable()
 export class UserService extends AbstractService {
