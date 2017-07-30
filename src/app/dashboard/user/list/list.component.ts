@@ -3,8 +3,6 @@ import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { NgForm } from "@angular/forms";
 
-import { PageResponse, FilterModel, ODataController } from 'ng2-jsgrid';
-
 //services
 import { UserService } from '../../service/user.service';
 import { AclService } from '../../service/acl.service';

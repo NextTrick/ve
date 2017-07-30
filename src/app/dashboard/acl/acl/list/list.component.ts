@@ -67,8 +67,14 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
     onRolChange(rolId: number) {
         this.filter.pageIndex = this.page;         
         this.filter.extra = [];      
-        this.filter.extra.push({rolId: rolId});    
-        this.getAll(this.filter);    
+        this.filter.extra.push({rolId: rolId});   
+
+        this.config.selection.disabled = false;
+        if (rolId == 1) { //admin
+            this.config.selection.disabled = true;
+        }
+        
+        this.getAll(this.filter, this.config);    
     }
 
     public getAll(filter: Filter, config: any = this.config, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }) {

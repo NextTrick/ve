@@ -26,7 +26,7 @@ export class HttpService {
 
     put(url, data, options?: RequestOptions) {
         options = this.prepareOption(options);        
-        return this.http.post(url, data, options);
+        return this.http.put(url, data, options);
     }
 
     delete(url, options?: RequestOptions) {

@@ -40,6 +40,7 @@ export class NextNg2TableComponent implements OnInit {
         },
         selection: {
             active: false,
+            disabled: false,
         },
         sorting: { columns: this.columns },
         filtering: { filterString: '' },
@@ -220,7 +221,7 @@ export class NextNg2TableComponent implements OnInit {
         this.totalItems = sortedData.length;                
     }
 
-    public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {    
+    public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {        
         if (this.config.oneLoad) {                               
             this.processConfig(config, page);
         } else {            

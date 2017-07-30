@@ -31,7 +31,7 @@ import { Router } from '@angular/router';
       </tr>
         <tr *ngFor="let row of rows">   
             <td *ngIf="config.selection.active" >            
-                <input type="checkbox" name="selection" [(ngModel)]="row.active" (change)="changeItemCheckbox(row, $event)">
+                <input type="checkbox" [disabled]="config.selection.disabled" name="selection" [(ngModel)]="row.active" (change)="changeItemCheckbox(row, $event)">
             </td>         
           <td *ngFor="let column of columns" [innerHtml]="sanitize(getData(row, column.name))"></td>
           <td *ngIf="config.action.active" >            
