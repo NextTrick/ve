@@ -20,20 +20,47 @@ import { NextNg2TableComponent, Filter } from '../../../common/component/next-ng
 export class ListComponent extends NextNg2TableComponent implements OnInit {
 
     public rows: Array<any> = [];
+    // public columns: Array<any> = [
+    //     {
+    //         title: 'Email', name: 'email',
+    //         sort: false,
+    //     },
+    //     {
+    //         title: 'Nombre',
+    //         name: 'name',
+    //         sort: false,            
+    //     },
+    //     {
+    //         title: 'Apellido',
+    //         name: 'lastName',
+    //         sort: false,
+    //     },
+    //     {
+    //         title: 'Rol',
+    //         name: 'rolName', 
+    //         sort: false,                         
+    //     },
+    //     {
+    //         title: 'Productos',            
+    //         name: 'products',
+    //         sort: false,
+    //     }        
+    // ];    
+
     public columns: Array<any> = [
         {
             title: 'Email', name: 'email',
-            sort: false,
+            sort: 'asc',
         },
         {
             title: 'Nombre',
             name: 'name',
-            sort: false,            
+            sort: 'desc',            
         },
         {
             title: 'Apellido',
             name: 'lastName',
-            sort: false,
+            sort: '',
         },
         {
             title: 'Rol',
@@ -45,7 +72,7 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
             name: 'products',
             sort: false,
         }        
-    ];    
+    ]; 
 
     constructor(
         private http: Http,
@@ -56,10 +83,12 @@ export class ListComponent extends NextNg2TableComponent implements OnInit {
     ) {               
         super(utilService, userService);        
 
-        this.config.oneLoad = false;       
+        this.config.oneLoad = false;
         this.config.action.edit.active = true;
         this.config.action.edit.uri = '/dashboard/user/';
-        this.config.action.remove.active = true;        
+        this.config.action.remove.active = true;   
+        this.config.sorting.columns =  this.columns;
+        this.itemsPerPage = 10;        
     }
 
     ngOnInit() {             

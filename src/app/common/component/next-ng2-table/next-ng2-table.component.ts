@@ -42,7 +42,7 @@ export class NextNg2TableComponent implements OnInit {
             active: false,
             disabled: false,
         },
-        sorting: { columns: this.columns },
+        sorting: { columns: this.columns }, //Needs to be declared inside child class
         filtering: { filterString: '' },
         className: ['table-striped', 'table-bordered'],
         oneLoad: false,
@@ -211,7 +211,7 @@ export class NextNg2TableComponent implements OnInit {
             Object.assign(this.config.filtering, config.filtering);
         }
 
-        if (config.sorting) {
+        if (config.sorting) {            
             Object.assign(this.config.sorting, config.sorting);
         }
 
@@ -222,7 +222,7 @@ export class NextNg2TableComponent implements OnInit {
     }
 
     public onChangeTable(config: any, page: any = { page: this.page, itemsPerPage: this.itemsPerPage }): any {        
-        if (this.config.oneLoad) {                               
+        if (this.config.oneLoad) {               
             this.processConfig(config, page);
         } else {            
             this.loadData(config, page);            
